@@ -269,7 +269,7 @@ export const contactInfo = {
   email: "michael.rafael03@gmail.com",
   phone: "+58 412 3574858",
   social: {
-    github: "https://github.com/quorexstudio",
+    github: "https://github.com/Quorex-Studio",
     linkedin: "https://linkedin.com/company/quorexstudio",
     twitter: "https://twitter.com/quorexstudio",
   },
