@@ -42,22 +42,41 @@ const Flexibility = () => (
       </div>
 
       {/* Code visual */}
-      <div className="reveal bg-[#050507] border border-[#F0F1F5]/08 p-6 font-mono text-sm leading-8"
-        style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-        <div className="text-[#F0F1F5]/25">{'// ¿Tu proyecto ya está en otra tecnología?'}</div>
-        <div><span className="text-[#6C63FF]">const</span> <span className="text-[#F0F1F5]">quorex</span> = {'{'}</div>
-        <div>&nbsp;&nbsp;<span className="text-[#FF6B6B]">preferredStack</span>: <span className="text-[#00E5A0]">'Next.js + Supabase'</span>,</div>
-        <div>&nbsp;&nbsp;<span className="text-[#FF6B6B]">canWorkWith</span>: [</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#00E5A0]">'WordPress'</span>, <span className="text-[#00E5A0]">'PHP'</span>, <span className="text-[#00E5A0]">'Laravel'</span>,</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#00E5A0]">'Vue'</span>, <span className="text-[#00E5A0]">'Angular'</span>, <span className="text-[#00E5A0]">'Django'</span>,</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#00E5A0]">'...cualquier stack'</span></div>
-        <div>&nbsp;&nbsp;],</div>
-        <div>&nbsp;&nbsp;<span className="text-[#FF6B6B]">dogmas</span>: <span className="text-[#FF6B6B]">false</span>,</div>
-        <div>&nbsp;&nbsp;<span className="text-[#FF6B6B]">flexibility</span>: <span className="text-[#00E5A0]">true</span>,</div>
-        <div>&nbsp;&nbsp;<span className="text-[#FF6B6B]">results</span>: <span className="text-[#00E5A0]">'guaranteed'</span></div>
-        <div>{'}'}</div>
-        <br />
-        <div className="text-[#F0F1F5]/25">{'// Tu proyecto en buenas manos.'}</div>
+      <div className="reveal relative group">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6C63FF] via-[#FF6B6B] to-[#00E5A0] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+        <div className="relative bg-[#050507] rounded-xl border border-white/[0.1] overflow-hidden">
+
+          {/* Terminal Header */}
+          <div className="flex items-center px-4 py-3 bg-[#0a0a0c] border-b border-white/[0.05]">
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#FF6B6B]/80 shadow-[0_0_10px_rgba(255,107,107,0.5)]" />
+              <div className="w-3 h-3 rounded-full bg-[#F0F1F5]/30" />
+              <div className="w-3 h-3 rounded-full bg-[#00E5A0]/80 shadow-[0_0_10px_rgba(0,229,160,0.5)]" />
+            </div>
+            <div className="mx-auto text-[#F0F1F5]/40 text-xs font-mono" style={{ fontFamily: "'JetBrains Mono', monospace" }}>quorex.config.ts</div>
+          </div>
+
+          {/* Terminal Body */}
+          <div className="p-6 font-mono text-sm leading-8 overflow-x-auto whitespace-pre animate-[typewriter_2s_steps(40)_forwards]" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+            <div className="text-[#F0F1F5]/30 mb-2">{'// ¿Tu proyecto ya está en otra tecnología?'}</div>
+            <div><span className="text-[#6C63FF]">const</span> <span className="text-[#F0F1F5] font-bold">quorex</span> <span className="text-[#FF6B6B]">=</span> {'{'}</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#00E5A0] ml-4">preferredStack</span>: <span className="text-[#FF6B6B]">"Next.js + Supabase"</span>,</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#00E5A0] ml-4">canWorkWith</span>: [</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#FF6B6B] ml-8">"WordPress"</span>, <span className="text-[#FF6B6B]">"PHP"</span>, <span className="text-[#FF6B6B]">"Laravel"</span>,</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#FF6B6B] ml-8">"Vue"</span>, <span className="text-[#FF6B6B]">"Angular"</span>, <span className="text-[#FF6B6B]">"Django"</span>,</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#FF6B6B] ml-8">"...cualquier stack"</span></div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#F0F1F5] ml-4">]</span>,</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#00E5A0] ml-4">dogmas</span>: <span className="text-[#6C63FF] italic">false</span>,</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#00E5A0] ml-4">flexibility</span>: <span className="text-[#6C63FF] italic">true</span>,</div>
+            <div className="hover:bg-white/[0.02] transition-colors"><span className="text-[#00E5A0] ml-4">results</span>: <span className="text-[#FF6B6B]">"guaranteed"</span></div>
+            <div>{'};'}</div>
+            <br />
+            <div className="text-[#00E5A0] mt-2 flex items-center">
+              <span>{'// Tu proyecto en buenas manos.'}</span>
+              <span className="w-2 h-4 bg-[#00E5A0] ml-2 animate-blink inline-block" />
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

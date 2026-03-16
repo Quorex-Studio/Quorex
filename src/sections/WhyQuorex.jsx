@@ -19,14 +19,18 @@ const WhyQuorex = () => (
         {features.map(f => {
           const Icon = iconMap[f.icon];
           return (
-            <div key={f.id} className="group relative bg-[#050507] p-8 hover:bg-[#0a0a0c] transition-colors overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-0.5 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400" style={{ background: f.color }} />
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300"
-                style={{ background: `${f.color}18`, border: `1.5px solid ${f.color}40` }}>
-                {Icon && <Icon className="w-7 h-7" style={{ color: f.color }} />}
+            <div key={f.id} className="group relative bg-[#0a0a0c] p-8 hover:bg-[#111116] transition-all duration-500 overflow-hidden rounded-2xl border border-white/[0.04] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] animate-fade-in" style={{ animationDelay: `${f.id * 150}ms` }}>
+              <div className="absolute top-0 left-0 right-0 h-1 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" style={{ background: f.color, boxShadow: `0 0 20px ${f.color}` }} />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `radial-gradient(circle at top right, ${f.color}, transparent 70%)` }} />
+
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
+                  style={{ background: `${f.color}15`, border: `1px solid ${f.color}30`, boxShadow: `inset 0 0 20px ${f.color}10` }}>
+                  {Icon && <Icon className="w-8 h-8 transition-colors duration-300" style={{ color: f.color }} />}
+                </div>
+                <h3 className="font-bold text-[#F0F1F5] text-2xl mb-3 group-hover:text-white transition-colors" style={{ fontFamily: "'Outfit',sans-serif" }}>{f.title}</h3>
+                <p className="text-[#F0F1F5]/60 text-sm md:text-base leading-relaxed" style={{ fontFamily: "'Outfit',sans-serif" }}>{f.description}</p>
               </div>
-              <h3 className="font-bold text-[#F0F1F5] text-xl mb-2" style={{ fontFamily: "'Outfit',sans-serif" }}>{f.title}</h3>
-              <p className="text-[#F0F1F5]/55 text-sm leading-relaxed" style={{ fontFamily: "'Outfit',sans-serif" }}>{f.description}</p>
             </div>
           );
         })}

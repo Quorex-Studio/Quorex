@@ -19,43 +19,29 @@ const TechStack = () => (
         <p className="text-[#F0F1F5]/55 mt-3 max-w-xl" style={{ fontFamily: "'Outfit',sans-serif" }}>Herramientas modernas y probadas en producción. Sin compromisos.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
-        {/* Categories */}
-        <div className="flex flex-col gap-px bg-[#F0F1F5]/08">
-          {cats.map(cat => {
-            const items = techStack.filter(t => t.category === cat.name);
-            if (!items.length) return null;
-            return (
-              <div key={cat.name} className="bg-[#0a0a0c] p-5 hover:bg-[#111116] transition-colors">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 rounded-full" style={{ background: cat.color }} />
-                  <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: cat.color, fontFamily: "'JetBrains Mono',monospace" }}>{cat.name}</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {items.map(t => (
-                    <span key={t.name} className="font-mono text-xs px-3 py-1.5 bg-[#F0F1F5]/05 border border-[#F0F1F5]/10 text-[#F0F1F5] hover:border-[#6C63FF]/40 hover:bg-[#6C63FF]/08 transition-all duration-200 hoverable" style={{ fontFamily: "'JetBrains Mono',monospace" }}>
-                      {t.icon} {t.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 reveal">
+        {/* Tech Grid */}
+        <div className="flex flex-wrap gap-4 content-start">
+          {techStack.map((t, i) => (
+            <div key={t.name} className="group relative bg-[#0a0a0c] border border-white/[0.04] p-4 rounded-xl flex items-center gap-3 hover:-translate-y-2 transition-all duration-300 hover:border-[#6C63FF]/50 hover:shadow-[0_10px_30px_rgba(108,99,255,0.15)] animate-float" style={{ animationDelay: `${i * 0.15}s` }}>
+              <div className="text-2xl group-hover:scale-110 transition-transform">{t.icon}</div>
+              <div className="font-mono text-sm tracking-wide text-[#F0F1F5]/80 group-hover:text-white transition-colors" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t.name}</div>
+            </div>
+          ))}
         </div>
 
-        {/* Metrics */}
-        <div className="flex flex-col gap-px bg-[#F0F1F5]/08">
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-2 gap-px bg-[#F0F1F5]/08 rounded-2xl overflow-hidden border border-white/[0.04]">
           {[
             { num: '99.9%', label: 'Uptime garantizado', grad: 'from-[#6C63FF] to-[#FF6B6B]' },
             { num: '<100ms', label: 'Response Time', grad: 'from-[#FF6B6B] to-[#00E5A0]' },
             { num: 'A+', label: 'Security Score', grad: 'from-[#00E5A0] to-[#6C63FF]' },
             { num: '2 SEM', label: 'Tiempo promedio entrega', grad: 'from-[#6C63FF] to-[#00E5A0]' },
-            { num: '24/7', label: 'Soporte disponible', grad: 'from-[#FF6B6B] to-[#6C63FF]' },
-            { num: '∞', label: 'Revisiones incluidas', grad: 'from-[#00E5A0] to-[#FF6B6B]' },
-          ].map(m => (
-            <div key={m.num} className="bg-[#0a0a0c] p-5 text-center flex-1 hover:bg-[#111116] transition-colors">
-              <div className={`text-3xl font-black bg-gradient-to-r ${m.grad} bg-clip-text text-transparent`} style={{ fontFamily: "'Bebas Neue',sans-serif" }}>{m.num}</div>
-              <div className="text-xs text-[#F0F1F5]/45 mt-1 tracking-wide" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{m.label}</div>
+          ].map((m, i) => (
+            <div key={i} className="bg-[#050507] p-8 text-center flex flex-col justify-center relative group overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className={`text-4xl md:text-5xl font-black bg-gradient-to-r ${m.grad} bg-clip-text text-transparent transform group-hover:scale-110 transition-transform duration-500`} style={{ fontFamily: "'Bebas Neue',sans-serif" }}>{m.num}</div>
+              <div className="text-xs text-[#F0F1F5]/45 mt-3 tracking-widest uppercase font-semibold" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{m.label}</div>
             </div>
           ))}
         </div>

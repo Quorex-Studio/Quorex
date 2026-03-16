@@ -10,7 +10,7 @@ const Hero = () => {
     const ctx = canvas.getContext('2d');
     let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
-    const COLORS = [[108,99,255],[255,107,107],[0,229,160]];
+    const COLORS = [[108, 99, 255], [255, 107, 107], [0, 229, 160]];
     const N = 90;
 
     class P {
@@ -43,9 +43,9 @@ const Hero = () => {
         p.update(); p.draw();
         for (let j = i + 1; j < N; j++) {
           const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
-          const d = Math.sqrt(dx*dx + dy*dy);
+          const d = Math.sqrt(dx * dx + dy * dy);
           if (d < 130) {
-            ctx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - d/130)})`;
+            ctx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - d / 130)})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
           }
@@ -67,19 +67,19 @@ const Hero = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050507]/40 to-[#050507] z-[1]" />
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 border border-[#00E5A0]/30 text-[#00E5A0] px-4 py-2 rounded-full mb-8 animate-[fadeUp_0.8s_ease_both]">
-          <Sparkles className="w-4 h-4" />
-          <span className="font-mono text-xs tracking-widest uppercase">Desarrollo Web Premium · 2025</span>
+        <div className="inline-flex items-center gap-2 border border-[#00E5A0]/50 text-[#00E5A0] px-5 py-2.5 rounded-full mb-8 animate-[fadeUp_0.8s_ease_both] shadow-[0_0_20px_rgba(0,229,160,0.2)] hover:shadow-[0_0_30px_rgba(0,229,160,0.4)] transition-shadow">
+          <Sparkles className="w-4 h-4 animate-pulse" />
+          <span className="font-mono text-xs tracking-[0.2em] uppercase font-semibold">Desarrollo Web Premium</span>
         </div>
 
         {/* Title */}
-        <h1 className="font-bebas text-[clamp(5rem,16vw,11rem)] leading-none tracking-wide text-[#F0F1F5] animate-[fadeUp_0.8s_0.1s_ease_both]"
+        <h1 className="font-bebas text-[clamp(6rem,20vw,16rem)] leading-[0.85] tracking-tight text-[#F0F1F5] animate-[fadeUp_0.8s_0.1s_ease_both] hover:animate-glitch transition-all duration-300 w-full"
           style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
           QUOREX
         </h1>
-        <div className="font-bebas text-[clamp(2rem,6vw,4.5rem)] tracking-[0.08em] bg-gradient-to-r from-[#6C63FF] via-[#FF6B6B] to-[#00E5A0] bg-clip-text text-transparent animate-[fadeUp_0.8s_0.15s_ease_both]"
+        <div className="font-bebas text-[clamp(2.5rem,8vw,6rem)] leading-none tracking-[0.1em] bg-gradient-to-r from-[#6C63FF] via-[#FF6B6B] to-[#00E5A0] bg-clip-text text-transparent animate-[fadeUp_0.8s_0.15s_ease_both]"
           style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
           STUDIO
         </div>
@@ -111,13 +111,13 @@ const Hero = () => {
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-[#F0F1F5]/10 animate-[fadeUp_0.8s_0.4s_ease_both]">
           {[
-            { num:'50+',   color:'#6C63FF', label:'Proyectos'    },
-            { num:'30+',   color:'#FF6B6B', label:'Clientes'     },
-            { num:'100%',  color:'#00E5A0', label:'Satisfacción' },
-          ].map((s,i) => (
+            { num: '50+', color: '#6C63FF', label: 'Proyectos' },
+            { num: '30+', color: '#FF6B6B', label: 'Clientes' },
+            { num: '100%', color: '#00E5A0', label: 'Satisfacción' },
+          ].map((s, i) => (
             <div key={i} className="text-center">
-              <div className="text-4xl font-black leading-none" style={{ color: s.color, fontFamily:"'Bebas Neue', sans-serif" }}>{s.num}</div>
-              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily:"'JetBrains Mono', monospace" }}>{s.label}</div>
+              <div className="text-4xl font-black leading-none" style={{ color: s.color, fontFamily: "'Bebas Neue', sans-serif" }}>{s.num}</div>
+              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{s.label}</div>
             </div>
           ))}
         </div>
