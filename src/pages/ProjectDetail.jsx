@@ -19,6 +19,14 @@ const ProjectDetail = () => {
     setProjectIndex(index);
   }, [slug, localizedProjects]);
 
+  useEffect(() => {
+    if (projectIndex !== -1) {
+      document.title = `${localizedProjects[projectIndex].title} | Quorex Studio`;
+    } else {
+      document.title = "Quorex Studio | Desarrollo Web Premium";
+    }
+  }, [projectIndex, localizedProjects]);
+
   if (projectIndex === -1) {
     return (
       <div className="min-h-screen bg-[#050507] flex flex-col items-center justify-center text-white font-outfit">
@@ -44,7 +52,7 @@ const ProjectDetail = () => {
           className="fixed inset-0 z-50 bg-[#050507]/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer animate-fade-in"
           onClick={() => setLightboxImg(null)}
         >
-          <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/5 p-2 rounded-full">
+          <button aria-label="Close Gallery" className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/5 p-2 rounded-full">
             <X className="w-6 h-6" />
           </button>
           <img src={lightboxImg} alt="Gallery view" className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />

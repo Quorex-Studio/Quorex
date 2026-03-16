@@ -20,13 +20,13 @@ const Footer = () => {
           </div>
 
           <div className="flex gap-4">
-            <a href={contactInfo.social.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F0F1F5]/60 hover:text-white hover:bg-white/[0.05] hover:border-white/[0.1] transition-all hoverable">
+            <a href={contactInfo.social.github} aria-label="GitHub Profile" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F0F1F5]/60 hover:text-white hover:bg-white/[0.05] hover:border-white/[0.1] transition-all hoverable">
               <Github className="w-4 h-4" />
             </a>
-            <a href={contactInfo.social.twitter} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F0F1F5]/60 hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/10 hover:border-[#1DA1F2]/30 transition-all hoverable">
+            <a href={contactInfo.social.twitter} aria-label="Twitter Profile" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F0F1F5]/60 hover:text-[#1DA1F2] hover:bg-[#1DA1F2]/10 hover:border-[#1DA1F2]/30 transition-all hoverable">
               <Twitter className="w-4 h-4" />
             </a>
-            <a href={contactInfo.social.linkedin} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F0F1F5]/60 hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 hover:border-[#0A66C2]/30 transition-all hoverable">
+            <a href={contactInfo.social.linkedin} aria-label="LinkedIn Profile" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F0F1F5]/60 hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 hover:border-[#0A66C2]/30 transition-all hoverable">
               <Linkedin className="w-4 h-4" />
             </a>
           </div>
@@ -35,8 +35,8 @@ const Footer = () => {
         <div className="border-t border-white/[0.05] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-[#F0F1F5]/40" style={{ fontFamily: "'JetBrains Mono',monospace" }}>
           <div>&copy; {currentYear} Quorex Studio. {t('footer.rights')}</div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors hoverable">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors hoverable">Terms of Service</a>
+            <a href="/privacy" className="hover:text-white transition-colors hoverable">Privacy Policy</a>
+            <a href="/terms" className="hover:text-white transition-colors hoverable">Terms of Service</a>
           </div>
         </div>
       </div>

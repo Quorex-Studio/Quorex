@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '../sections/Hero';
 import Services from '../sections/Services';
 import TechStack from '../sections/TechStack';
@@ -7,7 +7,12 @@ import WhyQuorex from '../sections/WhyQuorex';
 import Flexibility from '../sections/Flexibility';
 import Contact from '../sections/Contact';
 
-const Home = () => (
+const Home = () => {
+  useEffect(() => {
+    document.title = "Quorex Studio | Desarrollo Web Premium";
+  }, []);
+
+  return (
   <main>
     <Hero />
     <Services />
@@ -17,6 +22,7 @@ const Home = () => (
     <Flexibility />
     <Contact />
   </main>
-);
+  );
+};
 
 export default Home;

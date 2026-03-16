@@ -73,8 +73,9 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Nombre</label>
+                    <label htmlFor="contact-name" className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Nombre</label>
                     <input 
+                      id="contact-name"
                       type="text" 
                       required
                       placeholder={t('contact.name_placeholder')}
@@ -85,8 +86,9 @@ const Contact = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Email</label>
+                    <label htmlFor="contact-email" className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Email</label>
                     <input 
+                      id="contact-email"
                       type="email" 
                       required
                       placeholder={t('contact.email_placeholder')}
@@ -100,8 +102,9 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Servicio</label>
+                    <label htmlFor="contact-service" className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Servicio</label>
                     <select 
+                      id="contact-service"
                       required
                       value={formState.service}
                       onChange={e => setFormState({...formState, service: e.target.value})}
@@ -117,8 +120,9 @@ const Contact = () => {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Presupuesto</label>
+                    <label htmlFor="contact-budget" className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Presupuesto</label>
                     <select 
+                      id="contact-budget"
                       required
                       value={formState.budget}
                       onChange={e => setFormState({...formState, budget: e.target.value})}
@@ -135,8 +139,9 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Detalles</label>
+                  <label htmlFor="contact-details" className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Detalles</label>
                   <textarea 
+                    id="contact-details"
                     required
                     rows="4"
                     placeholder={t('contact.details_placeholder')}
