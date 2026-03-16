@@ -1,15 +1,6 @@
 import React from 'react';
 import { techStack } from '../data/mock';
 
-const cats = [
-  { name: 'Frontend', color: '#6C63FF' },
-  { name: 'Language', color: '#00E5A0' },
-  { name: 'Backend', color: '#FF6B6B' },
-  { name: 'Database', color: '#6C63FF' },
-  { name: 'Styling', color: '#FF6B6B' },
-  { name: 'Deploy', color: '#00E5A0' },
-];
-
 const TechStack = () => (
   <section id="stack" className="py-24 px-6 bg-[#050507]">
     <div className="max-w-7xl mx-auto">
