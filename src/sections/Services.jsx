@@ -42,8 +42,7 @@ const Services = () => {
                     style={{ background: c.bg, border: `1px solid ${c.border}` }}>
                     {Icon && <Icon className="w-7 h-7" style={{ color: c.text }} />}
                   </div>
-                  <div className="font-bold text-[#F0F1F5] text-xl mb-2 group-hover:text-white transition-colors" style={{ fontFamily: "'Outfit',sans-serif" }}>{s.title}</div>
-                  <div className="font-mono text-sm font-semibold mb-4" style={{ color: c.text, fontFamily: "'JetBrains Mono',monospace" }}>{s.price}</div>
+                  <div className="font-bold text-[#F0F1F5] text-xl mb-4 group-hover:text-white transition-colors" style={{ fontFamily: "'Outfit',sans-serif" }}>{s.title}</div>
                   <p className="text-[#F0F1F5]/60 text-sm leading-relaxed mb-6" style={{ fontFamily: "'Outfit',sans-serif" }}>{s.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {s.tags.map(t => (
