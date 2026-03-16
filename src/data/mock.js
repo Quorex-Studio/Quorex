@@ -27,10 +27,106 @@ export const techStack = [
 ];
 
 export const projects = [
-  { id: 1, title: "Dashboard Financiero", description: "Sistema de análisis financiero con reportes en tiempo real y visualización de datos avanzada.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=70", tags: ["React", "TypeScript", "Supabase"], color: "#6C63FF", span: 7 },
-  { id: 2, title: "E-Commerce Premium", description: "Tienda online con carrito de compras, pagos y panel de administración completo.", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=70", tags: ["Next.js", "Node.js", "Stripe"], color: "#FF6B6B", span: 5 },
-  { id: 3, title: "Analytics Platform", description: "Plataforma de análisis de datos con métricas personalizables y exportación.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=70", tags: ["React", "Python", "PostgreSQL"], color: "#00E5A0", span: 4 },
-  { id: 4, title: "Sistema de Gestión CRM", description: "CRM personalizado con gestión de clientes, tareas, pipeline de ventas y roles granulares.", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=70", tags: ["TypeScript", "Supabase", "React"], color: "#6C63FF", span: 8 },
+  {
+    id: 1,
+    slug: "dashboard-financiero",
+    title: "Dashboard Financiero",
+    description: "Sistema de análisis financiero con reportes en tiempo real y visualización de datos avanzada.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=70",
+    tags: ["React", "TypeScript", "Supabase"],
+    color: "#6C63FF",
+    span: 7,
+    // ── Case Study Extended Data ──
+    heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80",
+    category: "Dashboard",
+    year: "2025",
+    timeline: "6 semanas",
+    client: "Fintech Startup",
+    stack: ["React 18", "TypeScript", "Supabase", "TailwindCSS", "Recharts", "Zustand"],
+    challenge: "El cliente necesitaba un panel de control financiero que procesara miles de transacciones en tiempo real, con visualizaciones interactivas y alertas automáticas para anomalías en los flujos de dinero.",
+    solution: "Desarrollamos un dashboard reactivo con Supabase Realtime para actualizaciones instantáneas, gráficos interactivos con Recharts, y un motor de reglas basado en Zustand para alertas inteligentes. La arquitectura modular permite agregar nuevos widgets sin afectar el rendimiento.",
+    results: "Reducción del 40% en tiempo de análisis financiero. El sistema procesa +5,000 transacciones por segundo con latencia menor a 200ms. El cliente reportó un aumento del 60% en la eficiencia de su equipo de finanzas.",
+    gallery: [
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=70",
+      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=70",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=70",
+    ],
+  },
+  {
+    id: 2,
+    slug: "ecommerce-premium",
+    title: "E-Commerce Premium",
+    description: "Tienda online con carrito de compras, pagos y panel de administración completo.",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=70",
+    tags: ["Next.js", "Node.js", "Stripe"],
+    color: "#FF6B6B",
+    span: 5,
+    // ── Case Study Extended Data ──
+    heroImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1400&q=80",
+    category: "E-Commerce",
+    year: "2025",
+    timeline: "8 semanas",
+    client: "Marca de Moda DTC",
+    stack: ["Next.js 14", "Node.js", "Stripe", "PostgreSQL", "Cloudinary", "Redis"],
+    challenge: "La marca necesitaba una tienda online que soportara picos de tráfico durante campañas de marketing, con un flujo de compra ultra-rápido y gestión integral de inventario multi-bodega.",
+    solution: "Implementamos una plataforma Next.js con ISR (Incremental Static Regeneration) para páginas de producto instantáneas, Stripe para pagos seguros, y un backend Node.js con cache Redis para manejar la concurrencia. El panel admin permite gestión visual de productos, variantes y descuentos.",
+    results: "Conversión del 4.2% (vs 1.8% de la tienda anterior). Tiempo de carga de producto < 0.8s. El sistema soportó +15,000 usuarios concurrentes durante el Black Friday sin degradación de rendimiento.",
+    gallery: [
+      "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=70",
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=70",
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&q=70",
+    ],
+  },
+  {
+    id: 3,
+    slug: "analytics-platform",
+    title: "Analytics Platform",
+    description: "Plataforma de análisis de datos con métricas personalizables y exportación.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=70",
+    tags: ["React", "Python", "PostgreSQL"],
+    color: "#00E5A0",
+    span: 4,
+    // ── Case Study Extended Data ──
+    heroImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=80",
+    category: "Analytics",
+    year: "2024",
+    timeline: "10 semanas",
+    client: "Agencia de Marketing Digital",
+    stack: ["React 18", "Python", "FastAPI", "PostgreSQL", "Pandas", "Chart.js"],
+    challenge: "La agencia procesaba datos de +50 clientes manualmente en hojas de cálculo. Necesitaban una plataforma centralizada que automatizara la recolección, procesamiento y visualización de métricas de múltiples fuentes (Google Ads, Meta, Analytics).",
+    solution: "Creamos una plataforma con un backend Python/FastAPI que conecta con APIs de publicidad, procesa datos con Pandas, y presenta dashboards personalizables por cliente. Cada cliente tiene su portal con métricas relevantes y exportación a PDF/CSV.",
+    results: "Eliminación del 90% del trabajo manual de reportería. Los reportes que antes tomaban 4 horas ahora se generan en 30 segundos. La agencia pudo escalar de 50 a 120 clientes sin contratar más personal de analytics.",
+    gallery: [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=70",
+      "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=70",
+      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=70",
+    ],
+  },
+  {
+    id: 4,
+    slug: "sistema-crm",
+    title: "Sistema de Gestión CRM",
+    description: "CRM personalizado con gestión de clientes, tareas, pipeline de ventas y roles granulares.",
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=70",
+    tags: ["TypeScript", "Supabase", "React"],
+    color: "#6C63FF",
+    span: 8,
+    // ── Case Study Extended Data ──
+    heroImage: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1400&q=80",
+    category: "CRM / SaaS",
+    year: "2024",
+    timeline: "12 semanas",
+    client: "Empresa de Servicios B2B",
+    stack: ["TypeScript", "React 18", "Supabase", "TailwindCSS", "DnD Kit", "Zod"],
+    challenge: "La empresa usaba 4 herramientas diferentes (Excel, Trello, email, WhatsApp) para gestionar su pipeline de ventas. Los datos estaban fragmentados y no había visibilidad centralizada del progreso de cada oportunidad.",
+    solution: "Diseñamos un CRM a medida con pipeline visual drag-and-drop, gestión de contactos con historial de interacciones, sistema de tareas con recordatorios, y roles granulares (admin, vendedor, soporte). RLS de Supabase garantiza que cada equipo solo ve sus datos.",
+    results: "Centralización al 100% de la operación comercial. El ciclo de venta se redujo un 25%. La tasa de seguimiento a leads aumentó del 40% al 92% gracias a las automatizaciones de recordatorios.",
+    gallery: [
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=70",
+      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=70",
+      "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=70",
+    ],
+  },
 ];
 
 export const features = [
@@ -49,10 +145,10 @@ export const otherTechs = [
 
 export const contactInfo = {
   email: "michael.rafael03@gmail.com",
-  phone: "+58 412 3574858",            // ← Reemplaza con tu teléfono real
+  phone: "+58 412 3574858",
   social: {
-    github: "https://github.com/quorexstudio",    // ← Reemplaza
-    linkedin: "https://linkedin.com/company/quorexstudio", // ← Reemplaza
-    twitter: "https://twitter.com/quorexstudio",   // ← Reemplaza
+    github: "https://github.com/quorexstudio",
+    linkedin: "https://linkedin.com/company/quorexstudio",
+    twitter: "https://twitter.com/quorexstudio",
   },
 };

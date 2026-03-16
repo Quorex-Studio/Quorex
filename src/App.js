@@ -1,23 +1,51 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Hero from "./sections/Hero";
-import Services from "./sections/Services";
-import TechStack from "./sections/TechStack";
-import Projects from "./sections/Projects";
-import WhyQuorex from "./sections/WhyQuorex";
-import Flexibility from "./sections/Flexibility";
-import Contact from "./sections/Contact";
 import Preloader from "./components/Preloader";
+import Home from "./pages/Home";
+import ProjectDetail from "./pages/ProjectDetail";
 
-function App() {
+// ScrollToHash: handles navigation to /#section from other pages
+const ScrollToHash = () => {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      // Wait for the page to render, then scroll
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }, [pathname, hash]);
+  return null;
+};
+
+// Reveal observer — re-triggers on route change
+const RevealObserver = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.remove('visible'); // reset for re-entry
+      obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, [pathname]);
+  return null;
+};
+
+function AppContent() {
   const [loading, setLoading] = useState(true);
 
   // Custom cursor
   useEffect(() => {
-    // Only initialize custom cursor when loading is complete to avoid jank
     if (loading) return;
 
     const cursor = document.getElementById('cursor');
@@ -52,14 +80,6 @@ function App() {
       el.addEventListener('mouseleave', shrink);
     });
 
-    // Scroll reveal
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
     return () => {
       document.removeEventListener('mousemove', move);
       document.querySelectorAll('a, button, .hoverable').forEach(el => {
@@ -77,19 +97,24 @@ function App() {
       <div className={`cursor ${loading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`} id="cursor" />
       <div className={`cursor-ring ${loading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`} id="cursorRing" />
 
+      <ScrollToHash />
+      <RevealObserver />
       <Header />
-      <main>
-        <Hero />
-        <Services />
-        <TechStack />
-        <Projects />
-        <WhyQuorex />
-        <Flexibility />
-        <Contact />
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/proyecto/:slug" element={<ProjectDetail />} />
+      </Routes>
       <Footer />
       <Toaster richColors position="bottom-right" />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const navItems = [
@@ -12,17 +13,31 @@ const navItems = [
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
-  const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setOpen(false); };
+
+  const go = (id) => {
+    setOpen(false);
+    if (isHome) {
+      // On home: smooth scroll to section
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // On other pages: navigate to home with hash
+      navigate(`/#${id}`);
+    }
+  };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#050507]/60 backdrop-blur-md border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.5)]' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled || !isHome ? 'bg-[#050507]/60 backdrop-blur-md border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.5)]' : 'bg-transparent'}`}>
       <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hoverable group">
+        <Link to="/" className="flex items-center gap-2 hoverable group" onClick={() => { if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
           <div className="w-8 h-8 bg-gradient-to-br from-[#6C63FF] to-[#FF6B6B] flex items-center justify-center transition-transform duration-500 group-hover:rotate-180 group-hover:scale-110 shadow-[0_0_15px_rgba(108,99,255,0.4)]">
             <span className="font-black text-white text-sm transition-transform duration-500 group-hover:-rotate-180" style={{ fontFamily: "'Bebas Neue',sans-serif" }}>Q</span>
           </div>
@@ -30,7 +45,7 @@ const Header = () => {
             <div className="font-black text-[#F0F1F5] text-base tracking-wide group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#6C63FF] group-hover:to-[#00E5A0] transition-all duration-300" style={{ fontFamily: "'Bebas Neue',sans-serif" }}>QUOREX</div>
             <div className="text-[0.45rem] tracking-[0.18em] text-[#F0F1F5]/40 uppercase" style={{ fontFamily: "'JetBrains Mono',monospace" }}>Studio</div>
           </div>
-        </button>
+        </Link>
         <div className="hidden md:flex items-center gap-7">
           {navItems.map(i => (
             <button key={i.id} onClick={() => go(i.id)} className="relative py-1 text-sm text-[#F0F1F5]/60 hover:text-[#F0F1F5] transition-colors group hoverable font-medium tracking-wide" style={{ fontFamily: "'Outfit',sans-serif" }}>

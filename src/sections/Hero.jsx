@@ -5,59 +5,93 @@ const Hero = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let W = canvas.width = window.innerWidth;
-    let H = canvas.height = window.innerHeight;
-    const COLORS = [[108, 99, 255], [255, 107, 107], [0, 229, 160]];
-    const N = 90;
-
-    class P {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * W;
-        this.y = Math.random() * H;
-        this.size = Math.random() * 1.8 + 0.4;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.alpha = Math.random() * 0.5 + 0.15;
-        this.color = COLORS[Math.floor(Math.random() * 3)];
-      }
-      update() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
-      }
-      draw() {
-        ctx.fillStyle = `rgba(${this.color[0]},${this.color[1]},${this.color[2]},${this.alpha})`;
-        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-      }
-    }
-
-    const particles = Array.from({ length: N }, () => new P());
     let raf;
+    let particles = [];
+    let isRunning = true;
 
-    const animate = () => {
-      ctx.clearRect(0, 0, W, H);
-      particles.forEach((p, i) => {
-        p.update(); p.draw();
-        for (let j = i + 1; j < N; j++) {
-          const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 130) {
-            ctx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - d / 130)})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
-          }
+    // Use requestIdleCallback or setTimeout fallback to defer heavy initialization
+    const initCanvas = () => {
+      const canvas = canvasRef.current;
+      if (!canvas || !isRunning) return;
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = window.innerWidth;
+      let H = canvas.height = window.innerHeight;
+      const COLORS = [[108, 99, 255], [255, 107, 107], [0, 229, 160]];
+      const N = 90; // Reducing slightly or keeping same, deferring is the key
+
+      class P {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * W;
+          this.y = Math.random() * H;
+          this.size = Math.random() * 1.8 + 0.4;
+          this.vx = (Math.random() - 0.5) * 0.4;
+          this.vy = (Math.random() - 0.5) * 0.4;
+          this.alpha = Math.random() * 0.5 + 0.15;
+          this.color = COLORS[Math.floor(Math.random() * 3)];
         }
-      });
-      raf = requestAnimationFrame(animate);
-    };
-    animate();
+        update() {
+          this.x += this.vx; this.y += this.vy;
+          if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+        }
+        draw() {
+          ctx.fillStyle = `rgba(${this.color[0]},${this.color[1]},${this.color[2]},${this.alpha})`;
+          ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+        }
+      }
 
-    const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
-    window.addEventListener('resize', onResize);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize); };
+      particles = Array.from({ length: N }, () => new P());
+
+      const animate = () => {
+        if (!isRunning) return;
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach((p, i) => {
+          p.update(); p.draw();
+          for (let j = i + 1; j < N; j++) {
+            const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 130) {
+              ctx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - d / 130)})`;
+              ctx.lineWidth = 0.5;
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+            }
+          }
+        });
+        raf = requestAnimationFrame(animate);
+      };
+
+      // Start animation loop
+      raf = requestAnimationFrame(animate);
+
+      const onResize = () => {
+        if (canvas) {
+          W = canvas.width = window.innerWidth;
+          H = canvas.height = window.innerHeight;
+        }
+      };
+
+      window.addEventListener('resize', onResize);
+
+      // Cleanup resize listener specific to exactly this closure
+      return () => window.removeEventListener('resize', onResize);
+    };
+
+    // Defer initialization
+    let cleanupResize = null;
+    const idleCallbackId = (window.requestIdleCallback || window.setTimeout)(() => {
+      cleanupResize = initCanvas();
+    }, { timeout: 2000 });
+
+    return () => {
+      isRunning = false;
+      if (window.cancelIdleCallback && window.requestIdleCallback) {
+        window.cancelIdleCallback(idleCallbackId);
+      } else {
+        clearTimeout(idleCallbackId);
+      }
+      cancelAnimationFrame(raf);
+      if (cleanupResize) cleanupResize();
+    };
   }, []);
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
