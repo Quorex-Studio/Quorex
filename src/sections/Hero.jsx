@@ -1,0 +1,136 @@
+import React, { useEffect, useRef } from 'react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+
+const Hero = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+    const COLORS = [[108,99,255],[255,107,107],[0,229,160]];
+    const N = 90;
+
+    class P {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.size = Math.random() * 1.8 + 0.4;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.5 + 0.15;
+        this.color = COLORS[Math.floor(Math.random() * 3)];
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(${this.color[0]},${this.color[1]},${this.color[2]},${this.alpha})`;
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    const particles = Array.from({ length: N }, () => new P());
+    let raf;
+
+    const animate = () => {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach((p, i) => {
+        p.update(); p.draw();
+        for (let j = i + 1; j < N; j++) {
+          const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 130) {
+            ctx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - d/130)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+          }
+        }
+      });
+      raf = requestAnimationFrame(animate);
+    };
+    animate();
+
+    const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+    window.addEventListener('resize', onResize);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize); };
+  }, []);
+
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+  return (
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050507] px-6 text-center pt-20">
+      <canvas ref={canvasRef} className="absolute inset-0 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050507]/40 to-[#050507] z-[1]" />
+
+      <div className="relative z-10 max-w-4xl mx-auto">
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 border border-[#00E5A0]/30 text-[#00E5A0] px-4 py-2 rounded-full mb-8 animate-[fadeUp_0.8s_ease_both]">
+          <Sparkles className="w-4 h-4" />
+          <span className="font-mono text-xs tracking-widest uppercase">Desarrollo Web Premium · 2025</span>
+        </div>
+
+        {/* Title */}
+        <h1 className="font-bebas text-[clamp(5rem,16vw,11rem)] leading-none tracking-wide text-[#F0F1F5] animate-[fadeUp_0.8s_0.1s_ease_both]"
+          style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+          QUOREX
+        </h1>
+        <div className="font-bebas text-[clamp(2rem,6vw,4.5rem)] tracking-[0.08em] bg-gradient-to-r from-[#6C63FF] via-[#FF6B6B] to-[#00E5A0] bg-clip-text text-transparent animate-[fadeUp_0.8s_0.15s_ease_both]"
+          style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+          STUDIO
+        </div>
+
+        {/* Tagline */}
+        <p className="text-[clamp(1.1rem,2.5vw,1.4rem)] text-[#F0F1F5]/85 mt-5 animate-[fadeUp_0.8s_0.2s_ease_both]"
+          style={{ fontFamily: "'Outfit', sans-serif" }}>
+          Diseño. Desarrollo. Resultados.
+        </p>
+        <p className="text-base text-[#F0F1F5]/55 mt-3 max-w-xl mx-auto leading-relaxed animate-[fadeUp_0.8s_0.25s_ease_both]"
+          style={{ fontFamily: "'Outfit', sans-serif" }}>
+          Transformamos ideas en productos digitales de alto impacto. Código a la medida, sin plantillas.
+        </p>
+
+        {/* CTAs */}
+        <div className="flex flex-wrap gap-4 items-center justify-center mt-8 animate-[fadeUp_0.8s_0.3s_ease_both]">
+          <button onClick={() => scrollTo('proyectos')}
+            className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] text-white rounded-full font-semibold text-base hover:shadow-[0_12px_40px_rgba(108,99,255,0.45)] hover:-translate-y-1 transition-all duration-300 hoverable"
+            style={{ fontFamily: "'Outfit', sans-serif" }}>
+            Ver Proyectos <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <button onClick={() => scrollTo('contacto')}
+            className="px-7 py-3.5 border-2 border-[#00E5A0] text-[#00E5A0] rounded-full font-semibold text-base hover:bg-[#00E5A0] hover:text-[#050507] transition-all duration-300 hoverable"
+            style={{ fontFamily: "'Outfit', sans-serif" }}>
+            Cotizar Proyecto
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div className="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-[#F0F1F5]/10 animate-[fadeUp_0.8s_0.4s_ease_both]">
+          {[
+            { num:'50+',   color:'#6C63FF', label:'Proyectos'    },
+            { num:'30+',   color:'#FF6B6B', label:'Clientes'     },
+            { num:'100%',  color:'#00E5A0', label:'Satisfacción' },
+          ].map((s,i) => (
+            <div key={i} className="text-center">
+              <div className="text-4xl font-black leading-none" style={{ color: s.color, fontFamily:"'Bebas Neue', sans-serif" }}>{s.num}</div>
+              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily:"'JetBrains Mono', monospace" }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <div className="w-6 h-10 border-2 border-[#6C63FF]/50 rounded-full flex items-start justify-center p-1.5">
+          <div className="w-1 h-2.5 bg-[#6C63FF] rounded-full animate-[scroll-dot_2s_infinite]" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
