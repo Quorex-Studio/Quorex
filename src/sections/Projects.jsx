@@ -22,12 +22,10 @@ const Projects = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 reveal">
           {localizedProjects.map((p, i) => {
             const spanClass = i % 4 === 0 ? 'md:col-span-8' : i % 4 === 1 ? 'md:col-span-4' : i % 4 === 2 ? 'md:col-span-5' : 'md:col-span-7';
-            return (
-              <Link
-                to={`/proyecto/${p.slug}`}
-                key={p.id}
-                className={`group relative bg-[#0a0a0c] overflow-hidden rounded-2xl border border-white/[0.04] transition-all duration-500 hover:border-[#6C63FF]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${spanClass} block`}
-              >
+            const className = `group relative bg-[#0a0a0c] overflow-hidden rounded-2xl border border-white/[0.04] transition-all duration-500 hover:border-[#6C63FF]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${spanClass} block`;
+            
+            const cardContent = (
+              <>
                 {/* Arrow icon */}
                 <div className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center bg-[#050507]/80 backdrop-blur-md rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-white/[0.1]">
                   <ArrowUpRight className="w-4 h-4 text-white" />
@@ -56,10 +54,35 @@ const Projects = () => {
                   
                   {/* View case study hint */}
                   <div className="flex items-center gap-2 mt-4 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-                    <span className="font-mono text-xs text-[#6C63FF] tracking-wide" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t('common.view_study')}</span>
+                    <span className="font-mono text-xs text-[#6C63FF] tracking-wide" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{p.link ? t('common.visit_site') || 'Visitar sitio' : t('common.view_study')}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-[#6C63FF]" />
                   </div>
                 </div>
+              </>
+            );
+
+            if (p.link) {
+              return (
+                <a
+                  key={p.id}
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={className}
+                  style={{ textDecoration: 'none' }}
+                >
+                  {cardContent}
+                </a>
+              );
+            }
+
+            return (
+              <Link
+                to={`/proyecto/${p.slug}`}
+                key={p.id}
+                className={className}
+              >
+                {cardContent}
               </Link>
             );
           })}

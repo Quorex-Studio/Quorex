@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ArrowUpRight, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, X, Users, Calendar, Clock, Folder } from 'lucide-react';
 import { getLocalizedData } from '../data/mock';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -98,10 +98,10 @@ const ProjectDetail = () => {
         {/* Metadata Strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-b border-white/10 mb-16 animate-[fadeUp_0.8s_0.2s_ease_both]">
           {[
-            { labelKey: 'detail.client', value: project.client, icon: "👥" },
-            { labelKey: 'detail.year', value: project.year, icon: "📅" },
-            { labelKey: 'detail.timeline', value: project.timeline, icon: "🕒" },
-            { labelKey: 'detail.category', value: project.category, icon: "🗂️" }
+            { labelKey: 'detail.client', value: project.client, icon: <Users size={16} /> },
+            { labelKey: 'detail.year', value: project.year, icon: <Calendar size={16} /> },
+            { labelKey: 'detail.timeline', value: project.timeline, icon: <Clock size={16} /> },
+            { labelKey: 'detail.category', value: project.category, icon: <Folder size={16} /> }
           ].map((item, i) => (
             <div key={i}>
               <div className="text-xs font-mono tracking-widest text-white/40 uppercase mb-2 flex items-center gap-2">

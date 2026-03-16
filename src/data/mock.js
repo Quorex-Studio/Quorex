@@ -1,4 +1,6 @@
 // ── Quorex Studio — Data ──────────────────────────────────────────────────────
+import React from 'react';
+import { Zap, Code, Terminal, Server, Flame, Database, Palette, Cloud, Box, Atom } from 'lucide-react';
 
 const dataES = {
   services: [
@@ -40,25 +42,24 @@ const dataES = {
     {
       id: 2,
       slug: "ecommerce-premium",
-      title: "E-Commerce Premium",
-      description: "Tienda online con carrito de compras, pagos y panel de administración completo.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=70",
-      tags: ["Next.js", "Node.js", "Stripe"],
+      title: "Manojitos Bloom",
+      description: "Plataforma E-commerce completa con ERP/CRM e IA integrada para floristería nacional. Storefront B2C, portal de clientes y backoffice administrativo en una sola SPA.",
+      image: "https://manojitos.vercel.app/og-image.png",
+      tags: ["React 18", "TypeScript", "Supabase"],
       color: "#FF6B6B",
       span: 5,
-      heroImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1400&q=80",
+      heroImage: "https://manojitos.vercel.app/og-image.png",
       category: "E-Commerce",
-      year: "2025",
-      timeline: "8 semanas",
-      client: "Marca de Moda DTC",
-      stack: ["Next.js 14", "Node.js", "Stripe", "PostgreSQL", "Cloudinary", "Redis"],
-      challenge: "La marca necesitaba una tienda online que soportara picos de tráfico durante campañas de marketing, con un flujo de compra ultra-rápido y gestión integral de inventario multi-bodega.",
-      solution: "Implementamos una plataforma Next.js con ISR (Incremental Static Regeneration) para páginas de producto instantáneas, Stripe para pagos seguros, y un backend Node.js con cache Redis para manejar la concurrencia. El panel admin permite gestión visual de productos, variantes y descuentos.",
-      results: "Conversión del 4.2% (vs 1.8% de la tienda anterior). Tiempo de carga de producto < 0.8s. El sistema soportó +15,000 usuarios concurrentes durante el Black Friday sin degradación de rendimiento.",
+      year: "2024",
+      timeline: "12 semanas",
+      client: "Manojitos",
+      stack: ["React 18", "TypeScript", "Supabase", "TailwindCSS"],
+      challenge: "Se requería una plataforma integral para gestión web y portal administrativo.",
+      solution: "SPA robusta con B2C y portal administrativo.",
+      results: "Optimización total del e-commerce.",
+      link: "https://manojitos.vercel.app",
       gallery: [
-        "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=70",
-        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=70",
-        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&q=70",
+        "https://manojitos.vercel.app/og-image.png"
       ],
     },
     {
@@ -160,25 +161,24 @@ const dataEN = {
     {
       id: 2,
       slug: "ecommerce-premium",
-      title: "Premium E-Commerce",
-      description: "Online store with shopping cart, payments, and full admin panel.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=70",
-      tags: ["Next.js", "Node.js", "Stripe"],
+      title: "Manojitos Bloom",
+      description: "Complete E-commerce platform with integrated ERP/CRM and AI for a national florist. B2C Storefront, customer portal, and backoffice in a single SPA.",
+      image: "https://manojitos.vercel.app/og-image.png",
+      tags: ["React 18", "TypeScript", "Supabase"],
       color: "#FF6B6B",
       span: 5,
-      heroImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1400&q=80",
+      heroImage: "https://manojitos.vercel.app/og-image.png",
       category: "E-Commerce",
-      year: "2025",
-      timeline: "8 weeks",
-      client: "DTC Fashion Brand",
-      stack: ["Next.js 14", "Node.js", "Stripe", "PostgreSQL", "Cloudinary", "Redis"],
-      challenge: "The brand needed an online store that supported high traffic spikes during marketing campaigns, with an ultra-fast checkout flow and comprehensive multi-warehouse inventory management.",
-      solution: "We implemented a Next.js platform with ISR (Incremental Static Regeneration) for instant product pages, Stripe for secure payments, and a Node.js backend with Redis cache to handle concurrency. Admin panel allows visual management of products, variants, and discounts.",
-      results: "4.2% conversion rate (vs 1.8% of previous store). Product load time < 0.8s. The system handled +15,000 concurrent users during Black Friday without performance degradation.",
+      year: "2024",
+      timeline: "12 weeks",
+      client: "Manojitos",
+      stack: ["React 18", "TypeScript", "Supabase", "TailwindCSS"],
+      challenge: "An integral platform for web management and administrative portal was required.",
+      solution: "Robust SPA with B2C and administrative portal.",
+      results: "Total optimization of e-commerce.",
+      link: "https://manojitos.vercel.app",
       gallery: [
-        "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=70",
-        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=70",
-        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&q=70",
+        "https://manojitos.vercel.app/og-image.png"
       ],
     },
     {
@@ -247,17 +247,17 @@ export const getLocalizedData = (lang) => {
 
 // Common/agnostic data stays static
 export const techStack = [
-  { name: "Next.js", icon: "⚡", category: "Frontend" },
-  { name: "React", icon: "⚛️", category: "Frontend" },
-  { name: "TypeScript", icon: "📘", category: "Language" },
-  { name: "Node.js", icon: "🟢", category: "Backend" },
-  { name: "Python", icon: "🐍", category: "Backend" },
-  { name: "FastAPI", icon: "⚙️", category: "Backend" },
-  { name: "Supabase", icon: "🔥", category: "Database" },
-  { name: "PostgreSQL", icon: "🐘", category: "Database" },
-  { name: "TailwindCSS", icon: "🎨", category: "Styling" },
-  { name: "Vercel", icon: "▲", category: "Deploy" },
-  { name: "Docker", icon: "🐳", category: "Deploy" },
+  { name: "Next.js", icon: <Zap size={24} />, category: "Frontend" },
+  { name: "React", icon: <Atom size={24} />, category: "Frontend" },
+  { name: "TypeScript", icon: <Code size={24} />, category: "Language" },
+  { name: "Node.js", icon: <Server size={24} />, category: "Backend" },
+  { name: "Python", icon: <Terminal size={24} />, category: "Backend" },
+  { name: "FastAPI", icon: <Zap size={24} />, category: "Backend" },
+  { name: "Supabase", icon: <Flame size={24} />, category: "Database" },
+  { name: "PostgreSQL", icon: <Database size={24} />, category: "Database" },
+  { name: "TailwindCSS", icon: <Palette size={24} />, category: "Styling" },
+  { name: "Vercel", icon: <Cloud size={24} />, category: "Deploy" },
+  { name: "Docker", icon: <Box size={24} />, category: "Deploy" },
 ];
 
 export const otherTechs = [
