@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero = () => {
   const canvasRef = useRef(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     let raf;
@@ -105,7 +107,7 @@ const Hero = () => {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 border border-[#00E5A0]/50 text-[#00E5A0] px-5 py-2.5 rounded-full mb-8 animate-[fadeUp_0.8s_ease_both] shadow-[0_0_20px_rgba(0,229,160,0.2)] hover:shadow-[0_0_30px_rgba(0,229,160,0.4)] transition-shadow">
           <Sparkles className="w-4 h-4 animate-pulse" />
-          <span className="font-mono text-xs tracking-[0.2em] uppercase font-semibold">Desarrollo Web Premium</span>
+          <span className="font-mono text-xs tracking-[0.2em] uppercase font-semibold">{t('hero.badge')}</span>
         </div>
 
         {/* Title */}
@@ -121,11 +123,11 @@ const Hero = () => {
         {/* Tagline */}
         <p className="text-[clamp(1.1rem,2.5vw,1.4rem)] text-[#F0F1F5]/85 mt-5 animate-[fadeUp_0.8s_0.2s_ease_both]"
           style={{ fontFamily: "'Outfit', sans-serif" }}>
-          Diseño. Desarrollo. Resultados.
+          {t('hero.tagline')}
         </p>
         <p className="text-base text-[#F0F1F5]/55 mt-3 max-w-xl mx-auto leading-relaxed animate-[fadeUp_0.8s_0.25s_ease_both]"
           style={{ fontFamily: "'Outfit', sans-serif" }}>
-          Transformamos ideas en productos digitales de alto impacto. Código a la medida, sin plantillas.
+          {t('hero.description')}
         </p>
 
         {/* CTAs */}
@@ -133,25 +135,25 @@ const Hero = () => {
           <button onClick={() => scrollTo('proyectos')}
             className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] text-white rounded-full font-semibold text-base hover:shadow-[0_12px_40px_rgba(108,99,255,0.45)] hover:-translate-y-1 transition-all duration-300 hoverable"
             style={{ fontFamily: "'Outfit', sans-serif" }}>
-            Ver Proyectos <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            {t('hero.cta_projects')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
           <button onClick={() => scrollTo('contacto')}
             className="px-7 py-3.5 border-2 border-[#00E5A0] text-[#00E5A0] rounded-full font-semibold text-base hover:bg-[#00E5A0] hover:text-[#050507] transition-all duration-300 hoverable"
             style={{ fontFamily: "'Outfit', sans-serif" }}>
-            Cotizar Proyecto
+            {t('hero.cta_quote')}
           </button>
         </div>
 
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-[#F0F1F5]/10 animate-[fadeUp_0.8s_0.4s_ease_both]">
           {[
-            { num: '50+', color: '#6C63FF', label: 'Proyectos' },
-            { num: '30+', color: '#FF6B6B', label: 'Clientes' },
-            { num: '100%', color: '#00E5A0', label: 'Satisfacción' },
+            { num: '50+', color: '#6C63FF', labelKey: 'hero.stats_projects' },
+            { num: '30+', color: '#FF6B6B', labelKey: 'hero.stats_clients' },
+            { num: '100%', color: '#00E5A0', labelKey: 'hero.stats_satisfaction' },
           ].map((s, i) => (
             <div key={i} className="text-center">
               <div className="text-4xl font-black leading-none" style={{ color: s.color, fontFamily: "'Bebas Neue', sans-serif" }}>{s.num}</div>
-              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{s.label}</div>
+              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{t(s.labelKey)}</div>
             </div>
           ))}
         </div>

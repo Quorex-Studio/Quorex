@@ -1,108 +1,165 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Github, Linkedin, Twitter, Send, CheckCircle2 } from 'lucide-react';
-import { toast } from 'sonner';
-import { contactInfo } from '../data/mock';
+import { Send, Mail, MapPin } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', service: '', message: '' });
-  const [sent, setSent] = useState(false);
+  const [formState, setFormState] = useState({ name: '', email: '', service: '', budget: '', details: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const { t } = useLanguage();
 
-  const onChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-
-  const onSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Formulario:', form); // TODO: conectar a Supabase
-    setSent(true);
-    toast.success('¡Mensaje enviado! Te respondemos en menos de 24 horas.');
-    setTimeout(() => { setForm({ name: '', email: '', service: '', message: '' }); setSent(false); }, 3500);
+    setIsSubmitting(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setFormState({ name: '', email: '', service: '', budget: '', details: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    }, 1500);
   };
 
-  const services = ['E-Commerce', 'Sistema Administrativo', 'Landing Page', 'Página Corporativa', 'Catálogo Digital', 'API & Automatizaciones', 'Sistema de Reservas', 'Plataforma SaaS', 'Hosting & Soporte', 'Otro / Consultoría'];
-
   return (
-    <section id="contacto" className="py-24 px-6 bg-[#050507]">
-      <div className="max-w-7xl mx-auto">
-        <div className="reveal mb-12">
-          <div className="text-xs font-mono tracking-[0.14em] uppercase text-[#6C63FF] mb-3" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{'// 06 — Contacto'}</div>
-          <h2 className="text-[clamp(3rem,7vw,5rem)] font-black text-[#F0F1F5] leading-none" style={{ fontFamily: "'Bebas Neue',sans-serif" }}>¿EMPEZAMOS?</h2>
-          <p className="text-[#F0F1F5]/55 mt-3 max-w-md" style={{ fontFamily: "'Outfit',sans-serif" }}>Cuéntanos tu idea. Respondemos en menos de 24 horas.</p>
-        </div>
+    <section id="contacto" className="py-32 relative bg-[#050507]">
+      <div className="absolute top-0 right-0 w-full h-1/2 bg-gradient-to-b from-[#6C63FF]/05 to-transparent pointer-events-none" />
+      
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
+          
+          {/* Header & Info */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-[1px] w-12 bg-[#FF6B6B]"></div>
+              <span className="font-mono text-[#FF6B6B] text-sm tracking-widest uppercase">{t('contact.tag')}</span>
+            </div>
+            
+            <h2 className="font-bebas text-5xl md:text-7xl text-[#F0F1F5] tracking-wide mb-8 leading-[0.9]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              {t('contact.title')}
+            </h2>
+            
+            <p className="text-[#F0F1F5]/60 text-lg leading-relaxed mb-12" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              {t('contact.subtitle')}
+            </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 reveal">
-          {/* Form */}
-          <form onSubmit={onSubmit} className="flex flex-col gap-5 p-8 bg-[#0a0a0c] border border-white/[0.04] rounded-2xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#6C63FF]/5 to-transparent pointer-events-none" />
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-5">
-              {[{ n: 'name', t: 'text', label: 'Nombre', ph: 'Tu nombre' }, { n: 'email', t: 'email', label: 'Email', ph: 'tu@email.com' }].map(f => (
-                <div key={f.n} className="flex flex-col gap-2">
-                  <label className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#F0F1F5]/60 font-semibold" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{f.label}</label>
-                  <input name={f.n} type={f.t} required value={form[f.n]} onChange={onChange} placeholder={f.ph}
-                    className="bg-[#050507] border border-white/[0.08] text-[#F0F1F5] px-4 py-3.5 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-[#6C63FF] transition-all rounded-lg placeholder-white/[0.2]" style={{ fontFamily: "'Outfit',sans-serif" }} />
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] text-[#FF6B6B]">
+                  <Mail className="w-5 h-5" />
                 </div>
-              ))}
-            </div>
-            <div className="relative z-10 flex flex-col gap-2">
-              <label className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#F0F1F5]/60 font-semibold" style={{ fontFamily: "'JetBrains Mono',monospace" }}>Tipo de proyecto</label>
-              <select name="service" value={form.service} onChange={onChange}
-                className="bg-[#050507] border border-white/[0.08] text-[#F0F1F5]/80 px-4 py-3.5 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-[#6C63FF] transition-all appearance-none rounded-lg" style={{ fontFamily: "'Outfit',sans-serif" }}>
-                <option value="">Selecciona un servicio...</option>
-                {services.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div className="relative z-10 flex flex-col gap-2">
-              <label className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#F0F1F5]/60 font-semibold" style={{ fontFamily: "'JetBrains Mono',monospace" }}>Mensaje</label>
-              <textarea name="message" required rows={4} value={form.message} onChange={onChange} placeholder="Cuéntanos sobre tu proyecto..."
-                className="bg-[#050507] border border-white/[0.08] text-[#F0F1F5] px-4 py-3.5 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-[#6C63FF] transition-all resize-none rounded-lg placeholder-white/[0.2]" style={{ fontFamily: "'Outfit',sans-serif" }} />
-            </div>
-            <button type="submit" disabled={sent}
-              className="relative z-10 overflow-hidden flex items-center justify-center gap-2 py-4 mt-2 bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] text-white font-bold tracking-wide hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(108,99,255,0.4)] transition-all duration-300 disabled:opacity-60 hoverable rounded-lg group-btn" style={{ fontFamily: "'Outfit',sans-serif" }}>
-              <span className="relative z-10 flex items-center gap-2">{sent ? <><CheckCircle2 className="w-5 h-5" /> Enviado</> : <><Send className="w-4 h-4" /> Enviar mensaje</>}</span>
-              <div className="absolute inset-0 bg-white/20 opacity-0 group-active:animate-ripple rounded-lg" />
-            </button>
-          </form>
-
-          {/* Info */}
-          <div className="flex flex-col gap-7">
-            {[
-              { label: 'Email', icon: <Mail className="w-5 h-5 text-[#6C63FF]" />, value: contactInfo.email, sub: 'Respondemos en < 24 horas', color: '#6C63FF' },
-              { label: 'Teléfono', icon: <Phone className="w-5 h-5 text-[#FF6B6B]" />, value: contactInfo.phone, sub: 'Lun–Vie · 9am – 7pm', color: '#FF6B6B' },
-            ].map(i => (
-              <div key={i.label} className="flex items-center gap-4 p-4 bg-[#0a0a0c] border border-[#F0F1F5]/08 hover:border-opacity-50 transition-colors group" style={{ '--hc': i.color }}>
-                <div className="w-11 h-11 flex items-center justify-center rounded-lg group-hover:scale-110 transition-transform" style={{ background: `${i.color}18` }}>{i.icon}</div>
                 <div>
-                  <div className="text-xs text-[#F0F1F5]/40 mb-0.5" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{i.label}</div>
-                  <div className="font-medium text-[#F0F1F5]" style={{ fontFamily: "'Outfit',sans-serif" }}>{i.value}</div>
-                  <div className="text-xs text-[#F0F1F5]/40 mt-0.5" style={{ fontFamily: "'Outfit',sans-serif" }}>{i.sub}</div>
+                  <div className="text-xs font-mono text-[#F0F1F5]/40 tracking-widest uppercase mb-1">{t('contact.direct')}</div>
+                  <a href="mailto:michael.rafael03@gmail.com" className="text-[#F0F1F5] font-semibold tracking-wide hover:text-[#FF6B6B] transition-colors" style={{ fontFamily: "'Outfit', sans-serif" }}>michael.rafael03@gmail.com</a>
                 </div>
               </div>
-            ))}
-
-            <div>
-              <div className="text-xs font-mono tracking-[0.1em] uppercase text-[#F0F1F5]/40 mb-3" style={{ fontFamily: "'JetBrains Mono',monospace" }}>Redes sociales</div>
-              <div className="flex gap-2">
-                {[
-                  { href: contactInfo.social.github, icon: <Github className="w-4 h-4" />, c: '#6C63FF' },
-                  { href: contactInfo.social.linkedin, icon: <Linkedin className="w-4 h-4" />, c: '#FF6B6B' },
-                  { href: contactInfo.social.twitter, icon: <Twitter className="w-4 h-4" />, c: '#00E5A0' },
-                ].map((s, i) => (
-                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 border border-[#F0F1F5]/10 flex items-center justify-center text-[#F0F1F5]/60 hover:text-white hover:border-opacity-60 hover:bg-opacity-10 transition-all duration-200 hoverable"
-                    style={{ '--sc': s.c }}>
-                    {s.icon}
-                  </a>
-                ))}
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] text-[#00E5A0]">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-mono text-[#F0F1F5]/40 tracking-widest uppercase mb-1">{t('contact.location')}</div>
+                  <div className="text-[#F0F1F5] font-semibold tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>{t('contact.location')}</div>
+                </div>
               </div>
-            </div>
-
-            <div className="flex items-center gap-2 text-sm" style={{ fontFamily: "'Outfit',sans-serif" }}>
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00E5A0] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00E5A0]"></span>
-              </span>
-              <span className="text-[#00E5A0] font-medium">Disponible para proyectos</span>
-              <span className="text-[#F0F1F5]/40">— Freelance · Full time · Colaboración</span>
             </div>
           </div>
+
+          {/* Form */}
+          <div className="lg:col-span-3">
+            <div className="bg-[#0a0a0c] p-8 md:p-12 rounded-3xl border border-white/[0.04] shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#6C63FF]/10 blur-[100px] pointer-events-none rounded-full" />
+              
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Nombre</label>
+                    <input 
+                      type="text" 
+                      required
+                      placeholder={t('contact.name_placeholder')}
+                      value={formState.name}
+                      onChange={e => setFormState({...formState, name: e.target.value})}
+                      className="w-full bg-[#050507] border border-white/[0.06] rounded-xl px-5 py-4 text-[#F0F1F5] placeholder:text-[#F0F1F5]/30 focus:outline-none focus:border-[#6C63FF]/50 transition-colors font-outfit"
+                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Email</label>
+                    <input 
+                      type="email" 
+                      required
+                      placeholder={t('contact.email_placeholder')}
+                      value={formState.email}
+                      onChange={e => setFormState({...formState, email: e.target.value})}
+                      className="w-full bg-[#050507] border border-white/[0.06] rounded-xl px-5 py-4 text-[#F0F1F5] placeholder:text-[#F0F1F5]/30 focus:outline-none focus:border-[#6C63FF]/50 transition-colors font-outfit"
+                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Servicio</label>
+                    <select 
+                      required
+                      value={formState.service}
+                      onChange={e => setFormState({...formState, service: e.target.value})}
+                      className="w-full bg-[#050507] border border-white/[0.06] rounded-xl px-5 py-4 text-[#F0F1F5] focus:outline-none focus:border-[#6C63FF]/50 transition-colors font-outfit appearance-none"
+                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                    >
+                      <option value="" disabled className="text-[#F0F1F5]/30">{t('contact.service_placeholder')}</option>
+                      <option value="ecommerce">E-Commerce</option>
+                      <option value="dashboard">Dashboard / Admin</option>
+                      <option value="landing">Landing Page</option>
+                      <option value="saas">SaaS Development</option>
+                      <option value="other">Otro</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Presupuesto</label>
+                    <select 
+                      required
+                      value={formState.budget}
+                      onChange={e => setFormState({...formState, budget: e.target.value})}
+                      className="w-full bg-[#050507] border border-white/[0.06] rounded-xl px-5 py-4 text-[#F0F1F5] focus:outline-none focus:border-[#6C63FF]/50 transition-colors font-outfit appearance-none"
+                      style={{ fontFamily: "'Outfit', sans-serif" }}
+                    >
+                      <option value="" disabled className="text-[#F0F1F5]/30">{t('contact.budget_placeholder')}</option>
+                      <option value="<1k">Menos de $1k</option>
+                      <option value="1k-3k">$1k - $3k</option>
+                      <option value="3k-10k">$3k - $10k</option>
+                      <option value=">10k">Más de $10k</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Detalles</label>
+                  <textarea 
+                    required
+                    rows="4"
+                    placeholder={t('contact.details_placeholder')}
+                    value={formState.details}
+                    onChange={e => setFormState({...formState, details: e.target.value})}
+                    className="w-full bg-[#050507] border border-white/[0.06] rounded-xl px-5 py-4 text-[#F0F1F5] placeholder:text-[#F0F1F5]/30 focus:outline-none focus:border-[#6C63FF]/50 transition-colors font-outfit resize-none"
+                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                  ></textarea>
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className={`w-full py-5 rounded-xl font-bold tracking-wide flex items-center justify-center gap-2 transition-all duration-300 ${isSubmitting || submitted ? 'bg-[#232328] text-[#F0F1F5]/50 cursor-not-allowed border outline-transparent' : 'bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] text-white hover:shadow-[0_10px_30px_rgba(108,99,255,0.4)] hover:-translate-y-1 hoverable'}`}
+                  style={{ fontFamily: "'Outfit', sans-serif" }}
+                >
+                  {isSubmitting ? 'Enviando...' : submitted ? 'Mensaje Enviado ✓' : t('contact.submit')}
+                  {!isSubmitting && !submitted && <Send className="w-5 h-5" />}
+                </button>
+              </form>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

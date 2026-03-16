@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
 import Home from "./pages/Home";
 import ProjectDetail from "./pages/ProjectDetail";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 // ScrollToHash: handles navigation to /#section from other pages
 const ScrollToHash = () => {
@@ -112,9 +113,11 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
 

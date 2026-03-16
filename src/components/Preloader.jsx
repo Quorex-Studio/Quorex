@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Preloader = ({ onComplete }) => {
     const [progress, setProgress] = useState(0);
     const [phase, setPhase] = useState('loading'); // 'loading' | 'unveiling' | 'done'
+    const { t } = useLanguage();
 
     useEffect(() => {
         // Escala orgánica de progress hasta 100
@@ -60,7 +62,7 @@ const Preloader = ({ onComplete }) => {
                 {/* Loading text with animated dots */}
                 <div className="flex items-center gap-3">
                     <div className="text-xs uppercase tracking-[0.4em] font-bold text-[#F0F1F5]/60" style={{ fontFamily: "'JetBrains Mono',monospace" }}>
-                        CONECTANDO AL SERVIDOR
+                        {t('preloader.connecting')}
                     </div>
                     <div className="flex gap-1.5">
                         {[1, 2, 3].map((i) => (
