@@ -23,7 +23,7 @@ const Contact = () => {
     <section id="contacto" className="py-24 px-6 bg-[#050507]">
       <div className="max-w-7xl mx-auto">
         <div className="reveal mb-12">
-          <div className="text-xs font-mono tracking-[0.14em] uppercase text-[#6C63FF] mb-3" style={{fontFamily:"'JetBrains Mono',monospace"}}>// 06 — Contacto</div>
+          <div className="text-xs font-mono tracking-[0.14em] uppercase text-[#6C63FF] mb-3" style={{fontFamily:"'JetBrains Mono',monospace"}}>{'// 06 — Contacto'}</div>
           <h2 className="text-[clamp(3rem,7vw,5rem)] font-black text-[#F0F1F5] leading-none" style={{fontFamily:"'Bebas Neue',sans-serif"}}>¿EMPEZAMOS?</h2>
           <p className="text-[#F0F1F5]/55 mt-3 max-w-md" style={{fontFamily:"'Outfit',sans-serif"}}>Cuéntanos tu idea. Respondemos en menos de 24 horas.</p>
         </div>
