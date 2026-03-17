@@ -25,6 +25,7 @@ const es = {
   "common.available": "Disponible para nuevos proyectos",
   "common.start_project": "Iniciar proyecto →",
   "common.view_study": "Ver caso de estudio",
+  "common.visit_site": "Visitar sitio",
   
   // Services
   "services.tag": "// 01 — Nuestros Servicios",
@@ -129,6 +130,7 @@ const en = {
   "common.available": "Available for new projects",
   "common.start_project": "Start your project →",
   "common.view_study": "View case study",
+  "common.visit_site": "Visit site",
   
   // Services
   "services.tag": "// 01 — Our Services",
