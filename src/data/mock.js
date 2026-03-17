@@ -44,11 +44,11 @@ const dataES = {
       slug: "ecommerce-premium",
       title: "Manojitos",
       description: "Plataforma E-commerce completa con ERP/CRM e IA integrada. Dashboard administrativo con métricas en tiempo real, IA Ángela y gestión completa del negocio.",
-      image: "/images/manojitos-dashboard.jpg",
+      image: "/images/manojitos-dashboard.png",
       tags: ["React 18", "TypeScript", "Supabase"],
       color: "#FF6B6B",
       span: 5,
-      heroImage: "/images/manojitos-dashboard.jpg",
+      heroImage: "/images/manojitos-dashboard.png",
       category: "E-Commerce",
       year: "2024",
       timeline: "12 semanas",
@@ -59,7 +59,7 @@ const dataES = {
       results: "Optimización total del e-commerce.",
       link: "https://manojitos.vercel.app",
       gallery: [
-        "/images/manojitos-dashboard.jpg"
+        "/images/manojitos-dashboard.png"
       ],
     },
     {
@@ -163,11 +163,11 @@ const dataEN = {
       slug: "ecommerce-premium",
       title: "Manojitos",
       description: "Complete E-commerce platform with integrated ERP/CRM and AI. Administrative dashboard with real-time metrics, Angela AI, and full business management.",
-      image: "/images/manojitos-dashboard.jpg",
+      image: "/images/manojitos-dashboard.png",
       tags: ["React 18", "TypeScript", "Supabase"],
       color: "#FF6B6B",
       span: 5,
-      heroImage: "/images/manojitos-dashboard.jpg",
+      heroImage: "/images/manojitos-dashboard.png",
       category: "E-Commerce",
       year: "2024",
       timeline: "12 weeks",
@@ -178,7 +178,7 @@ const dataEN = {
       results: "Total optimization of e-commerce.",
       link: "https://manojitos.vercel.app",
       gallery: [
-        "/images/manojitos-dashboard.jpg"
+        "/images/manojitos-dashboard.png"
       ],
     },
     {
