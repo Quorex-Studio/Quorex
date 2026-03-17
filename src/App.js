@@ -6,7 +6,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
 import Home from "./pages/Home";
-import ProjectDetail from "./pages/ProjectDetail";
+import CategoryPage from "./pages/CategoryPage";
+import CaseStudyPage from "./pages/CaseStudyPage";
 import Precios from "./pages/Precios";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -104,7 +105,8 @@ function AppContent() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/proyecto/:slug" element={<ProjectDetail />} />
+        <Route path="/proyectos/:slug" element={<CategoryPage />} />
+        <Route path="/proyectos/:slug/:projectSlug" element={<CaseStudyPage />} />
         <Route path="/precios" element={<Precios />} />
       </Routes>
       <Footer />
