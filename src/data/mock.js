@@ -42,13 +42,13 @@ const dataES = {
     {
       id: 2,
       slug: "ecommerce-premium",
-      title: "Manojitos Bloom",
-      description: "Plataforma E-commerce completa con ERP/CRM e IA integrada para floristería nacional. Storefront B2C, portal de clientes y backoffice administrativo en una sola SPA.",
-      image: "https://manojitos.vercel.app/og-image.png",
+      title: "Manojitos",
+      description: "Plataforma E-commerce completa con ERP/CRM e IA integrada. Dashboard administrativo con métricas en tiempo real, IA Ángela y gestión completa del negocio.",
+      image: "/images/manojitos-dashboard.jpg",
       tags: ["React 18", "TypeScript", "Supabase"],
       color: "#FF6B6B",
       span: 5,
-      heroImage: "https://manojitos.vercel.app/og-image.png",
+      heroImage: "/images/manojitos-dashboard.jpg",
       category: "E-Commerce",
       year: "2024",
       timeline: "12 semanas",
@@ -59,7 +59,7 @@ const dataES = {
       results: "Optimización total del e-commerce.",
       link: "https://manojitos.vercel.app",
       gallery: [
-        "https://manojitos.vercel.app/og-image.png"
+        "/images/manojitos-dashboard.jpg"
       ],
     },
     {
@@ -161,13 +161,13 @@ const dataEN = {
     {
       id: 2,
       slug: "ecommerce-premium",
-      title: "Manojitos Bloom",
-      description: "Complete E-commerce platform with integrated ERP/CRM and AI for a national florist. B2C Storefront, customer portal, and backoffice in a single SPA.",
-      image: "https://manojitos.vercel.app/og-image.png",
+      title: "Manojitos",
+      description: "Complete E-commerce platform with integrated ERP/CRM and AI. Administrative dashboard with real-time metrics, Angela AI, and full business management.",
+      image: "/images/manojitos-dashboard.jpg",
       tags: ["React 18", "TypeScript", "Supabase"],
       color: "#FF6B6B",
       span: 5,
-      heroImage: "https://manojitos.vercel.app/og-image.png",
+      heroImage: "/images/manojitos-dashboard.jpg",
       category: "E-Commerce",
       year: "2024",
       timeline: "12 weeks",
@@ -178,7 +178,7 @@ const dataEN = {
       results: "Total optimization of e-commerce.",
       link: "https://manojitos.vercel.app",
       gallery: [
-        "https://manojitos.vercel.app/og-image.png"
+        "/images/manojitos-dashboard.jpg"
       ],
     },
     {

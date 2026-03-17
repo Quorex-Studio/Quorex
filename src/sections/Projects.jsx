@@ -39,6 +39,7 @@ const Projects = () => {
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover brightness-50 saturate-75 group-hover:brightness-100 group-hover:saturate-100 group-hover:scale-110 transition-all duration-700 ease-in-out"
+                    style={{ objectPosition: 'top' }}
                   />
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none mix-blend-color" style={{ backgroundColor: p.color }} />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
