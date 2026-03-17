@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
 import Home from "./pages/Home";
 import ProjectDetail from "./pages/ProjectDetail";
+import Precios from "./pages/Precios";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 // ScrollToHash: handles navigation to /#section from other pages
@@ -104,6 +105,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/proyecto/:slug" element={<ProjectDetail />} />
+        <Route path="/precios" element={<Precios />} />
       </Routes>
       <Footer />
       <Toaster richColors position="bottom-right" />

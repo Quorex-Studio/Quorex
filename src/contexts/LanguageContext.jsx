@@ -7,6 +7,7 @@ const es = {
   "nav.stack": "Stack",
   "nav.projects": "Proyectos",
   "nav.why": "¿Por qué?",
+  "nav.pricing": "Precios",
   "nav.contact": "Contacto",
   "nav.quote": "Cotizar",
 
@@ -110,6 +111,7 @@ const en = {
   "nav.stack": "Stack",
   "nav.projects": "Projects",
   "nav.why": "Why us?",
+  "nav.pricing": "Pricing",
   "nav.contact": "Contact",
   "nav.quote": "Get Quote",
 

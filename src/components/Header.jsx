@@ -8,6 +8,7 @@ const navItems = [
   { id: 'stack', labelKey: 'nav.stack' },
   { id: 'proyectos', labelKey: 'nav.projects' },
   { id: 'por-que', labelKey: 'nav.why' },
+  { id: 'precios', labelKey: 'nav.pricing' },
   { id: 'contacto', labelKey: 'nav.contact' },
 ];
 
@@ -44,6 +45,10 @@ const Header = () => {
 
   const go = (id) => {
     setOpen(false);
+    if (id === 'precios') {
+      navigate('/precios');
+      return;
+    }
     if (isHome) {
       // On home: smooth scroll to section
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
