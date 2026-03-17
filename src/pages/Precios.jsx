@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Precios.css';
-import { useLanguage } from '../contexts/LanguageContext';
 
 const devNames = {
   '150': 'Landing Page',
@@ -96,7 +95,7 @@ const Precios = () => {
       {/* CALCULADORA */}
       <section id="calc" className="section-padding">
         <div className="reveal visible">
-          <div className="section-label">// 01 — Calculadora</div>
+          <div className="section-label">{"// 01 — Calculadora"}</div>
           <h2 className="section-title">¿Cuánto cuesta mi proyecto?</h2>
           <p className="section-desc text-center" style={{margin:'0 auto'}}>El precio de <strong style={{color:'#F0F1F5'}}>desarrollo es un estimado</strong> — un asesor lo confirmará. Los <strong style={{color:'#00E5A0'}}>planes de hosting son precios fijos</strong> e innegociables.</p>
         </div>
@@ -295,7 +294,7 @@ const Precios = () => {
       {/* PLANES DE HOSTING */}
       <section id="plans" className="section-padding">
         <div className="reveal visible" style={{textAlign:'center', marginBottom:'0'}}>
-          <div className="section-label" style={{justifyContent:'center'}}>// 02 — Hosting</div>
+          <div className="section-label" style={{justifyContent:'center'}}>{"// 02 — Hosting"}</div>
           <h2 className="section-title">Planes de hosting</h2>
           <p className="section-desc" style={{margin:'0 auto'}}>Servicio mensual independiente al desarrollo. Cancela cuando quieras.</p>
         </div>
@@ -369,7 +368,7 @@ const Precios = () => {
       {/* INFRAESTRUCTURA */}
       <section id="includes" className="section-padding">
         <div className="reveal visible text-center">
-          <div className="section-label">// 03 — Infraestructura</div>
+          <div className="section-label">{"// 03 — Infraestructura"}</div>
           <h2 className="section-title">¿Qué usamos?</h2>
           <p className="section-desc" style={{margin:'0 auto'}}>La misma infraestructura que usan Notion, TikTok y Twitch. Solo lo mejor.</p>
         </div>
@@ -422,7 +421,7 @@ const Precios = () => {
       {/* FAQ */}
       <section id="faq" className="section-padding">
         <div className="reveal visible" style={{textAlign:'center'}}>
-          <div className="section-label">// 04 — FAQ</div>
+          <div className="section-label">{"// 04 — FAQ"}</div>
           <h2 className="section-title">Preguntas frecuentes</h2>
         </div>
         <div className="faq-list reveal visible">
