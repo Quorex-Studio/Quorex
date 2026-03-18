@@ -1,16 +1,15 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
+import Home from "./pages/Home";
+import CategoryPage from "./pages/CategoryPage";
+import CaseStudyPage from "./pages/CaseStudyPage";
+import Precios from "./pages/Precios";
 import { LanguageProvider } from "./contexts/LanguageContext";
-
-const Home = lazy(() => import("./pages/Home"));
-const CategoryPage = lazy(() => import("./pages/CategoryPage"));
-const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage"));
-const Precios = lazy(() => import("./pages/Precios"));
 
 // ScrollToHash: handles navigation to /#section from other pages
 const ScrollToHash = () => {
@@ -104,18 +103,12 @@ function AppContent() {
       <ScrollToHash />
       <RevealObserver />
       <Header />
-      <Suspense fallback={
-        <div className="min-h-screen bg-[#050507] flex items-center justify-center">
-          <div className="w-12 h-12 border-t-2 border-[#6C63FF] rounded-full animate-spin"></div>
-        </div>
-      }>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/proyectos/:slug" element={<CategoryPage />} />
-          <Route path="/proyectos/:slug/:projectSlug" element={<CaseStudyPage />} />
-          <Route path="/precios" element={<Precios />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/proyectos/:slug" element={<CategoryPage />} />
+        <Route path="/proyectos/:slug/:projectSlug" element={<CaseStudyPage />} />
+        <Route path="/precios" element={<Precios />} />
+      </Routes>
       <Footer />
       <Toaster richColors position="bottom-right" />
     </div>
