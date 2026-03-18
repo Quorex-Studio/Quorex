@@ -9,7 +9,11 @@ import {
   Check,
   X,
   Lock,
-  History
+  History,
+  Star,
+  Globe,
+  ShoppingCart,
+  Cpu
 } from 'lucide-react';
 import './Precios.css';
 
@@ -394,17 +398,20 @@ const Precios = () => {
         
         <div className="combos-container reveal">
           {[
-            { tag: '🚀', title: 'Landing Starter', dev: 'Landing Page', host: 'Starter', price: 180, next: 30 },
-            { tag: '⭐', title: 'Landing Business', dev: 'Landing Page', host: 'Business', price: 225, next: 75 },
-            { tag: '🏢', title: 'Web Corporativa', dev: 'Pág. Corporativa', host: 'Starter', price: 330, next: 30 },
-            { tag: '🛒', title: 'E-commerce Completo', dev: 'E-commerce', host: 'Business + DB', price: 615, next: 115 },
-            { tag: '⚙️', title: 'Sistema Pro', dev: 'ERP', host: 'Enterprise', price: 920, next: 120 }
+            { icon: <Rocket size={20} />, title: 'Landing Starter', dev: 'Landing Page', host: 'Starter', price: 180, next: 30 },
+            { icon: <Star size={20} />, title: 'Landing Business', dev: 'Landing Page', host: 'Business', price: 225, next: 75 },
+            { icon: <Globe size={20} />, title: 'Web Corporativa', dev: 'Pág. Corporativa', host: 'Starter', price: 330, next: 30 },
+            { icon: <ShoppingCart size={20} />, title: 'E-commerce Completo', dev: 'E-commerce', host: 'Business + DB', price: 615, next: 115 },
+            { icon: <Cpu size={20} />, title: 'Sistema Pro', dev: 'ERP', host: 'Enterprise', price: 920, next: 120 }
           ].map((c, i) => (
             <div key={i} className="combo-card">
-              <div className="text-2xl mb-4">{c.tag} {c.title}</div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="text-[#6C63FF]">{c.icon}</div>
+                <div className="text-xl font-bebas tracking-wide">{c.title}</div>
+              </div>
               <div className="text-sm text-white/50 mb-6">{c.dev} + Hosting {c.host}</div>
               <div className="space-y-1">
-                <div className="text-xl font-bebas tracking-wide">Mes 1: ${c.price}</div>
+                <div className="text-xl font-bold">Mes 1: ${c.price}</div>
                 <div className="text-[#00E5A0] font-mono text-xs">Siguientes: ${c.next}/mes</div>
               </div>
             </div>
