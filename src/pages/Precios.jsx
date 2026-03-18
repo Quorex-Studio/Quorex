@@ -1,461 +1,497 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Zap, 
+  Shield, 
+  Rocket, 
+  Database, 
+  Activity, 
+  Mail, 
+  ChevronDown, 
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  X,
+  Clock,
+  Globe,
+  Lock,
+  History,
+  Bell
+} from 'lucide-react';
 import './Precios.css';
 
-const devNames = {
-  '150': 'Landing Page',
-  '300': 'Página Corporativa',
-  '350': 'Catálogo Digital',
-  '500': 'E-commerce'
-};
-
-const hostNames = {
-  '0':   'Sin hosting',
-  '30':  'Plan Starter',
-  '75':  'Plan Business',
-  '120': 'Plan Enterprise'
-};
+const QuorexLogo = () => (
+  <svg viewBox="0 0 120 120" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="qg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#6C63FF" />
+        <stop offset="100%" stopColor="#FF6B6B" />
+      </linearGradient>
+      <mask id="qm">
+        <rect width="120" height="120" fill="white" />
+        <path d="M 65 61 L 88 84 L 65 107" fill="none" stroke="black" strokeWidth="24" strokeLinejoin="miter" strokeLinecap="butt" />
+      </mask>
+    </defs>
+    <circle cx="50" cy="50" r="32" fill="none" stroke="url(#qg)" strokeWidth="14" mask="url(#qm)" />
+    <path d="M 65 61 L 88 84 L 65 107" fill="none" stroke="url(#qg)" strokeWidth="14" strokeLinejoin="miter" strokeLinecap="butt" />
+  </svg>
+);
 
 const Precios = () => {
-  const [dev, setDev] = useState(null);
-  const [hosting, setHosting] = useState('0');
+  const [dev, setDev] = useState('landing');
+  const [hosting, setHosting] = useState('starter');
   const [extras, setExtras] = useState({
-    db: false,
-    rush: false,
+    supabase: false,
+    email: false,
     seo: false,
+    rush: false,
     multi: false
   });
+
+  const [prices, setPrices] = useState({
+    dev: 150,
+    host: 30,
+    extraDev: 0,
+    extraHost: 0
+  });
+
   const [faqOpen, setFaqOpen] = useState(null);
 
-  const toggleFaq = (index) => {
-    setFaqOpen(faqOpen === index ? null : index);
-  };
+  // Data
+  const devOptions = [
+    { id: 'landing', name: 'Landing Page', price: 150, desc: 'Una página de impacto para captar clientes.' },
+    { id: 'corp', name: 'Página Corporativa', price: 300, desc: 'Sitio completo con múltiples secciones.' },
+    { id: 'catalog', name: 'Catálogo Digital', price: 350, desc: 'Muestra tus productos sin carrito de compras.' },
+    { id: 'ecommerce', name: 'E-commerce', price: 500, desc: 'Tienda online con carrito, pagos y panel admin.' },
+    { id: 'erp', name: 'Sistema Administrativo / ERP', price: 800, desc: 'Dashboard, CRM o sistema a la medida.' },
+    { id: 'saas', name: 'SaaS / Plataforma', price: 1500, desc: 'Plataforma completa con suscripciones y roles.' }
+  ];
 
-  const handleExtraChange = (key) => {
-    setExtras(prev => ({ ...prev, [key]: !prev[key] }));
-  };
+  const hostingOptions = [
+    { id: 'none', name: 'Sin hosting por ahora', price: 0, desc: 'Solo el desarrollo. Puedes agregar hosting después.' },
+    { id: 'starter', name: 'Starter', price: 30, desc: 'Hosting + dominio .com* + SSL. Ideal para landings.' },
+    { id: 'business', name: 'Business', price: 75, desc: 'Starter + backups + soporte 24h + email (5 cuentas).' },
+    { id: 'enterprise', name: 'Enterprise', price: 120, desc: 'Business + mantenimiento + SEO + email (10 cuentas).' }
+  ];
 
-  const calculateTotalDev = () => {
-    if (!dev) return 0;
-    let total = parseInt(dev);
-    if (extras.rush) total += 100;
-    if (extras.seo) total += 80;
-    if (extras.multi) total += 60;
-    return total;
-  };
+  const extraOptions = [
+    { id: 'supabase', name: 'Supabase Pro', price: 40, type: 'monthly', desc: 'Base de datos para e-commerce/sistemas' },
+    { id: 'email', name: 'Email corporativo', price: 10, type: 'monthly', desc: 'Solo plan Starter' },
+    { id: 'seo', name: 'SEO inicial', price: 80, type: 'once', desc: 'Setup completo' },
+    { id: 'rush', name: 'Entrega urgente / Rush', price: 100, type: 'once', desc: 'Prioridad máxima' },
+    { id: 'multi', name: 'Idioma adicional ES/EN', price: 60, type: 'once', desc: 'Versión bilingüe' }
+  ];
 
-  const calculateTotalHosting = () => {
-    let total = parseInt(hosting);
-    if (extras.db) total += 40;
-    return total;
-  };
+  useEffect(() => {
+    const selectedDev = devOptions.find(o => o.id === dev);
+    const selectedHost = hostingOptions.find(o => o.id === hosting);
+    
+    let extraOnce = 0;
+    if (extras.seo) extraOnce += 80;
+    if (extras.rush) extraOnce += 100;
+    if (extras.multi) extraOnce += 60;
 
-  const getNote = () => {
-    if (dev === '500' && !extras.db) {
-      return <>💡 El e-commerce requiere base de datos. Te recomendamos añadir <span>Supabase Pro (+$40/mes)</span>.</>;
-    } else if (hosting === '0') {
-      return <>💡 Sin hosting tu sitio no estará disponible en internet. Puedes agregarlo después del desarrollo.</>;
-    } else if (hosting === '30' && dev === '500') {
-      return <>💡 Para e-commerce recomendamos el plan <span>Business</span> que incluye backups y mayor soporte.</>;
-    } else {
-      return <>✅ Todo listo. Contáctanos para confirmar los detalles y comenzar tu proyecto.</>;
-    }
-  };
+    let extraMonthly = 0;
+    if (extras.supabase) extraMonthly += 40;
+    if (extras.email && hosting === 'starter') extraMonthly += 10;
+
+    setPrices({
+      dev: selectedDev.price,
+      host: selectedHost.price,
+      extraDev: extraOnce,
+      extraHost: extraMonthly
+    });
+  }, [dev, hosting, extras]);
+
+  // Reveal effect
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const totalDev = prices.dev + prices.extraDev;
+  const totalHost = prices.host + prices.extraHost;
+
+  const notes = [];
+  if ((dev === 'ecommerce' || dev === 'erp') && !extras.supabase) {
+    notes.push({ type: 'warning', text: 'El proyecto seleccionado requiere base de datos. Añade Supabase Pro +$40/mes.' });
+  }
+  if (dev === 'saas' && hosting !== 'enterprise') {
+    notes.push({ type: 'info', text: 'Para SaaS recomendamos el plan Enterprise que incluye Supabase Pro.' });
+  }
+  if (hosting === 'none') {
+    notes.push({ type: 'info', text: 'Sin hosting tu sitio no estará disponible en internet.' });
+  }
+  if (dev === 'landing' && hosting === 'none') {
+    notes.push({ type: 'info', text: 'Te recomendamos el plan Starter — ideal para landing pages.' });
+  }
 
   return (
-    <div className="pricing-page pricing-page-container">
-      <div className="hero">
+    <div className="pricing-page">
+      {/* SECCIÓN 1 — NAV FIJO */}
+      <nav className="pricing-nav">
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-2">
+            <QuorexLogo />
+            <div className="leading-none text-left">
+              <div className="font-black text-[#F0F1F5] text-base tracking-wide" style={{fontFamily:"'Bebas Neue',sans-serif"}}>QUOREX</div>
+              <div className="text-[0.45rem] tracking-[0.18em] text-[#F0F1F5]/40 uppercase" style={{fontFamily:"'JetBrains Mono',monospace"}}>Studio</div>
+            </div>
+          </div>
+          <a href="/" className="back-link">
+            <ArrowLeft size={14} /> {"← Volver al sitio"}
+          </a>
+        </div>
+        <a href="#calc" className="cta-btn">Cotizar</a>
+      </nav>
+
+      {/* SECCIÓN 2 — HERO */}
+      <section className="hero-section">
         <div className="hero-glow"></div>
-        <div className="hero-badge"><div className="bdot"></div>Precios transparentes · Sin sorpresas</div>
-        <h1>Desarrollo <span>&amp;</span><br/>Hosting.</h1>
-        <p className="hero-sub">Los planes de hosting tienen precios fijos. El costo de desarrollo es un estimado — un asesor confirmará el valor exacto según los detalles de tu proyecto.</p>
-      </div>
+        <div className="reveal">
+          <div className="badge-anim">
+            <div className="pulse-dot"></div>
+            {"Precios en USD · Actualizados 2026"}
+          </div>
+          <h1>DESARROLLO &<br/>HOSTING.</h1>
+          <p className="hero-sub">Precios transparentes. Sin sorpresas. El desarrollo es un pago único, el hosting es mensual.</p>
+        </div>
+      </section>
 
-      <div className="ticker-wrap">
-        <div className="ticker">
-          <span className="ticker-item"><span>✦</span>Precios aproximados · Sujetos a confirmación</span>
-          <span className="ticker-item"><span>✦</span>Web Corporativa desde $300</span>
-          <span className="ticker-item"><span>✦</span>E-commerce desde $500</span>
-          <span className="ticker-item"><span>✦</span>Hosting desde $30/mes</span>
-          <span className="ticker-item"><span>✦</span>Dominio .com incluido</span>
-          <span className="ticker-item"><span>✦</span>SSL gratuito</span>
-          <span className="ticker-item"><span>✦</span>Email corporativo disponible</span>
-          <span className="ticker-item"><span>✦</span>Supabase incluido según plan</span>
-          {/* Duplicate for infinite loop */}
-          <span className="ticker-item"><span>✦</span>Precios aproximados · Sujetos a confirmación</span>
-          <span className="ticker-item"><span>✦</span>Web Corporativa desde $300</span>
-          <span className="ticker-item"><span>✦</span>E-commerce desde $500</span>
-          <span className="ticker-item"><span>✦</span>Hosting desde $30/mes</span>
-          <span className="ticker-item"><span>✦</span>Dominio .com incluido</span>
-          <span className="ticker-item"><span>✦</span>SSL gratuito</span>
-          <span className="ticker-item"><span>✦</span>Email corporativo disponible</span>
-          <span className="ticker-item"><span>✦</span>Supabase incluido según plan</span>
+      {/* TICKER */}
+      <div className="ticker-container">
+        <div className="ticker-track">
+          {[...Array(2)].map((_, i) => (
+            <React.Fragment key={i}>
+              <span className="ticker-item">Landing Page $150</span>
+              <span className="ticker-item">Página Corporativa $300</span>
+              <span className="ticker-item">Catálogo Digital $350</span>
+              <span className="ticker-item">E-commerce $500</span>
+              <span className="ticker-item">Sistema ERP $800</span>
+              <span className="ticker-item">SaaS $1,500</span>
+              <span className="ticker-item">Hosting Starter $30/mes</span>
+              <span className="ticker-item">Business $75/mes</span>
+              <span className="ticker-item">Enterprise $120/mes</span>
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
-      {/* CALCULADORA */}
-      <section id="calc" className="section-padding">
-        <div className="reveal visible">
-          <div className="section-label">{"// 01 — Calculadora"}</div>
-          <h2 className="section-title">¿Cuánto cuesta mi proyecto?</h2>
-          <p className="section-desc text-center" style={{margin:'0 auto'}}>El precio de <strong style={{color:'#F0F1F5'}}>desarrollo es un estimado</strong> — un asesor lo confirmará. Los <strong style={{color:'#00E5A0'}}>planes de hosting son precios fijos</strong> e innegociables.</p>
-        </div>
-
-        <div className="notice reveal visible mt-10">
-          <div className="notice-text">
-            💡 <strong>¿Cómo funciona el precio?</strong> El desarrollo es un <strong>pago único</strong> por construir tu sitio.
-            El hosting es un <strong>pago mensual separado</strong> para mantenerlo en línea con dominio, SSL y soporte incluidos.
-            Son dos servicios independientes — puedes contratar solo el desarrollo y agregar hosting después.
+      {/* SECCIÓN 3 — AVISO IMPORTANTE */}
+      <section className="calc-section">
+        <div className="reveal">
+          <div className="bg-[#0a0a0c] border border-white/10 border-l-4 border-l-[#6C63FF] p-8 rounded-2xl mb-20">
+            <h3 className="text-xl mb-4 flex items-center gap-3">
+              <span className="text-2xl">💡</span> ¿Cómo funcionan los precios?
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8 text-sm text-white/50 leading-relaxed">
+              <div className="space-y-4">
+                <p>El <strong className="text-white">DESARROLLO</strong> es un pago único por construir tu sitio web.</p>
+                <p>El <strong className="text-white">HOSTING</strong> es un pago mensual separado para mantenerlo en línea.</p>
+                <p>Los precios de hosting son <strong className="text-[#00E5A0]">FIJOS E INNEGOCIABLES</strong>.</p>
+                <p>El precio de desarrollo es un estimado — un asesor de Quorex Studio confirmará el valor exacto según los detalles de tu proyecto.</p>
+              </div>
+              <div className="space-y-4">
+                <p>El dominio .com está incluido el primer año en todos los planes de hosting. A partir del segundo año se factura una renovación anual de $15.</p>
+                <p>El dominio está sujeto a disponibilidad. Si el .com que deseas ya está registrado, te ofrecemos alternativas: .net, .co, .store u .online al mismo precio.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="calc-grid reveal visible">
+        {/* SECCIÓN 4 — CALCULADORA INTERACTIVA */}
+        <div id="calc" className="calc-grid reveal">
           <div className="calc-form">
-            {/* DESARROLLO */}
-            <div className="calc-group">
-              <span className="calc-label">1. ¿Qué necesitas desarrollar?</span>
-              <div className="calc-options">
-                <label className={`calc-option hoverable ${dev === '150' ? 'sel' : ''}`}>
-                  <input type="radio" name="dev" value="150" checked={dev === '150'} onChange={(e) => setDev(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Landing Page</div>
-                    <div className="opt-desc">Una página de impacto para captar clientes. Diseño premium, animaciones y formulario de contacto.</div>
+            {/* Paso 1 */}
+            <div className="calc-step">
+              <span className="step-label">{"// Paso 1"}</span>
+              <h3>¿Qué necesitas desarrollar?</h3>
+              <div className="radio-cards">
+                {devOptions.map(opt => (
+                  <div 
+                    key={opt.id} 
+                    className={`radio-card ${dev === opt.id ? 'selected' : ''}`}
+                    onClick={() => setDev(opt.id)}
+                  >
+                    <div className="info">
+                      <div className="name">{opt.name}</div>
+                      <div className="desc">{opt.desc}</div>
+                    </div>
+                    <div className="price">${opt.price}</div>
                   </div>
-                  <div className="opt-price">$150</div>
-                </label>
-
-                <label className={`calc-option hoverable ${dev === '300' ? 'sel' : ''}`}>
-                  <input type="radio" name="dev" value="300" checked={dev === '300'} onChange={(e) => setDev(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Página Corporativa</div>
-                    <div className="opt-desc">Sitio completo con múltiples secciones, quiénes somos, servicios y contacto.</div>
-                  </div>
-                  <div className="opt-price">$300</div>
-                </label>
-
-                <label className={`calc-option hoverable ${dev === '350' ? 'sel' : ''}`}>
-                  <input type="radio" name="dev" value="350" checked={dev === '350'} onChange={(e) => setDev(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Catálogo Digital</div>
-                    <div className="opt-desc">Muestra tus productos con filtros y búsqueda avanzada. Sin carrito de compras.</div>
-                  </div>
-                  <div className="opt-price">$350</div>
-                </label>
-
-                <label className={`calc-option hoverable ${dev === '500' ? 'sel' : ''}`}>
-                  <input type="radio" name="dev" value="500" checked={dev === '500'} onChange={(e) => setDev(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">E-commerce</div>
-                    <div className="opt-desc">Tienda online completa con carrito, pagos integrados y panel de administración.</div>
-                  </div>
-                  <div className="opt-price">$500</div>
-                </label>
+                ))}
               </div>
             </div>
 
-            <div className="divider"></div>
-
-            {/* HOSTING */}
-            <div className="calc-group">
-              <span className="calc-label">2. ¿Necesitas hosting mensual?</span>
-              <div className="calc-options">
-                <label className={`calc-option hoverable ${hosting === '0' ? 'sel' : ''}`}>
-                  <input type="radio" name="hosting" value="0" checked={hosting === '0'} onChange={(e) => setHosting(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Sin hosting por ahora</div>
-                    <div className="opt-desc">Solo el desarrollo. Puedes agregar hosting cuando lo necesites.</div>
+            {/* Paso 2 */}
+            <div className="calc-step">
+              <span className="step-label">{"// Paso 2"}</span>
+              <h3>¿Necesitas hosting mensual?</h3>
+              <div className="radio-cards">
+                {hostingOptions.map(opt => (
+                  <div 
+                    key={opt.id} 
+                    className={`radio-card ${hosting === opt.id ? 'selected' : ''}`}
+                    onClick={() => setHosting(opt.id)}
+                  >
+                    <div className="info">
+                      <div className="name">{opt.name}</div>
+                      <div className="desc">{opt.desc}</div>
+                    </div>
+                    <div className="price">{opt.price === 0 ? '$0/mes' : `$${opt.price}/mes`}</div>
                   </div>
-                  <div className="opt-price muted">$0/mes</div>
-                </label>
-
-                <label className={`calc-option hoverable ${hosting === '30' ? 'sel' : ''}`}>
-                  <input type="radio" name="hosting" value="30" checked={hosting === '30'} onChange={(e) => setHosting(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Starter — $30/mes</div>
-                    <div className="opt-desc">Hosting Vercel + dominio .com + SSL. Para landing pages y webs corporativas.</div>
-                  </div>
-                  <div className="opt-price">$30/mes</div>
-                </label>
-
-                <label className={`calc-option hoverable ${hosting === '75' ? 'sel' : ''}`}>
-                  <input type="radio" name="hosting" value="75" checked={hosting === '75'} onChange={(e) => setHosting(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Business ⭐ — $75/mes</div>
-                    <div className="opt-desc">Starter + backups diarios + soporte 24h + monitoreo + email corporativo (5 cuentas Zoho).</div>
-                  </div>
-                  <div className="opt-price">$75/mes</div>
-                </label>
-
-                <label className={`calc-option hoverable ${hosting === '120' ? 'sel' : ''}`}>
-                  <input type="radio" name="hosting" value="120" checked={hosting === '120'} onChange={(e) => setHosting(e.target.value)} />
-                  <div className="opt-body">
-                    <div className="opt-name">Enterprise — $120/mes</div>
-                    <div className="opt-desc">Business + mantenimiento mensual + actualizaciones + SEO + email (10 cuentas) + soporte 4h.</div>
-                  </div>
-                  <div className="opt-price">$120/mes</div>
-                </label>
+                ))}
               </div>
             </div>
 
-            <div className="divider"></div>
-
-            {/* EXTRAS */}
-            <div className="calc-group">
-              <span className="calc-label">3. ¿Extras? (opcional)</span>
-              <div className="extras-grid">
-                <label className={`calc-extra hoverable ${extras.db ? 'sel' : ''}`}>
-                  <input type="checkbox" checked={extras.db} onChange={() => handleExtraChange('db')} />
-                  <div className="extra-name">
-                    Base de datos Supabase Pro
-                    <div style={{fontSize:'0.76rem', color:'rgba(240,241,245,0.45)', marginTop:'2px'}}>Necesario para e-commerce, sistemas con login y datos de usuarios.</div>
+            {/* Paso 3 */}
+            <div className="calc-step">
+              <span className="step-label">{"// Paso 3"}</span>
+              <h3>Extras opcionales</h3>
+              <div className="checkbox-cards">
+                {extraOptions.map(opt => (
+                  <div 
+                    key={opt.id} 
+                    className={`checkbox-card ${extras[opt.id] ? 'selected' : ''}`}
+                    onClick={() => setExtras(prev => ({ ...prev, [opt.id]: !prev[opt.id] }))}
+                  >
+                    <div className="check-box">
+                      {extras[opt.id] && <Check size={14} />}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-sm">{opt.name}</div>
+                      <div className="text-xs text-white/40">{opt.desc}</div>
+                    </div>
+                    <div className="text-sm font-mono text-[#00E5A0]">
+                      +{opt.price}{opt.type === 'monthly' ? '/mes' : ' único'}
+                    </div>
                   </div>
-                  <div className="extra-price">+$40/mes</div>
-                </label>
-
-                <label className={`calc-extra hoverable ${extras.rush ? 'sel' : ''}`}>
-                  <input type="checkbox" checked={extras.rush} onChange={() => handleExtraChange('rush')} />
-                  <div className="extra-name">
-                    Entrega urgente (Rush)
-                    <div style={{fontSize:'0.76rem', color:'rgba(240,241,245,0.45)', marginTop:'2px'}}>Prioridad máxima, entrega en la mitad del tiempo estimado.</div>
-                  </div>
-                  <div className="extra-price">+$100</div>
-                </label>
-
-                <label className={`calc-extra hoverable ${extras.seo ? 'sel' : ''}`}>
-                  <input type="checkbox" checked={extras.seo} onChange={() => handleExtraChange('seo')} />
-                  <div className="extra-name">
-                    SEO inicial (setup completo)
-                    <div style={{fontSize:'0.76rem', color:'rgba(240,241,245,0.45)', marginTop:'2px'}}>Meta tags, sitemap, Google Search Console y optimización básica.</div>
-                  </div>
-                  <div className="extra-price">+$80</div>
-                </label>
-
-                <label className={`calc-extra hoverable ${extras.multi ? 'sel' : ''}`}>
-                  <input type="checkbox" checked={extras.multi} onChange={() => handleExtraChange('multi')} />
-                  <div className="extra-name">
-                    Idioma adicional (ES/EN)
-                    <div style={{fontSize:'0.76rem', color:'rgba(240,241,245,0.45)', marginTop:'2px'}}>Versión del sitio en un segundo idioma.</div>
-                  </div>
-                  <div className="extra-price">+$60</div>
-                </label>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* RESULTADO */}
-          <div className="calc-result">
-            {!dev ? (
-              <div className="res-empty" id="res-empty">
-                <span style={{fontSize:'2rem', display:'block', marginBottom:'0.75rem'}}>🧮</span>
-                Selecciona un tipo de proyecto<br/>para ver el estimado de precio.
+          {/* RESULTADO STICKY */}
+          <div className="result-panel">
+            <h4>ESTIMADO DE PRECIO</h4>
+            
+            <div className="res-sec">
+              <div className="res-sec-title">— DESARROLLO (pago único) —</div>
+              <div className="res-line">
+                <span className="name">{devOptions.find(o => o.id === dev)?.name}</span>
+                <span>${prices.dev}</span>
               </div>
-            ) : (
-              <div id="res-content">
-                <div className="res-title">Estimado de precio</div>
-
-                <div className="res-section">Desarrollo (pago único)</div>
-                <div className="res-line">
-                  <span className="res-name">{devNames[dev]}</span>
-                  <span className="res-val">${dev}</span>
-                </div>
-                {extras.rush && <div className="res-line"><span className="res-name">Entrega urgente</span><span className="res-val">+$100</span></div>}
-                {extras.seo && <div className="res-line"><span className="res-name">SEO inicial</span><span className="res-val">+$80</span></div>}
-                {extras.multi && <div className="res-line"><span className="res-name">Idioma adicional</span><span className="res-val">+$60</span></div>}
-
-                <div className="res-hr"></div>
-                <div className="res-total-dev">
-                  <span className="res-total-dev-label">Total desarrollo</span>
-                  <span className="res-total-dev-val">${calculateTotalDev()}</span>
-                </div>
-
-                <div className="res-section">Hosting (mensual)</div>
-                <div className="res-line">
-                  <span className="res-name">{hostNames[hosting]}</span>
-                  <span className={`res-val ${hosting === '0' ? 'zero' : ''}`}>${hosting}/mes</span>
-                </div>
-                {extras.db && <div className="res-line"><span className="res-name">Supabase Pro</span><span className="res-val">+$40/mes</span></div>}
-
-                <div className="res-hr"></div>
-                <div className="res-total-hosting">
-                  <span className="res-hosting-label">Total mensual</span>
-                  <span className="res-hosting-val">${calculateTotalHosting()}/mes</span>
-                </div>
-
-                <div className="res-note">{getNote()}</div>
-                <a href="#cta-final" className="res-cta hoverable">Solicitar cotización →</a>
-                <div style={{marginTop:'0.85rem', padding:'0.75rem', background:'rgba(255,107,107,0.06)', border:'1px solid rgba(255,107,107,0.2)', fontSize:'0.74rem', color:'rgba(240,241,245,0.55)', lineHeight:1.55, textAlign:'center', fontFamily:"'JetBrains Mono',monospace"}}>
-                  ⚠️ El precio de desarrollo es estimado y será confirmado por un asesor.<br/>Los planes de hosting son <strong style={{color:'#00E5A0'}}>precios fijos e innegociables</strong>.
-                </div>
+              {extras.rush && <div className="res-line"><span className="name">Rush</span><span>+$100</span></div>}
+              {extras.seo && <div className="res-line"><span className="name">SEO inicial</span><span>+$80</span></div>}
+              {extras.multi && <div className="res-line"><span className="name">Idioma adicional</span><span>+$60</span></div>}
+              
+              <div className="res-total">
+                <span className="label">Total desarrollo</span>
+                <span className="value total-dev-val">${totalDev}</span>
               </div>
-            )}
+            </div>
+
+            <div className="res-sec">
+              <div className="res-sec-title">— HOSTING (mensual) —</div>
+              <div className="res-line">
+                <span className="name">Plan {hostingOptions.find(o => o.id === hosting)?.name}</span>
+                <span>${prices.host}/mes</span>
+              </div>
+              {extras.supabase && <div className="res-line"><span className="name">Supabase Pro</span><span>+$40/mes</span></div>}
+              {extras.email && hosting === 'starter' && <div className="res-line"><span className="name">Email corporativo</span><span>+$10/mes</span></div>}
+              
+              <div className="res-total">
+                <span className="label">Total mensual</span>
+                <span className="value total-host-val">${totalHost}/mes</span>
+              </div>
+            </div>
+
+            <div className="res-note">
+              <p>📌 Dominio incluido el 1er año · Sujeto a disponibilidad</p>
+              <p className="mt-1 opacity-50">Renovación: $15/año a partir del segundo año</p>
+            </div>
+
+            {notes.map((note, i) => (
+              <div key={i} className={`smart-note ${note.type === 'warning' ? 'text-[#FF6B6B]' : 'text-blue-400'}`}>
+                {note.type === 'warning' ? '⚠️' : '💡'} {note.text}
+              </div>
+            ))}
+
+            <button className="res-btn">Solicitar cotización →</button>
+            
+            <div className="text-[10px] text-white/30 text-center mt-6 uppercase tracking-wider leading-relaxed">
+              ⚠️ El precio de desarrollo es estimado y será confirmado por un asesor. Los planes de hosting son precios FIJOS e innegociables.
+            </div>
           </div>
         </div>
       </section>
 
-      {/* PLANES DE HOSTING */}
-      <section id="plans" className="section-padding">
-        <div className="reveal visible" style={{textAlign:'center', marginBottom:'0'}}>
-          <div className="section-label" style={{justifyContent:'center'}}>{"// 02 — Hosting"}</div>
-          <h2 className="section-title">Planes de hosting</h2>
-          <p className="section-desc" style={{margin:'0 auto'}}>Servicio mensual independiente al desarrollo. Cancela cuando quieras.</p>
+      {/* SECCIÓN 5 — PLANES DE HOSTING */}
+      <section className="hosting-section">
+        <div className="reveal text-center mb-20">
+          <div className="badge-anim border-[#00E5A0]/20 text-[#00E5A0]">
+            {"✦ Precios fijos e innegociables"}
+          </div>
+          <p className="text-white/50 max-w-2xl mx-auto mt-4">Servicio mensual independiente al desarrollo. Cancela cuando quieras sin penalizaciones.</p>
         </div>
 
-        <div className="plans-note reveal visible mt-10">
-          <strong>Precios fijos e innegociables.</strong> Los planes de hosting tienen un precio establecido que no varía. El desarrollo de tu sitio web es un costo separado y único — el estimado de la calculadora será confirmado por un asesor de Quorex Studio según los detalles de tu proyecto.
-        </div>
-
-        <div className="plans-grid reveal visible">
+        <div className="plans-grid reveal">
           {/* STARTER */}
           <div className="plan-card">
-            <div className="plan-badge pb-basic">Starter</div>
-            <div className="plan-name">Starter</div>
-            <div className="plan-price" style={{color:'#F0F1F5'}}>$30<span>/mes</span></div>
-            <div className="plan-period">~$360/año</div>
-            <p className="plan-desc">Ideal para landing pages, webs corporativas y catálogos. Todo lo esencial para estar en línea.</p>
-            <div className="plan-features">
-              <div className="pf"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Hosting Vercel Edge Network</div>
-              <div className="pf"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Dominio .com incluido (1 año)</div>
-              <div className="pf"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Certificado SSL gratuito</div>
-              <div className="pf"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Deploy automático desde GitHub</div>
-              <div className="pf"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Soporte por email (48h)</div>
-              <div className="pf off"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><line x1="2" y1="6" x2="10" y2="6"/></svg></div>Backups automáticos</div>
-              <div className="pf off"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><line x1="2" y1="6" x2="10" y2="6"/></svg></div>Email corporativo</div>
-            </div>
-            <div className="plan-addon">➕ Email corporativo disponible: +$10/mes</div>
-            <a href="#cta-final" className="plan-cta pc-out hoverable">Contratar →</a>
+            <div className="text-xs font-mono text-white/30 mb-4 tracking-[0.2em] uppercase">Starter</div>
+            <div className="price">$30<span>/mes</span></div>
+            <ul className="features-list">
+              <li><Check size={16} className="text-[#00E5A0]" /> Hosting Vercel Edge Network</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Dominio incluido (1er año)*</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> SSL gratuito y automático</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Deploy automático desde GitHub</li>
+              <li className="no"><X size={16} /> Backups automáticos</li>
+              <li className="no"><X size={16} /> Email corporativo</li>
+            </ul>
+            <div className="mt-auto pt-8 text-xs text-[#00E5A0] font-mono">➕ Email corporativo: +$10/mes</div>
           </div>
 
           {/* BUSINESS */}
-          <div className="plan-card featured">
-            <div className="plan-badge pb-pop">⭐ Más popular</div>
-            <div className="plan-name">Business</div>
-            <div className="plan-price" style={{background:'linear-gradient(135deg,#6C63FF,#FF6B6B)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text'}}>$75<span style={{WebkitTextFillColor:'rgba(240,241,245,0.45)', fontSize:'0.95rem', fontWeight:'400'}}>/mes</span></div>
-            <div className="plan-period">~$900/año · Hosting + email incluido</div>
-            <p className="plan-desc">Para empresas que necesitan tranquilidad total. Email corporativo incluido para todo el equipo.</p>
-            <div className="plan-features">
-              <div className="pf"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Todo lo del plan Starter</div>
-              <div className="pf"><div className="fc r"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Backups automáticos diarios</div>
-              <div className="pf"><div className="fc r"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Soporte prioritario (24h)</div>
-              <div className="pf"><div className="fc r"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Monitoreo de uptime 24/7</div>
-              <div className="pf"><div className="fc r"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Reporte mensual de rendimiento</div>
-              <div className="pf"><div className="fc r"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Email corporativo (hasta 5 cuentas Zoho)</div>
-              <div className="pf off"><div className="fc p"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><line x1="2" y1="6" x2="10" y2="6"/></svg></div>Mantenimiento de contenido</div>
+          <div className="plan-card business">
+            <div className="text-xs font-mono text-[#6C63FF] mb-4 tracking-[0.2em] uppercase flex justify-between">
+              Business <span>⭐ POPULAR</span>
             </div>
-            <div className="plan-addon">➕ Supabase Pro disponible: +$40/mes</div>
-            <a href="#cta-final" className="plan-cta pc-solid hoverable">Contratar Business →</a>
+            <div className="price">$75<span>/mes</span></div>
+            <ul className="features-list">
+              <li><Check size={16} className="text-[#00E5A0]" /> Todo lo del plan Starter</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Backups automáticos diarios</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Soporte prioritario (24h)</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Monitoreo uptime 24/7</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Zoho Mail (5 cuentas)</li>
+              <li className="no"><X size={16} /> SEO mensual</li>
+            </ul>
+            <div className="mt-auto pt-8 text-xs text-white/50 font-mono">➕ Supabase Pro: +$40/mes</div>
           </div>
 
           {/* ENTERPRISE */}
           <div className="plan-card">
-            <div className="plan-badge pb-prem">Enterprise</div>
-            <div className="plan-name">Enterprise</div>
-            <div className="plan-price" style={{color:'#00E5A0'}}>$120<span>/mes</span></div>
-            <div className="plan-period">~$1,440/año · Todo incluido</div>
-            <p className="plan-desc">Cero preocupaciones técnicas. Nos encargamos de todo para que tú te enfoques en tu negocio.</p>
-            <div className="plan-features">
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Todo lo del plan Business</div>
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Mantenimiento mensual incluido</div>
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Actualizaciones de contenido</div>
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Email corporativo (hasta 10 cuentas)</div>
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Soporte inmediato (4h)</div>
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Optimización SEO mensual</div>
-              <div className="pf"><div className="fc g"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="2,6 5,9 10,3"/></svg></div>Supabase Pro incluido</div>
-            </div>
-            <a href="#cta-final" className="plan-cta pc-green hoverable">Contratar Enterprise →</a>
+            <div className="text-xs font-mono text-white/30 mb-4 tracking-[0.2em] uppercase">Enterprise</div>
+            <div className="price">$120<span>/mes</span></div>
+            <ul className="features-list">
+              <li><Check size={16} className="text-[#00E5A0]" /> Todo lo del plan Business</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Mantenimiento mensual</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Zoho Mail (10 cuentas)</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Soporte inmediato (4h)</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Optimización SEO mensual</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Supabase Pro incluido</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* INFRAESTRUCTURA */}
-      <section id="includes" className="section-padding">
-        <div className="reveal visible text-center">
-          <div className="section-label">{"// 03 — Infraestructura"}</div>
-          <h2 className="section-title">¿Qué usamos?</h2>
-          <p className="section-desc" style={{margin:'0 auto'}}>La misma infraestructura que usan Notion, TikTok y Twitch. Solo lo mejor.</p>
+      {/* SECCIÓN 6 — COMBOS SUGERIDOS */}
+      <section className="calc-section">
+        <div className="reveal mb-12">
+          <span className="step-label">{"// Combos sugeridos"}</span>
+          <h2 className="font-bebas text-4xl mt-2">SOLUCIONES COMPLETAS</h2>
         </div>
-        <div className="inc-grid reveal visible">
-          <div className="inc-item">
-            <div className="inc-icon" style={{background:'rgba(108,99,255,0.12)'}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C63FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <div className="inc-title">Vercel Edge Network</div>
-            <div className="inc-desc">Tu sitio servido desde el servidor más cercano a tu cliente. Tiempos de carga menores a 100ms garantizados.</div>
-          </div>
-          <div className="inc-item">
-            <div className="inc-icon" style={{background:'rgba(255,107,107,0.12)'}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div className="inc-title">SSL &amp; Seguridad</div>
-            <div className="inc-desc">Certificado SSL automático, HTTPS forzado y headers de seguridad configurados desde el día uno.</div>
-          </div>
-          <div className="inc-item">
-            <div className="inc-icon" style={{background:'rgba(0,229,160,0.1)'}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E5A0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            </div>
-            <div className="inc-title">Deploy Automático</div>
-            <div className="inc-desc">Cada cambio en el código se despliega automáticamente en segundos. Sin pasos manuales ni tiempo de inactividad.</div>
-          </div>
-          <div className="inc-item">
-            <div className="inc-icon" style={{background:'rgba(108,99,255,0.12)'}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C63FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
-            <div className="inc-title">Backups Diarios</div>
-            <div className="inc-desc">Copias de seguridad automáticas cada 24 horas. Si algo falla, restauramos tu sitio en minutos.</div>
-          </div>
-          <div className="inc-item">
-            <div className="inc-icon" style={{background:'rgba(255,107,107,0.12)'}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <div className="inc-title">Monitoreo 24/7</div>
-            <div className="inc-desc">Monitoreamos tu sitio en tiempo real. Si cae, somos los primeros en enterarnos y actuar.</div>
-          </div>
-          <div className="inc-item">
-            <div className="inc-icon" style={{background:'rgba(0,229,160,0.1)'}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E5A0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div className="inc-title">Email Corporativo</div>
-            <div className="inc-desc">nombre@tuempresa.com con Zoho Mail. Profesional, confiable y accesible desde cualquier dispositivo.</div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="section-padding">
-        <div className="reveal visible" style={{textAlign:'center'}}>
-          <div className="section-label">{"// 04 — FAQ"}</div>
-          <h2 className="section-title">Preguntas frecuentes</h2>
-        </div>
-        <div className="faq-list reveal visible">
+        
+        <div className="combos-container reveal">
           {[
-            { q: '¿El desarrollo y el hosting se pagan juntos?', a: 'No. Son servicios separados. El desarrollo es un pago único por construir tu sitio. El hosting es un pago mensual para mantenerlo en línea. Puedes contratar solo el desarrollo y agregar hosting después.'},
-            { q: '¿Necesito Supabase en mi proyecto?', a: 'Depende del proyecto. Para landing pages y webs corporativas simples, no es necesario. Para e-commerce, sistemas con login, catálogos con datos dinámicos o cualquier proyecto que requiera base de datos, sí se necesita Supabase Pro (+$40/mes).'},
-            { q: '¿El dominio .com es mío?', a: 'Sí, el dominio queda registrado a tu nombre. Si decides cancelar el hosting, te lo transferimos sin ningún costo adicional.'},
-            { q: '¿Puedo cancelar el hosting cuando quiera?', a: 'Sí, sin contratos ni penalizaciones. Cancelas cuando quieras. Te entregamos el código fuente completo y el dominio para que puedas llevarlo a donde prefieras.'},
-            { q: '¿Cuánto tiempo tarda el desarrollo?', a: 'Landing page: 3-5 días. Página corporativa: 1-2 semanas. Catálogo digital: 1-2 semanas. E-commerce: 2-4 semanas. Con entrega urgente (Rush) el tiempo se reduce a la mitad.'}
-          ].map((faq, index) => (
-            <div className="faq-item" key={index}>
-              <div className="faq-q hoverable" onClick={() => toggleFaq(index)}>
-                {faq.q}
-                <span className="faq-icon">{faqOpen === index ? '×' : '+'}</span>
-              </div>
-              <div className={`faq-a ${faqOpen === index ? 'open' : ''}`}>
-                <div className="faq-a-inner">{faq.a}</div>
+            { tag: '🚀', title: 'Landing Starter', dev: 'Landing Page', host: 'Starter', price: 180, next: 30 },
+            { tag: '⭐', title: 'Landing Business', dev: 'Landing Page', host: 'Business', price: 225, next: 75 },
+            { tag: '🏢', title: 'Web Corporativa', dev: 'Pág. Corporativa', host: 'Starter', price: 330, next: 30 },
+            { tag: '🛒', title: 'E-commerce Completo', dev: 'E-commerce', host: 'Business + DB', price: 615, next: 115 },
+            { tag: '⚙️', title: 'Sistema Pro', dev: 'ERP', host: 'Enterprise', price: 920, next: 120 }
+          ].map((c, i) => (
+            <div key={i} className="combo-card">
+              <div className="text-2xl mb-4">{c.tag} {c.title}</div>
+              <div className="text-sm text-white/50 mb-6">{c.dev} + Hosting {c.host}</div>
+              <div className="space-y-1">
+                <div className="text-xl font-bebas tracking-wide">Mes 1: ${c.price}</div>
+                <div className="text-[#00E5A0] font-mono text-xs">Siguientes: ${c.next}/mes</div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="cta-final" className="section-padding">
-        <div className="cta-box reveal visible">
-          <h2>¿Listo para empezar?</h2>
-          <p>Cuéntanos sobre tu proyecto y te respondemos en menos de 24 horas con una propuesta personalizada.</p>
-          <div className="cta-btns">
-            <a href="mailto:contacto@quorexstudio.com" className="btn-grad hoverable">Solicitar cotización →</a>
-            <a href="/" className="btn-out hoverable">Ver proyectos</a>
+      {/* SECCIÓN 7 — INFRAESTRUCTURA */}
+      <section className="calc-section bg-[#0a0a0c]">
+        <div className="grid md:grid-cols-3 gap-8 reveal">
+          {[
+            { icon: <Zap />, title: 'Vercel Edge Network', desc: 'Tiempos de carga menores a 100ms garantizados.' },
+            { icon: <Lock />, title: 'SSL & Seguridad', desc: 'Certificado SSL automático y HTTPS forzado.' },
+            { icon: <Rocket />, title: 'Deploy Automático', desc: 'Cada cambio se despliega en segundos automáticamente.' },
+            { icon: <History />, title: 'Backups Diarios', desc: 'Copias de seguridad cada 24h con restauración en minutos.' },
+            { icon: <Activity />, title: 'Monitoreo 24/7', desc: 'Sistemas de alerta en tiempo real ante cualquier caída.' },
+            { icon: <Mail />, title: 'Email Corporativo', desc: 'Profesionalismo con Zoho Mail en todos tus dispositivos.' }
+          ].map((item, i) => (
+            <div key={i} className="p-8 border border-white/5 rounded-2xl hover:bg-white/5 transition-colors">
+              <div className="text-[#6C63FF] mb-6">{item.icon}</div>
+              <div className="font-semibold mb-3">{item.title}</div>
+              <div className="text-sm text-white/40 leading-relaxed">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SECCIÓN 8 — FAQ */}
+      <section className="calc-section">
+        <div className="reveal text-center mb-16">
+          <span className="step-label">{"// Preguntas frecuentes"}</span>
+          <h2 className="font-bebas text-5xl mt-4">RESOLVEMOS TUS DUDAS</h2>
+        </div>
+        
+        <div className="faq-list reveal">
+          {[
+            { q: '¿El desarrollo y el hosting se pagan juntos?', a: 'No. Son servicios completamente separados. El desarrollo es un pago único por construir tu sitio. El hosting es un pago mensual para mantenerlo en línea. Puedes contratar solo el desarrollo y agregar hosting después cuando lo necesites.' },
+            { q: '¿Los precios de hosting son negociables?', a: 'No. Los planes de hosting tienen precios fijos establecidos que no varían. Lo que sí puede ajustarse es el precio de desarrollo según la complejidad específica de tu proyecto — un asesor te confirmará el valor exacto.' },
+            { q: '¿Necesito Supabase en mi proyecto?', a: 'Depende del proyecto. Para landing pages y webs corporativas simples no es necesario. Para e-commerce, sistemas administrativos, plataformas con login o cualquier proyecto que requiera base de datos, sí se necesita Supabase Pro (+$40/mes). La calculadora te avisa automáticamente.' },
+            { q: '¿El dominio .com es mío para siempre?', a: 'Sí. El dominio queda registrado a tu nombre desde el primer día. Está incluido el primer año en todos los planes de hosting. A partir del segundo año la renovación cuesta $15/año — te avisamos con 30 días de anticipación.' },
+            { q: '¿Qué pasa si el dominio .com que quiero no está disponible?', a: 'Es más común de lo que parece. En ese caso te ofrecemos alternativas: .net, .co, .store, .online, .ve. Todas al mismo precio de renovación ($15/año). Si el dominio es premium, el precio puede variar.' },
+            { q: '¿Qué pasa si no renuevo el dominio?', a: 'Si el dominio no se renueva vence y queda disponible para que cualquier persona lo registre. Por eso te avisamos con 30 días de anticipación. La renovación es opcional — si ya no necesitas el sitio simplemente no la realizas. Una vez vencido recuperarlo puede ser más costoso o imposible.' },
+            { q: '¿Puedo cancelar el hosting cuando quiera?', a: 'Sí, sin contratos ni penalizaciones. Cancelas cuando quieras. Te entregamos el código fuente completo y el dominio para que puedas llevarlo a donde prefieras.' },
+            { q: '¿Cuánto tiempo tarda el desarrollo?', a: 'Landing Page: 3-5 días · Corporativa: 1-2 semanas · Catálogo: 1-2 semanas · E-commerce: 2-4 semanas · ERP: 4-6 semanas · SaaS: 6-10 semanas. Con Rush el tiempo se reduce a la mitad.' }
+          ].map((item, i) => (
+            <div key={i} className="faq-item">
+              <div className="faq-q" onClick={() => setFaqOpen(faqOpen === i ? null : i)}>
+                {item.q}
+                <ChevronDown className={`transition-transform ${faqOpen === i ? 'rotate-180' : ''}`} />
+              </div>
+              <div className={`faq-a ${faqOpen === i ? 'open' : ''}`}>
+                {item.a}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SECCIÓN 9 — CTA FINAL */}
+      <section className="final-cta">
+        <div className="cta-glow"></div>
+        <div className="reveal">
+          <h2 className="font-bebas text-7xl mb-6">¿LISTO PARA EMPEZAR?</h2>
+          <p className="text-white/50 max-w-xl mx-auto mb-10 text-lg">Cuéntanos sobre tu proyecto y te respondemos en menos de 24 horas con una propuesta personalizada.</p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <button className="res-btn !mt-0 !w-auto !px-12">Solicitar cotización →</button>
+            <a href="/" className="px-12 items-center flex border border-white/10 rounded-full text-sm font-mono hover:bg-white/5 transition-colors">Ver proyectos</a>
           </div>
         </div>
       </section>
+
+      {/* SECCIÓN 10 — FOOTER */}
+      <footer className="calc-section !py-12 border-top border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="text-white/30 text-xs font-mono">
+          © 2026 Quorex Studio · Todos los derechos reservados
+        </div>
+        <div className="flex gap-8 text-xs font-mono uppercase tracking-widest">
+          <a href="/" className="hover:text-[#6C63FF] transition-colors">Inicio</a>
+          <a href="/#contact" className="hover:text-[#6C63FF] transition-colors">Contacto</a>
+        </div>
+      </footer>
     </div>
   );
 };

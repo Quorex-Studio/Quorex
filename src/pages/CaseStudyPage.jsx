@@ -166,7 +166,7 @@ const CaseStudyPage = () => {
           {/* Gallery */}
           {project.gallery.length > 0 && (
             <section className="reveal">
-              <div className="section-label">// Galería del Proyecto</div>
+              <div className="section-label">{"// Galería del Proyecto"}</div>
               <div className="gallery-grid">
                 {project.gallery.map((img, i) => (
                   <img
