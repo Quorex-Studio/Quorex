@@ -38,9 +38,18 @@ const dataES = {
       slug: "eina-shop",
       category: "landing",
       title: "Eina Shop",
-      description: "Landing page premium para tienda de skincare coreano en Isla Margarita, Venezuela.",
+      description: "Landing page premium para tienda de maquillaje, skincare y accesorios en Isla Margarita, Venezuela.",
       image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800",
-      color: "#00E5A0",
+      color: "#78293c",
+    },
+    {
+      id: "dulces-cakes",
+      slug: "dulces-cakes",
+      category: "landing",
+      title: "Dulce's Cakes",
+      description: "Landing page premium para pastelería artesanal venezolana con 13 productos y fotos reales.",
+      image: "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+      color: "#FF6B6B",
     }
   ],
   features: [
@@ -89,9 +98,18 @@ const dataEN = {
       slug: "eina-shop",
       category: "landing",
       title: "Eina Shop",
-      description: "Premium landing page for Korean skincare shop in Isla Margarita, Venezuela.",
+      description: "Premium landing page for makeup, skincare, and accessories shop in Isla Margarita, Venezuela.",
       image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80",
-      color: "#00E5A0",
+      color: "#78293c",
+    },
+    {
+      id: "dulces-cakes",
+      slug: "dulces-cakes",
+      category: "landing",
+      title: "Dulce's Cakes",
+      description: "Premium landing page for Venezuelan artisanal bakery with 13 products and real photos.",
+      image: "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+      color: "#FF6B6B",
     }
   ],
   features: [
@@ -128,7 +146,7 @@ export const projectCategories = [
     title: "Landing Page",
     color: "#00E5A0",
     description: "Páginas de alto impacto diseñadas para convertir visitantes en clientes.",
-    projectCount: 1,
+    projectCount: 2,
   },
   {
     id: 4,
@@ -173,9 +191,9 @@ export const categoryDetails = {
     color: "#00E5A0",
     description: "Una primera impresión que convierte visitantes en clientes desde el primer scroll.",
     challenge: "Negocios sin presencia digital que pierden clientes frente a competidores con mejor imagen. Una mala primera impresión equivale a una venta perdida.",
-    solution: "Diseñamos landing pages de alto impacto con animaciones premium, CTAs optimizados y SEO desde el día uno. Resultados medibles desde el primer mes.",
-    stack: ["React 18", "TailwindCSS", "Vite", "Vercel"],
-    projects: ["eina-shop"]
+    solution: "Diseñamos landing pages de alto impacto con animaciones premium y CTAs optimizados. Trabajamos con React o HTML/CSS puro según las necesidades del proyecto — sin frameworks innecesarios cuando no hacen falta.",
+    stack: ["React 18", "HTML5", "CSS3", "JavaScript", "TailwindCSS", "Vite", "Vercel"],
+    projects: ["eina-shop", "dulces-cakes"]
   },
   catalogo: {
     title: "Catálogo Digital",
@@ -264,25 +282,25 @@ export const caseStudies = [
     category: "landing",
     categoryTitle: "Landing Page",
     title: "Eina Shop",
-    subtitle: "Landing page premium para tienda de skincare coreano en Isla Margarita, Venezuela.",
+    subtitle: "Landing page premium para tienda de maquillaje, skincare y accesorios en Isla Margarita, Venezuela.",
     client: "Eina Shop",
     location: "Isla Margarita, Venezuela",
     year: "2025",
     timeline: "4 días",
-    color: "#00E5A0",
+    color: "#78293c",
     heroImage: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800",
-    challenge: "La tienda operaba 100% por Instagram sin presencia web propia. Sin catálogo digital, los clientes no podían ver todos los productos disponibles ni sus precios. La imagen de marca no reflejaba la calidad premium de los productos coreanos que ofrecen.",
-    solution: "Diseñamos una landing page de lujo con estética glassmorphism, completamente en inglés para conectar con la identidad de las marcas coreanas. Catálogo de productos destacados, historia de marca y contacto directo por WhatsApp e Instagram.",
-    results: "La marca ahora tiene presencia web profesional que refleja el nivel premium de sus productos. Los clientes pueden explorar el catálogo, conocer la historia y contactar directamente desde la página.",
-    stack: ["React 18", "TailwindCSS", "Vite", "Vercel", "MCP Stitch"],
+    challenge: "La tienda operaba 100% por Instagram sin presencia web propia. Sin catálogo digital, los clientes no podían ver todos los productos disponibles ni sus precios. La imagen de marca no reflejaba la calidad premium del maquillaje y skincare coreano que ofrecen.",
+    solution: "Diseñamos una landing page de estética K-beauty, femenina y premium con HTML5, CSS3 y JavaScript vanilla puro. Hero con animación de estrella giratoria, marquee animado con productos, grid de 5 destacados con fotos reales e integración directa con WhatsApp Business.",
+    results: "La marca ahora tiene presencia web profesional que refleja su identidad K-beauty premium. Los clientes pueden explorar productos y contactar directamente desde la página sin depender del algoritmo de Instagram.",
+    stack: ["HTML5", "CSS3", "JavaScript", "Vercel"],
     features: [
-      "Hero inmersivo con glassmorphism y tipografía editorial de lujo",
-      "Catálogo de productos con badges: Bestseller, Viral, New y precios en USD",
-      "Sección 'From Seoul to Isla Margarita' con historia de marca",
-      "Contacto directo por WhatsApp e Instagram integrados",
-      "Newsletter para captar clientes con ofertas exclusivas",
-      "Diseño 100% en inglés con estética de marca coreana",
-      "100% responsive and deploy automático en Vercel"
+      "Hero con animación de estrella giratoria en CSS puro",
+      "Marquee animado con productos destacados",
+      "Grid de 5 productos con imágenes reales de la tienda",
+      "Formulario de contacto con integración directa a WhatsApp Business",
+      "Botones de producto con link al catálogo de WhatsApp",
+      "Tipografía editorial: Cormorant Garamond + Source Sans 3",
+      "Paleta K-beauty: #78293c · #e1ae9d · #f4e7d7 · #252024"
     ],
     gallery: [
       "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800",
@@ -290,6 +308,41 @@ export const caseStudies = [
       "https://images.unsplash.com/photo-1596462502278-27bf85033e5a?q=80&w=400"
     ],
     link: "https://einashop.vercel.app",
+    nextProject: "dulces-cakes"
+  },
+  {
+    id: "dulces-cakes",
+    slug: "dulces-cakes",
+    category: "landing",
+    categoryTitle: "Landing Page",
+    title: "Dulce's Cakes",
+    subtitle: "Landing page premium para pastelería artesanal venezolana con 13 productos y fotos reales.",
+    client: "Dulce's Cakes",
+    location: "Venezuela",
+    year: "2024",
+    timeline: "3 días",
+    color: "#FF6B6B",
+    heroImage: "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+    challenge: "La pastelería tomaba pedidos únicamente por Instagram sin presencia web propia. Sin catálogo digital, los clientes no podían ver todos los postres disponibles con sus fotos reales. La marca necesitaba una imagen profesional que reflejara la calidad artesanal de sus productos.",
+    solution: "Diseñamos una landing page cálida y premium con HTML5 y CSS3 puro sin ningún framework. Hero con logo animado y floating pills de productos, marquee animado, grid de 13 postres con fotos reales, historia de marca y CTAs directos a WhatsApp e Instagram.",
+    results: "La pastelería ahora tiene presencia web profesional con los 13 postres de su catálogo fotografiados y publicados. Los clientes pueden explorar cada postre con descripción y hacer el pedido directamente por WhatsApp desde la página.",
+    stack: ["HTML5", "CSS3", "Vercel"],
+    features: [
+      "Hero con logo animado, floating pills y CTA directo a WhatsApp",
+      "Marquee animado con todos los productos del menú",
+      "Grid de 13 postres con fotos reales del cliente y descripción",
+      "Tipografía editorial: Playfair Display · Cormorant Garamond · DM Sans",
+      "Animaciones 100% CSS nativo con @keyframes — cero JavaScript",
+      "Sección 'Nosotras' con historia de marca y badges artesanales",
+      "CTAs directos a WhatsApp Business e Instagram @dulce_scakes19"
+    ],
+    gallery: [
+      "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+      "https://dulcescakes.vercel.app/assets/tres_leches_tradicional.jpeg",
+      "https://dulcescakes.vercel.app/assets/torta_de_chocolate.jpeg",
+      "https://dulcescakes.vercel.app/assets/chocoflan.jpeg"
+    ],
+    link: "https://dulcescakes.vercel.app",
     nextProject: "dashboard-financiero"
   }
 ];
