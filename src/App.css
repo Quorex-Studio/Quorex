@@ -24,6 +24,17 @@ body {
   color: #F0F1F5;
   overflow-x: hidden;
   cursor: none;
+  /* GPU Acceleration */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  backface-visibility: hidden;
+}
+
+/* Optimización para transiciones suaves */
+.reveal, .hoverable, button, a {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* ── CUSTOM CURSOR ── */

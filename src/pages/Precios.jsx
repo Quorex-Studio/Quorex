@@ -322,7 +322,19 @@ const Precios = () => {
               </div>
             ))}
 
-            <button className="res-btn">Solicitar cotización →</button>
+            <button
+              className="res-btn"
+              onClick={() => {
+                const contactSection = document.getElementById('contacto');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#contacto';
+                }
+              }}
+            >
+              Solicitar cotización →
+            </button>
             
             <div className="text-[10px] text-white/30 text-center mt-6 uppercase tracking-wider leading-relaxed">
               ⚠️ El precio de desarrollo es estimado y será confirmado por un asesor. Los planes de hosting son precios FIJOS e innegociables.
@@ -347,6 +359,7 @@ const Precios = () => {
             <div className="price">$30<span>/mes</span></div>
             <ul className="features-list">
               <li><Check size={16} className="text-[#00E5A0]" /> Hosting Vercel Edge Network</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Protección y CDN Cloudflare</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Dominio incluido (1er año)*</li>
               <li><Check size={16} className="text-[#00E5A0]" /> SSL gratuito y automático</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Deploy automático desde GitHub</li>
@@ -364,6 +377,7 @@ const Precios = () => {
             <div className="price">$75<span>/mes</span></div>
             <ul className="features-list">
               <li><Check size={16} className="text-[#00E5A0]" /> Todo lo del plan Starter</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Cloudflare incluido (DDoS Protection)</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Backups automáticos diarios</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Soporte prioritario (24h)</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Monitoreo uptime 24/7</li>
@@ -379,6 +393,7 @@ const Precios = () => {
             <div className="price">$120<span>/mes</span></div>
             <ul className="features-list">
               <li><Check size={16} className="text-[#00E5A0]" /> Todo lo del plan Business</li>
+              <li><Check size={16} className="text-[#00E5A0]" /> Full Cloudflare WAF & Optimization</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Mantenimiento mensual</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Zoho Mail (10 cuentas)</li>
               <li><Check size={16} className="text-[#00E5A0]" /> Soporte inmediato (4h)</li>
@@ -477,7 +492,12 @@ const Precios = () => {
           <h2 className="font-bebas text-7xl mb-6">¿LISTO PARA EMPEZAR?</h2>
           <p className="text-white/50 max-w-xl mx-auto mb-10 text-lg">Cuéntanos sobre tu proyecto y te respondemos en menos de 24 horas con una propuesta personalizada.</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <button className="res-btn !mt-0 !w-auto !px-12">Solicitar cotización →</button>
+            <button
+              className="res-btn !mt-0 !w-auto !px-12"
+              onClick={() => { window.location.href = '/#contacto'; }}
+            >
+              Solicitar cotización →
+            </button>
             <a href="/" className="px-12 items-center flex border border-white/10 rounded-full text-sm font-mono hover:bg-white/5 transition-colors">Ver proyectos</a>
           </div>
         </div>

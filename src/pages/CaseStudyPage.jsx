@@ -1,17 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef, memo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, X as CloseIcon, ExternalLink } from 'lucide-react';
 import { caseStudies } from '../data/mock';
+
+// Función para resaltar métricas en el texto
+const highlightMetrics = (text) => {
+  if (!text) return '';
+  return text.replace(
+    /(\d+%|\d+,\d+%|<\d+ms|<\d+s|<\d+\.\d+s|\d+\s?días|\d+\s?módulos|\d+\s?productos|\d+\s?JS|\d+\s?frameworks|\b100%|\b0\b)/g,
+    '<span style="color:#6C63FF;font-weight:700">$1</span>'
+  );
+};
 
 const CaseStudyPage = () => {
   const { slug, projectSlug } = useParams();
   const navigate = useNavigate();
   const project = caseStudies.find(p => p.slug === projectSlug);
   const nextProjectData = project ? caseStudies.find(p => p.slug === project.nextProject) : null;
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showCaseNav, setShowCaseNav] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [projectSlug]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const atBottom = window.innerHeight + currentY >= document.body.scrollHeight - 50;
+
+      // Mostrar solo cuando scrollea hacia abajo y ya pasó 150px
+      if (currentY > 150 && currentY > lastScrollY.current + 10) {
+        setShowCaseNav(true);
+      }
+
+      // Ocultar cuando scrollea hacia arriba o está arriba del todo
+      if (currentY < lastScrollY.current - 10 || currentY < 150) {
+        setShowCaseNav(false);
+      }
+
+      // Ocultar cuando está abajo del todo (el header vuelve a aparecer)
+      if (atBottom) {
+        setShowCaseNav(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (!project) {
     return (
@@ -28,6 +67,49 @@ const CaseStudyPage = () => {
 
   return (
     <div className="min-h-screen bg-[#050507] pb-24">
+      {/* NAV FIJO CASE STUDY — aparece cuando el header principal se oculta */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 40,
+          transform: showCaseNav ? 'translateY(0)' : 'translateY(-110%)',
+          opacity: showCaseNav ? 1 : 0,
+          transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease',
+          background: 'rgba(5,5,7,0.95)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(240,241,245,0.07)',
+          padding: '1rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <button
+          onClick={() => navigate(`/proyectos/${slug}`)}
+          style={{ fontFamily: "'JetBrains Mono',monospace" }}
+          className="group flex items-center gap-2 text-white/60 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+        >
+          <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
+          Volver a {project.categoryTitle}
+        </button>
+
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontFamily: "'JetBrains Mono',monospace" }}
+            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+          >
+            Ver sitio en vivo
+            <ExternalLink size={14} />
+          </a>
+        )}
+      </div>
+
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-end px-6 pb-20 overflow-hidden">
         {/* Background Image/Gradient */}
@@ -36,6 +118,8 @@ const CaseStudyPage = () => {
             <img 
               src={project.heroImage} 
               alt={project.title} 
+              loading="eager"
+              fetchpriority="high"
               className="w-full h-full object-cover brightness-[0.3]"
             />
           ) : (
@@ -48,14 +132,6 @@ const CaseStudyPage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto w-full relative z-10 reveal">
-          <button 
-            onClick={() => navigate(`/proyectos/${slug}`)}
-            className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors font-mono text-xs mb-12 uppercase tracking-widest"
-          >
-            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-            VOLVER A {project.categoryTitle}
-          </button>
-
           <span 
             className="inline-block px-3 py-1 rounded-full text-[10px] font-mono border mb-6 uppercase tracking-widest"
             style={{ 
@@ -80,6 +156,19 @@ const CaseStudyPage = () => {
           >
             {project.subtitle}
           </p>
+
+          {project.link && (
+            <a 
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-10 px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-white font-mono text-xs uppercase tracking-widest transition-all hover:scale-105 backdrop-blur-sm"
+              style={{ fontFamily: "'JetBrains Mono',monospace" }}
+            >
+              VER SITIO EN VIVO
+              <ExternalLink size={16} />
+            </a>
+          )}
         </div>
       </section>
 
@@ -104,6 +193,23 @@ const CaseStudyPage = () => {
           </div>
         </div>
       </section>
+
+      {/* MÉTRICAS SECTION */}
+      {project.metrics && project.metrics.length > 0 && (
+        <section className="px-6 py-24 bg-[#0a0a0c]/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="section-label mb-8 tracking-[0.3em]">{"// Impacto del proyecto"}</div>
+            <div className="metrics-grid reveal">
+              {project.metrics.map((metric, i) => (
+                <div key={i} className="metric-card">
+                  <div className="metric-value">{metric.value}</div>
+                  <div className="metric-label">{metric.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Content Section */}
       <section className="px-6 py-32">
@@ -157,25 +263,38 @@ const CaseStudyPage = () => {
               <h2 className="text-4xl font-bebas text-white tracking-wide uppercase">Resultados</h2>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-3xl p-10 md:p-16">
-              <p className="text-2xl md:text-3xl text-white font-outfit font-light leading-relaxed italic">
-                "{project.results}"
-              </p>
+              <p 
+                className="text-2xl md:text-3xl text-white font-outfit font-light leading-relaxed italic"
+                dangerouslySetInnerHTML={{ __html: highlightMetrics(project.results) }}
+              />
             </div>
           </div>
 
           {/* Gallery */}
-          {project.gallery.length > 0 && (
+          {project.gallery && project.gallery.length > 0 && (
             <section className="reveal">
               <div className="section-label">{"// Galería del Proyecto"}</div>
               <div className="gallery-grid">
                 {project.gallery.map((img, i) => (
-                  <img
-                    key={i}
-                    src={img}
-                    alt={`${project.title} screenshot ${i + 1}`}
-                    className="w-full rounded-lg object-cover object-top"
-                    style={{ aspectRatio: i === 0 ? '16/9' : '4/3' }}
-                  />
+                  <div 
+                    key={i} 
+                    className="group cursor-zoom-in relative overflow-hidden rounded-lg"
+                    onClick={() => setSelectedImage(img)}
+                  >
+                    <img
+                      src={img}
+                      alt={`${project.title} screenshot ${i + 1}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      style={{ aspectRatio: i === 0 ? '16/9' : '4/3' }}
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-xs font-mono uppercase tracking-widest text-white">
+                        Ver Imagen
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </section>
@@ -215,8 +334,8 @@ const CaseStudyPage = () => {
               <p className="text-xl text-white/50 max-w-2xl mx-auto font-outfit mb-12 leading-relaxed">
                 Podemos desarrollar una solución a medida similar a esta para tu negocio. Hablemos sobre tus objetivos.
               </p>
-              <a 
-                href="#contacto"
+              <a
+                href="/cotizar"
                 className="inline-flex items-center gap-4 bg-white text-black px-12 py-5 rounded-full font-mono text-sm uppercase tracking-widest hover:bg-white/90 transition-all hover:scale-105"
                 style={{ fontFamily: "'JetBrains Mono',monospace" }}
               >
@@ -253,8 +372,26 @@ const CaseStudyPage = () => {
           )}
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div 
+          className="lightbox-overlay"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+            <button 
+              className="lightbox-close"
+              onClick={() => setSelectedImage(null)}
+            >
+              <CloseIcon size={24} />
+            </button>
+            <img src={selectedImage} alt="Fullscreen preview" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default CaseStudyPage;
+export default memo(CaseStudyPage);
