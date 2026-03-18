@@ -1,21 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Zap, 
-  Shield, 
   Rocket, 
-  Database, 
   Activity, 
   Mail, 
   ChevronDown, 
   ArrowLeft,
-  ArrowRight,
   Check,
   X,
-  Clock,
-  Globe,
   Lock,
-  History,
-  Bell
+  History
 } from 'lucide-react';
 import './Precios.css';
 
@@ -36,6 +30,31 @@ const QuorexLogo = () => (
   </svg>
 );
 
+// Static Data Moved Outside to avoid useEffect dependency issues
+const devOptions = [
+  { id: 'landing', name: 'Landing Page', price: 150, desc: 'Una página de impacto para captar clientes.' },
+  { id: 'corp', name: 'Página Corporativa', price: 300, desc: 'Sitio completo con múltiples secciones.' },
+  { id: 'catalog', name: 'Catálogo Digital', price: 350, desc: 'Muestra tus productos sin carrito de compras.' },
+  { id: 'ecommerce', name: 'E-commerce', price: 500, desc: 'Tienda online con carrito, pagos y panel admin.' },
+  { id: 'erp', name: 'Sistema Administrativo / ERP', price: 800, desc: 'Dashboard, CRM o sistema a la medida.' },
+  { id: 'saas', name: 'SaaS / Plataforma', price: 1500, desc: 'Plataforma completa con suscripciones y roles.' }
+];
+
+const hostingOptions = [
+  { id: 'none', name: 'Sin hosting por ahora', price: 0, desc: 'Solo el desarrollo. Puedes agregar hosting después.' },
+  { id: 'starter', name: 'Starter', price: 30, desc: 'Hosting + dominio .com* + SSL. Ideal para landings.' },
+  { id: 'business', name: 'Business', price: 75, desc: 'Starter + backups + soporte 24h + email (5 cuentas).' },
+  { id: 'enterprise', name: 'Enterprise', price: 120, desc: 'Business + mantenimiento + SEO + email (10 cuentas).' }
+];
+
+const extraOptions = [
+  { id: 'supabase', name: 'Supabase Pro', price: 40, type: 'monthly', desc: 'Base de datos para e-commerce/sistemas' },
+  { id: 'email', name: 'Email corporativo', price: 10, type: 'monthly', desc: 'Solo plan Starter' },
+  { id: 'seo', name: 'SEO inicial', price: 80, type: 'once', desc: 'Setup completo' },
+  { id: 'rush', name: 'Entrega urgente / Rush', price: 100, type: 'once', desc: 'Prioridad máxima' },
+  { id: 'multi', name: 'Idioma adicional ES/EN', price: 60, type: 'once', desc: 'Versión bilingüe' }
+];
+
 const Precios = () => {
   const [dev, setDev] = useState('landing');
   const [hosting, setHosting] = useState('starter');
@@ -55,31 +74,6 @@ const Precios = () => {
   });
 
   const [faqOpen, setFaqOpen] = useState(null);
-
-  // Data
-  const devOptions = [
-    { id: 'landing', name: 'Landing Page', price: 150, desc: 'Una página de impacto para captar clientes.' },
-    { id: 'corp', name: 'Página Corporativa', price: 300, desc: 'Sitio completo con múltiples secciones.' },
-    { id: 'catalog', name: 'Catálogo Digital', price: 350, desc: 'Muestra tus productos sin carrito de compras.' },
-    { id: 'ecommerce', name: 'E-commerce', price: 500, desc: 'Tienda online con carrito, pagos y panel admin.' },
-    { id: 'erp', name: 'Sistema Administrativo / ERP', price: 800, desc: 'Dashboard, CRM o sistema a la medida.' },
-    { id: 'saas', name: 'SaaS / Plataforma', price: 1500, desc: 'Plataforma completa con suscripciones y roles.' }
-  ];
-
-  const hostingOptions = [
-    { id: 'none', name: 'Sin hosting por ahora', price: 0, desc: 'Solo el desarrollo. Puedes agregar hosting después.' },
-    { id: 'starter', name: 'Starter', price: 30, desc: 'Hosting + dominio .com* + SSL. Ideal para landings.' },
-    { id: 'business', name: 'Business', price: 75, desc: 'Starter + backups + soporte 24h + email (5 cuentas).' },
-    { id: 'enterprise', name: 'Enterprise', price: 120, desc: 'Business + mantenimiento + SEO + email (10 cuentas).' }
-  ];
-
-  const extraOptions = [
-    { id: 'supabase', name: 'Supabase Pro', price: 40, type: 'monthly', desc: 'Base de datos para e-commerce/sistemas' },
-    { id: 'email', name: 'Email corporativo', price: 10, type: 'monthly', desc: 'Solo plan Starter' },
-    { id: 'seo', name: 'SEO inicial', price: 80, type: 'once', desc: 'Setup completo' },
-    { id: 'rush', name: 'Entrega urgente / Rush', price: 100, type: 'once', desc: 'Prioridad máxima' },
-    { id: 'multi', name: 'Idioma adicional ES/EN', price: 60, type: 'once', desc: 'Versión bilingüe' }
-  ];
 
   useEffect(() => {
     const selectedDev = devOptions.find(o => o.id === dev);
