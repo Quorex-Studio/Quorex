@@ -22,8 +22,11 @@ const CaseStudyPage = () => {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
+    if (project) {
+      document.title = `${project.title} — Quorex Studio`;
+    }
     window.scrollTo(0, 0);
-  }, [projectSlug]);
+  }, [projectSlug, project]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,7 +122,8 @@ const CaseStudyPage = () => {
               src={project.heroImage} 
               alt={project.title} 
               loading="eager"
-              fetchpriority="high"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover brightness-[0.3]"
             />
           ) : (
@@ -334,14 +338,14 @@ const CaseStudyPage = () => {
               <p className="text-xl text-white/50 max-w-2xl mx-auto font-outfit mb-12 leading-relaxed">
                 Podemos desarrollar una solución a medida similar a esta para tu negocio. Hablemos sobre tus objetivos.
               </p>
-              <a
-                href="/cotizar"
+              <Link
+                to="/precios"
                 className="inline-flex items-center gap-4 bg-white text-black px-12 py-5 rounded-full font-mono text-sm uppercase tracking-widest hover:bg-white/90 transition-all hover:scale-105"
                 style={{ fontFamily: "'JetBrains Mono',monospace" }}
               >
                 COTIZAR PROYECTO
                 <ArrowRight size={20} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

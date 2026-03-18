@@ -10,8 +10,11 @@ const CategoryPage = () => {
   const projects = caseStudies.filter(p => p.category === slug);
 
   useEffect(() => {
+    if (category) {
+      document.title = `${category.title} — Quorex Studio`;
+    }
     window.scrollTo(0, 0);
-  }, [slug]);
+  }, [slug, category]);
 
   if (!category) {
     return (
@@ -31,7 +34,7 @@ const CategoryPage = () => {
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
         <button 
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/#proyectos')}
           className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors font-mono text-sm mb-12"
           style={{ fontFamily: "'JetBrains Mono',monospace" }}
         >
@@ -136,6 +139,8 @@ const CategoryPage = () => {
                       <img 
                         src={project.heroImage} 
                         alt={project.title} 
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover brightness-50 group-hover:scale-105 transition-transform duration-700"
                       />
                     ) : (
@@ -229,7 +234,7 @@ const CategoryPage = () => {
                   Aún no tenemos proyectos de {category.title} publicados. El tuyo podría ser el primero en esta sección.
                 </p>
                 <a 
-                  href="#contacto"
+                  href="/#contacto"
                   className="px-8 py-4 rounded-full font-mono text-sm uppercase tracking-widest transition-all hover:scale-105"
                   style={{ backgroundColor: category.color, color: '#000' }}
                 >
@@ -249,7 +254,7 @@ const CategoryPage = () => {
             Hablemos sobre tu proyecto y cómo podemos ayudarte a llevarlo al siguiente nivel con tecnología de vanguardia.
           </p>
           <a 
-            href="#contacto"
+            href="/#contacto"
             className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-full font-mono text-sm uppercase tracking-widest hover:bg-white/90 transition-all hover:scale-105"
             style={{ fontFamily: "'JetBrains Mono',monospace" }}
           >

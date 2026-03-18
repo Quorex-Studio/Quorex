@@ -144,16 +144,15 @@ const Hero = () => {
           </button>
         </div>
 
-        {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-[#F0F1F5]/10 animate-[fadeUp_0.8s_0.4s_ease_both]">
           {[
-            { num: '50+', color: '#6C63FF', labelKey: 'hero.stats_projects' },
-            { num: '30+', color: '#FF6B6B', labelKey: 'hero.stats_clients' },
-            { num: '100%', color: '#00E5A0', labelKey: 'hero.stats_satisfaction' },
+            { num: '4', color: '#6C63FF', label: 'Proyectos en producción' },
+            { num: '3', color: '#FF6B6B', label: 'Clientes satisfechos' },
+            { num: '100%', color: '#00E5A0', label: 'Código a la medida' },
           ].map((s, i) => (
             <div key={i} className="text-center">
               <div className="text-4xl font-black leading-none" style={{ color: s.color, fontFamily: "'Bebas Neue', sans-serif" }}>{s.num}</div>
-              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{t(s.labelKey)}</div>
+              <div className="text-xs tracking-[0.1em] uppercase text-[#F0F1F5]/50 mt-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{s.label}</div>
             </div>
           ))}
         </div>

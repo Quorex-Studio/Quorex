@@ -23,7 +23,7 @@ const Projects = () => {
             <div className="text-xs font-mono tracking-[0.14em] uppercase text-[#6C63FF] mb-3" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t('projects.tag')}</div>
             <h2 className="text-[clamp(3rem,7vw,5rem)] font-black text-[#F0F1F5] leading-none" style={{ fontFamily: "'Bebas Neue',sans-serif" }}>{t('projects.title')}</h2>
           </div>
-          <a href="#contacto" className="px-5 py-2.5 border border-[#F0F1F5]/15 text-[#F0F1F5]/65 hover:border-[#6C63FF]/50 hover:text-[#6C63FF] transition-all text-sm font-mono hoverable" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t('common.start_project')}</a>
+          <a href="/#contacto" className="px-5 py-2.5 border border-[#F0F1F5]/15 text-[#F0F1F5]/65 hover:border-[#6C63FF]/50 hover:text-[#6C63FF] transition-all text-sm font-mono hoverable" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t('common.start_project')}</a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
