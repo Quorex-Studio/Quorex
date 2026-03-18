@@ -197,8 +197,32 @@ img {
   transform: none;
 }
 
+/* ── CASE STUDY GALLERY ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.gallery-grid img:first-child {
+  grid-column: 1 / -1;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 2rem;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
 
   .cursor,
   .cursor-ring {

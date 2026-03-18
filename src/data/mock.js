@@ -39,7 +39,7 @@ const dataES = {
       category: "landing",
       title: "Eina Shop",
       description: "Landing page premium para tienda de maquillaje, skincare y accesorios en Isla Margarita, Venezuela.",
-      image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800",
+      image: "/images/eina-home.png",
       color: "#78293c",
     },
     {
@@ -48,7 +48,7 @@ const dataES = {
       category: "landing",
       title: "Dulce's Cakes",
       description: "Landing page premium para pastelería artesanal venezolana con 13 productos y fotos reales.",
-      image: "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+      image: "/images/dulces-cakes-home.png",
       color: "#FF6B6B",
     }
   ],
@@ -99,7 +99,7 @@ const dataEN = {
       category: "landing",
       title: "Eina Shop",
       description: "Premium landing page for makeup, skincare, and accessories shop in Isla Margarita, Venezuela.",
-      image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80",
+      image: "/images/eina-home.png",
       color: "#78293c",
     },
     {
@@ -108,7 +108,7 @@ const dataEN = {
       category: "landing",
       title: "Dulce's Cakes",
       description: "Premium landing page for Venezuelan artisanal bakery with 13 products and real photos.",
-      image: "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+      image: "/images/dulces-cakes-home.png",
       color: "#FF6B6B",
     }
   ],
@@ -243,7 +243,13 @@ export const caseStudies = [
       "IA nativa 'Ángela' con 4 modos: soporte, personal shopper, cotizador y copilot",
       "Importación masiva de productos y gestión de proveedores"
     ],
-    gallery: [],
+    gallery: [
+      "/images/manojitos-dashboard.png",
+      "/images/manojitos-tienda.png",
+      "/images/manojitos-home-angela.png",
+      "/images/manojitos-opciones-admin.png",
+      "/images/manojitos-estadisticas.png",
+    ],
     link: "https://manojitos.vercel.app",
     nextProject: "eina-shop"
   },
@@ -288,7 +294,7 @@ export const caseStudies = [
     year: "2025",
     timeline: "4 días",
     color: "#78293c",
-    heroImage: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800",
+    heroImage: "/images/eina-home.png",
     challenge: "La tienda operaba 100% por Instagram sin presencia web propia. Sin catálogo digital, los clientes no podían ver todos los productos disponibles ni sus precios. La imagen de marca no reflejaba la calidad premium del maquillaje y skincare coreano que ofrecen.",
     solution: "Diseñamos una landing page de estética K-beauty, femenina y premium con HTML5, CSS3 y JavaScript vanilla puro. Hero con animación de estrella giratoria, marquee animado con productos, grid de 5 destacados con fotos reales e integración directa con WhatsApp Business.",
     results: "La marca ahora tiene presencia web profesional que refleja su identidad K-beauty premium. Los clientes pueden explorar productos y contactar directamente desde la página sin depender del algoritmo de Instagram.",
@@ -303,9 +309,7 @@ export const caseStudies = [
       "Paleta K-beauty: #78293c · #e1ae9d · #f4e7d7 · #252024"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800",
-      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=600",
-      "https://images.unsplash.com/photo-1596462502278-27bf85033e5a?q=80&w=400"
+      "/images/eina-home.png",
     ],
     link: "https://einashop.vercel.app",
     nextProject: "dulces-cakes"
@@ -322,7 +326,7 @@ export const caseStudies = [
     year: "2024",
     timeline: "3 días",
     color: "#FF6B6B",
-    heroImage: "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
+    heroImage: "/images/dulces-cakes-home.png",
     challenge: "La pastelería tomaba pedidos únicamente por Instagram sin presencia web propia. Sin catálogo digital, los clientes no podían ver todos los postres disponibles con sus fotos reales. La marca necesitaba una imagen profesional que reflejara la calidad artesanal de sus productos.",
     solution: "Diseñamos una landing page cálida y premium con HTML5 y CSS3 puro sin ningún framework. Hero con logo animado y floating pills de productos, marquee animado, grid de 13 postres con fotos reales, historia de marca y CTAs directos a WhatsApp e Instagram.",
     results: "La pastelería ahora tiene presencia web profesional con los 13 postres de su catálogo fotografiados y publicados. Los clientes pueden explorar cada postre con descripción y hacer el pedido directamente por WhatsApp desde la página.",
@@ -337,10 +341,9 @@ export const caseStudies = [
       "CTAs directos a WhatsApp Business e Instagram @dulce_scakes19"
     ],
     gallery: [
-      "https://dulcescakes.vercel.app/assets/marquesas.jpeg",
-      "https://dulcescakes.vercel.app/assets/tres_leches_tradicional.jpeg",
-      "https://dulcescakes.vercel.app/assets/torta_de_chocolate.jpeg",
-      "https://dulcescakes.vercel.app/assets/chocoflan.jpeg"
+      "/images/dulces-cakes-home.png",
+      "/images/dulces-cakes-dulces.png",
+      "/images/dulces-cakes-pedir.png",
     ],
     link: "https://dulcescakes.vercel.app",
     nextProject: "dashboard-financiero"

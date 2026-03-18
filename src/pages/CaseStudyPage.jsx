@@ -165,18 +165,20 @@ const CaseStudyPage = () => {
 
           {/* Gallery */}
           {project.gallery.length > 0 && (
-            <div className="reveal">
-              <div className="flex items-center gap-4 mb-12">
-                <h2 className="text-4xl font-bebas text-white tracking-wide uppercase">GALERÍA DEL PROYECTO</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {project.gallery.map((img, idx) => (
-                  <div key={idx} className={`rounded-2xl overflow-hidden border border-white/5 ${idx % 3 === 0 ? 'md:col-span-2' : ''}`}>
-                    <img src={img} alt={`${project.title} screenshot ${idx + 1}`} className="w-full h-auto object-cover" />
-                  </div>
+            <section className="reveal">
+              <div className="section-label">// Galería del Proyecto</div>
+              <div className="gallery-grid">
+                {project.gallery.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`${project.title} screenshot ${i + 1}`}
+                    className="w-full rounded-lg object-cover object-top"
+                    style={{ aspectRatio: i === 0 ? '16/9' : '4/3' }}
+                  />
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
           {/* Features */}
