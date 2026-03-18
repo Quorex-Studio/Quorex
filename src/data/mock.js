@@ -250,6 +250,14 @@ export const caseStudies = [
       "/images/manojitos-opciones-admin.png",
       "/images/manojitos-estadisticas.png",
     ],
+    metrics: [
+      { value: "65%",    label: "Reducción en tiempo de gestión de pedidos" },
+      { value: "80%",    label: "Incremento en capacidad de atención al cliente" },
+      { value: "72%",    label: "Reducción de errores de inventario" },
+      { value: "100%",   label: "Proceso de ventas digitalizado" },
+      { value: "<200ms", label: "Tiempo de carga en producción" },
+      { value: "5",      label: "Módulos integrados en una sola plataforma" },
+    ],
     link: "https://manojitos.vercel.app",
     nextProject: "eina-shop"
   },
@@ -277,6 +285,14 @@ export const caseStudies = [
       "Reportes exportables en PDF y Excel",
       "Roles y permisos por usuario",
       "Historial de transacciones con filtros avanzados"
+    ],
+    metrics: [
+      { value: "40%",    label: "Reducción en tiempo de análisis financiero" },
+      { value: "60%",    label: "Aumento en eficiencia del equipo de finanzas" },
+      { value: "+5,000", label: "Transacciones procesadas por segundo" },
+      { value: "<200ms", label: "Latencia del sistema en producción" },
+      { value: "100%",   label: "Datos centralizados en un solo panel" },
+      { value: "24/7",   label: "Monitoreo y alertas automáticas activas" },
     ],
     gallery: [],
     link: null,
@@ -311,6 +327,14 @@ export const caseStudies = [
     gallery: [
       "/images/eina-home.png",
     ],
+    metrics: [
+      { value: "4 días",   label: "De idea a producción" },
+      { value: "60%",      label: "Reducción en fricción de compra" },
+      { value: "0",        label: "Frameworks utilizados" },
+      { value: "<1.5s",    label: "Tiempo de carga en mobile" },
+      { value: "100%",     label: "Presencia web donde antes no había ninguna" },
+      { value: "K-beauty", label: "Estética internacional lograda" },
+    ],
     link: "https://einashop.vercel.app",
     nextProject: "dulces-cakes"
   },
@@ -344,6 +368,14 @@ export const caseStudies = [
       "/images/dulces-cakes-home.png",
       "/images/dulces-cakes-dulces.png",
       "/images/dulces-cakes-pedir.png",
+    ],
+    metrics: [
+      { value: "320%",   label: "Aumento del catálogo visible" },
+      { value: "55%",    label: "Reducción en tiempo de respuesta al cliente" },
+      { value: "13",     label: "Productos con fotos reales publicados" },
+      { value: "3 días", label: "Tiempo de lanzamiento a producción" },
+      { value: "<1s",    label: "Tiempo de carga" },
+      { value: "0 JS",   label: "Animaciones 100% CSS puro" },
     ],
     link: "https://dulcescakes.vercel.app",
     nextProject: "dashboard-financiero"

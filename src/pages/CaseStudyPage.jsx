@@ -198,22 +198,7 @@ const CaseStudyPage = () => {
         </div>
       </section>
 
-      {/* MÉTRICAS SECTION */}
-      {project.metrics && project.metrics.length > 0 && (
-        <section className="px-6 py-24 bg-[#0a0a0c]/50">
-          <div className="max-w-7xl mx-auto">
-            <div className="section-label mb-8 tracking-[0.3em]">{"// Impacto del proyecto"}</div>
-            <div className="metrics-grid reveal">
-              {project.metrics.map((metric, i) => (
-                <div key={i} className="metric-card">
-                  <div className="metric-value">{metric.value}</div>
-                  <div className="metric-label">{metric.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+
 
       {/* Content Section */}
       <section className="px-6 py-32">
@@ -273,6 +258,24 @@ const CaseStudyPage = () => {
               />
             </div>
           </div>
+
+          {/* 04 — Impacto */}
+          {project.metrics && project.metrics.length > 0 && (
+            <div className="reveal">
+              <div className="flex items-center gap-4 mb-10">
+                <span className="text-6xl font-bebas text-white/5">04</span>
+                <h2 className="text-4xl font-bebas text-white tracking-wide uppercase">Impacto</h2>
+              </div>
+              <div className="metrics-grid">
+                {project.metrics.map((metric, i) => (
+                  <div key={i} className="metric-card">
+                    <div className="metric-value">{metric.value}</div>
+                    <div className="metric-label">{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Gallery */}
           {project.gallery && project.gallery.length > 0 && (
