@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "sonner";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
@@ -111,6 +112,7 @@ function AppContent() {
       </Routes>
       <Footer />
       <Toaster richColors position="bottom-right" />
+      <SpeedInsights />
     </div>
   );
 }
