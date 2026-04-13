@@ -5,11 +5,16 @@ import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Preloader from "./components/Preloader";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import CategoryPage from "./pages/CategoryPage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import Precios from "./pages/Precios";
+import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { trackPageView } from "./hooks/useGTM";
 
 // ScrollToHash: handles navigation to /#section from other pages
 const ScrollToHash = () => {
@@ -17,7 +22,6 @@ const ScrollToHash = () => {
   useEffect(() => {
     if (hash) {
       const id = hash.replace('#', '');
-      // Wait for the page to render, then scroll
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
@@ -36,7 +40,7 @@ const RevealObserver = () => {
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => {
-      el.classList.remove('visible'); // reset for re-entry
+      el.classList.remove('visible');
       obs.observe(el);
     });
     return () => obs.disconnect();
@@ -44,10 +48,21 @@ const RevealObserver = () => {
   return null;
 };
 
+// Analytics page tracking
+const AnalyticsTracker = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    trackPageView(pathname, document.title);
+  }, [pathname]);
+
+  return null;
+};
+
 function AppContent() {
   const [loading, setLoading] = useState(true);
 
-  // Custom cursor
+  // Custom cursor - improved with route change support
   useEffect(() => {
     if (loading) return;
 
@@ -77,20 +92,24 @@ function AppContent() {
       ring.style.borderColor = 'rgba(108,99,255,0.5)';
     };
 
-    const interactableElements = document.querySelectorAll('a, button, .hoverable');
-    interactableElements.forEach(el => {
-      el.addEventListener('mouseenter', grow);
-      el.addEventListener('mouseleave', shrink);
-    });
+    // Use event delegation instead of attaching to each element
+    const handleMouseOver = (e) => {
+      const target = e.target.closest('a, button, .hoverable');
+      if (target) grow();
+    };
+    const handleMouseOut = (e) => {
+      const target = e.target.closest('a, button, .hoverable');
+      if (target) shrink();
+    };
 
     document.addEventListener('mousemove', move);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
 
     return () => {
       document.removeEventListener('mousemove', move);
-      interactableElements.forEach(el => {
-        el.removeEventListener('mouseenter', grow);
-        el.removeEventListener('mouseleave', shrink);
-      });
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
     };
   }, [loading]);
 
@@ -104,14 +123,19 @@ function AppContent() {
 
       <ScrollToHash />
       <RevealObserver />
+      <AnalyticsTracker />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/proyectos/:slug" element={<CategoryPage />} />
         <Route path="/proyectos/:slug/:projectSlug" element={<CaseStudyPage />} />
         <Route path="/precios" element={<Precios />} />
+        <Route path="/privacidad" element={<PrivacyPolicy />} />
+        <Route path="/terminos" element={<TermsOfService />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+      <ScrollToTop />
       <Toaster richColors position="bottom-right" />
     </div>
   );

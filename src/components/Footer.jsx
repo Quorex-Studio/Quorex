@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Github, Twitter, Linkedin } from 'lucide-react';
 import { contactInfo } from '../data/mock';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -41,8 +42,8 @@ const Footer = () => {
         <div className="border-t border-white/[0.05] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-[#F0F1F5]/40" style={{ fontFamily: "'JetBrains Mono',monospace" }}>
           <div>&copy; {currentYear} Quorex Studio. {t('footer.rights')}</div>
           <div className="flex gap-6">
-            <a href="#privacy" aria-label="Política de privacidad" className="hover:text-white transition-colors hoverable">Privacy Policy</a>
-            <a href="#terms" aria-label="Términos de servicio" className="hover:text-white transition-colors hoverable">Terms of Service</a>
+            <Link to="/privacidad" aria-label="Política de privacidad" className="hover:text-white transition-colors hoverable">Privacy Policy</Link>
+            <Link to="/terminos" aria-label="Términos de servicio" className="hover:text-white transition-colors hoverable">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -1,21 +1,60 @@
 import React, { useState } from 'react';
 import { Send, Mail, MapPin } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { trackFormSubmission } from '../hooks/useGTM';
 
 const Contact = () => {
   const [formState, setFormState] = useState({ name: '', email: '', service: '', budget: '', details: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
   const { t } = useLanguage();
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!formState.name.trim()) return 'El nombre es requerido';
+    if (!formState.email.trim()) return 'El email es requerido';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) return 'Email inválido';
+    if (!formState.service) return 'Selecciona un servicio';
+    if (!formState.budget) return 'Selecciona un presupuesto';
+    if (!formState.details.trim()) return 'Los detalles son requeridos';
+    if (formState.details.trim().length < 20) return 'Los detalles deben tener al menos 20 caracteres';
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setIsSubmitting(true);
-    // Simulate API call
+
+    // Track form submission in GTM
+    trackFormSubmission('contact_form', 'home_page');
+
+    // Build mailto link as fallback
+    const subject = encodeURIComponent(`Nuevo proyecto de ${formState.name}`);
+    const body = encodeURIComponent(
+      `Nombre: ${formState.name}\n` +
+      `Email: ${formState.email}\n` +
+      `Servicio: ${formState.service}\n` +
+      `Presupuesto: ${formState.budget}\n` +
+      `Detalles: ${formState.details}`
+    );
+
+    // Simulate API call (replace with real backend later)
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
       setFormState({ name: '', email: '', service: '', budget: '', details: '' });
+
+      // Open mailto after showing success
+      window.location.href = `mailto:${process.env.REACT_APP_CONTACT_EMAIL || 'michael.rafael03@gmail.com'}?subject=${subject}&body=${body}`;
+
       setTimeout(() => setSubmitted(false), 5000);
     }, 1500);
   };
@@ -71,6 +110,11 @@ const Contact = () => {
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#6C63FF]/10 blur-[100px] pointer-events-none rounded-full" />
 
               <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                {error && (
+                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm font-outfit" role="alert" aria-live="polite">
+                    {error}
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label htmlFor="contact-name" className="text-xs font-mono tracking-widest text-[#F0F1F5]/50 uppercase">Nombre</label>
