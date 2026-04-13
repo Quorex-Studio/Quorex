@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050507"/>
+      <stop offset="100%" stop-color="#0a0a0c"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6C63FF"/>
+      <stop offset="50%" stop-color="#FF6B6B"/>
+      <stop offset="100%" stop-color="#00E5A0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="150" cy="100" r="200" fill="#6C63FF" opacity="0.05"/>
+  <circle cx="1050" cy="530" r="250" fill="#FF6B6B" opacity="0.05"/>
+  
+  <!-- Logo Q -->
+  <g transform="translate(100, 180)">
+    <circle cx="60" cy="60" r="50" fill="none" stroke="url(#accent)" stroke-width="8"/>
+    <path d="M 70 70 L 110 110" stroke="url(#accent)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Main Text -->
+  <text x="250" y="220" font-family="Arial, sans-serif" font-size="80" font-weight="900" fill="#F0F1F5" letter-spacing="4">
+    QUOREX
+  </text>
+  
+  <text x="250" y="300" font-family="Arial, sans-serif" font-size="56" font-weight="900" fill="url(#accent)" letter-spacing="3">
+    STUDIO
+  </text>
+  
+  <!-- Tagline -->
+  <text x="250" y="380" font-family="Arial, sans-serif" font-size="28" fill="#F0F1F5" opacity="0.7">
+    Desarrollo Web Premium
+  </text>
+  
+  <!-- Bottom accent line -->
+  <rect x="250" y="420" width="400" height="4" fill="url(#accent)" rx="2"/>
+  
+  <!-- Website URL -->
+  <text x="250" y="480" font-family="Arial, sans-serif" font-size="24" fill="#6C63FF" letter-spacing="2">
+    quorex.studio
+  </text>
+</svg>
