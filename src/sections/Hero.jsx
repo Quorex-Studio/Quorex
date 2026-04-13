@@ -96,6 +96,22 @@ const Hero = () => {
     };
   }, []);
 
+  // Lazy load hero image
+  useEffect(() => {
+    const preloadImages = () => {
+      const images = ['/images/manojitos-dashboard.png'];
+      images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(preloadImages);
+    } else {
+      setTimeout(preloadImages, 1000);
+    }
+  }, []);
+
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (

@@ -28,9 +28,32 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Optimización segura */
-.reveal, .hoverable, button, a {
+/* Optimización segura - solo en elementos animados activos */
+.reveal {
   will-change: transform, opacity;
+}
+
+.hoverable:hover {
+  will-change: transform;
+}
+
+/* Reduce motion para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-bounce,
+  .animate-pulse,
+  .animate-float {
+    animation: none !important;
+  }
 }
 
 /* ── CUSTOM CURSOR ── */
@@ -276,8 +299,15 @@ img {
 }
 
 @keyframes scaleUp {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* ── MOBILE ── */
@@ -308,17 +338,18 @@ img {
   .lightbox-close {
     top: 1rem;
     right: 1rem;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
   }
 }
+
 /* ── METRICS GRID ─────────────────────────────────────── */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: rgba(240,241,245,0.07);
-  border: 1px solid rgba(240,241,245,0.07);
+  background: rgba(240, 241, 245, 0.07);
+  border: 1px solid rgba(240, 241, 245, 0.07);
   margin-top: 1.5rem;
 }
 
@@ -347,7 +378,7 @@ img {
 
 .metric-label {
   font-size: 0.72rem;
-  color: rgba(240,241,245,0.4);
+  color: rgba(240, 241, 245, 0.4);
   line-height: 1.4;
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.06em;
@@ -364,6 +395,7 @@ img {
   .metrics-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .metric-value {
     font-size: 2.2rem;
   }

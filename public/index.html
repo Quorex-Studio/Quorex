@@ -1,28 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#050507" />
-    <meta name="description" content="Quorex Studio — Transformamos ideas en productos digitales de alto impacto. Diseño, desarrollo web premium y resultados a la medida." />
-    <meta name="keywords" content="Desarrollo web, Diseño premium, Agencia digital, UI/UX, React, Startups, Quorex" />
-    <meta name="author" content="Quorex Studio" />
-    
-    <!-- Open Graph for Social Sharing -->
-    <meta property="og:title" content="Quorex Studio | Desarrollo Web Premium" />
-    <meta property="og:description" content="Transformamos ideas en productos digitales de alto impacto. Código a la medida, sin plantillas." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://quorex.studio" />
-    
-    <title>Quorex Studio | Desarrollo Web Premium</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236C63FF'/><stop offset='100%25' stop-color='%23FF6B6B'/></linearGradient><mask id='m'><rect width='120' height='120' fill='white'/><path d='M 65 61 L 88 84 L 65 107' fill='none' stroke='black' stroke-width='24'/></mask></defs><rect width='120' height='120' fill='%23050507'/><circle cx='50' cy='50' r='32' fill='none' stroke='url(%23g)' stroke-width='14' mask='url(%23m)'/><path d='M 65 61 L 88 84 L 65 107' fill='none' stroke='url(%23g)' stroke-width='14' stroke-linejoin='miter'/></svg>" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <noscript>Necesitas habilitar JavaScript para correr esta app.</noscript>
-    <div id="root"></div>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050507" />
+  <meta name="description"
+    content="Quorex Studio — Transformamos ideas en productos digitales de alto impacto. Diseño, desarrollo web premium y resultados a la medida." />
+  <meta name="keywords" content="Desarrollo web, Diseño premium, Agencia digital, UI/UX, React, Startups, Quorex" />
+  <meta name="author" content="Quorex Studio" />
+
+  <!-- Security Headers (meta equivalents) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="Quorex Studio | Desarrollo Web Premium" />
+  <meta property="og:description"
+    content="Transformamos ideas en productos digitales de alto impacto. Código a la medida, sin plantillas." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://quorex.studio" />
+  <meta property="og:image" content="https://quorex.studio/og-image.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quorex Studio | Desarrollo Web Premium" />
+  <meta name="twitter:description"
+    content="Transformamos ideas en productos digitales de alto impacto. Código a la medida, sin plantillas." />
+  <meta name="twitter:image" content="https://quorex.studio/og-image.png" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://quorex.studio" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+
+  <title>Quorex Studio | Desarrollo Web Premium</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236C63FF'/><stop offset='100%25' stop-color='%23FF6B6B'/></linearGradient><mask id='m'><rect width='120' height='120' fill='white'/><path d='M 65 61 L 88 84 L 65 107' fill='none' stroke='black' stroke-width='24'/></mask></defs><rect width='120' height='120' fill='%23050507'/><circle cx='50' cy='50' r='32' fill='none' stroke='url(%23g)' stroke-width='14' mask='url(%23m)'/><path d='M 65 61 L 88 84 L 65 107' fill='none' stroke='url(%23g)' stroke-width='14' stroke-linejoin='miter'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Quorex Studio",
+      "url": "https://quorex.studio",
+      "description": "Transformamos ideas en productos digitales de alto impacto. Diseño, desarrollo web premium y resultados a la medida.",
+      "email": "michael.rafael03@gmail.com",
+      "telephone": "+58 412 3574858",
+      "sameAs": ["https://github.com/Quorex-Studio"],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "150",
+        "highPrice": "1500"
+      }
+    }
+    </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-W7SP74CQ');</script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W7SP74CQ" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <noscript>Necesitas habilitar JavaScript para correr esta app.</noscript>
+  <div id="root"></div>
+</body>
+
 </html>

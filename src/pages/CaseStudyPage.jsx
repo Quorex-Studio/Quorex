@@ -118,16 +118,16 @@ const CaseStudyPage = () => {
         {/* Background Image/Gradient */}
         <div className="absolute inset-0 z-0">
           {project.heroImage ? (
-            <img 
-              src={project.heroImage} 
-              alt={project.title} 
+            <img
+              src={project.heroImage}
+              alt={project.title}
               loading="eager"
               fetchPriority="high"
               decoding="async"
               className="w-full h-full object-cover brightness-[0.3]"
             />
           ) : (
-            <div 
+            <div
               className="w-full h-full opacity-30"
               style={{ background: `linear-gradient(135deg, ${project.color}, #050507)` }}
             />
@@ -136,10 +136,10 @@ const CaseStudyPage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto w-full relative z-10 reveal">
-          <span 
+          <span
             className="inline-block px-3 py-1 rounded-full text-[10px] font-mono border mb-6 uppercase tracking-widest"
-            style={{ 
-              borderColor: `${project.color}40`, 
+            style={{
+              borderColor: `${project.color}40`,
               color: project.color,
               backgroundColor: `${project.color}10`,
               fontFamily: "'JetBrains Mono',monospace"
@@ -147,14 +147,14 @@ const CaseStudyPage = () => {
           >
             {project.categoryTitle}
           </span>
-          
-          <h1 
+
+          <h1
             className="text-[clamp(4rem,10vw,9rem)] font-black text-white leading-[0.8] mb-6 uppercase"
             style={{ fontFamily: "'Bebas Neue',sans-serif" }}
           >
             {project.title}
           </h1>
-          <p 
+          <p
             className="text-xl md:text-3xl text-white/80 max-w-4xl font-outfit font-light leading-relaxed"
             style={{ fontFamily: "'Outfit',sans-serif" }}
           >
@@ -162,7 +162,7 @@ const CaseStudyPage = () => {
           </p>
 
           {project.link && (
-            <a 
+            <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -208,7 +208,7 @@ const CaseStudyPage = () => {
             <div className="lg:col-span-1 border-r border-white/5 hidden lg:block">
               <span className="text-sm font-mono text-white/10 [writing-mode:vertical-lr] rotate-180 uppercase tracking-[0.5em]">CASE STUDY</span>
             </div>
-            
+
             <div className="lg:col-span-5 reveal">
               <div className="flex items-center gap-4 mb-10">
                 <span className="text-6xl font-bebas text-white/5">01</span>
@@ -227,13 +227,13 @@ const CaseStudyPage = () => {
               <p className="text-lg text-white/60 leading-relaxed font-outfit mb-12">
                 {project.solution}
               </p>
-              
+
               <div className="space-y-4">
                 <div className="text-[10px] font-mono text-white/30 uppercase tracking-widest">Stack de Tecnologías</div>
                 <div className="flex flex-wrap gap-2">
                   {project.stack.map(tech => (
-                    <span 
-                      key={tech} 
+                    <span
+                      key={tech}
                       className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-white/70 font-mono"
                       style={{ fontFamily: "'JetBrains Mono',monospace" }}
                     >
@@ -252,7 +252,7 @@ const CaseStudyPage = () => {
               <h2 className="text-4xl font-bebas text-white tracking-wide uppercase">Resultados</h2>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-3xl p-10 md:p-16">
-              <p 
+              <p
                 className="text-2xl md:text-3xl text-white font-outfit font-light leading-relaxed italic"
                 dangerouslySetInnerHTML={{ __html: highlightMetrics(project.results) }}
               />
@@ -283,14 +283,18 @@ const CaseStudyPage = () => {
               <div className="section-label">{"// Galería del Proyecto"}</div>
               <div className="gallery-grid">
                 {project.gallery.map((img, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className="group cursor-zoom-in relative overflow-hidden rounded-lg"
                     onClick={() => setSelectedImage(img)}
+                    role="button"
+                    aria-label={`Ver imagen ${i + 1} del proyecto ${project.title}`}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setSelectedImage(img); e.preventDefault(); } }}
                   >
                     <img
                       src={img}
-                      alt={`${project.title} screenshot ${i + 1}`}
+                      alt={`${project.title} - Captura de pantalla ${i + 1}`}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
@@ -315,7 +319,7 @@ const CaseStudyPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-6">
               {project.features.map((feat, idx) => (
                 <div key={idx} className="flex items-start gap-4 p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
-                  <div 
+                  <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: `${project.color}20`, color: project.color }}
                   >
@@ -332,7 +336,7 @@ const CaseStudyPage = () => {
       {/* CTA Section */}
       <section className="px-6 py-20 reveal">
         <div className="max-w-7xl mx-auto">
-          <div 
+          <div
             className="relative rounded-[3rem] p-12 md:p-24 overflow-hidden border border-white/10"
             style={{ background: `linear-gradient(135deg, ${project.color}20, #0a0a0c)` }}
           >
@@ -357,7 +361,7 @@ const CaseStudyPage = () => {
       {/* Bottom Navigation */}
       <section className="px-6 py-12 border-t border-white/5">
         <div className="max-w-7xl mx-auto flex justify-between items-center reveal">
-          <Link 
+          <Link
             to={`/proyectos/${slug}`}
             className="flex items-center gap-2 text-white/40 hover:text-white transition-colors font-mono text-xs uppercase tracking-[0.2em]"
           >
@@ -365,7 +369,7 @@ const CaseStudyPage = () => {
           </Link>
 
           {nextProjectData && (
-            <Link 
+            <Link
               to={`/proyectos/${nextProjectData.category}/${nextProjectData.slug}`}
               className="group flex flex-col items-end text-right"
             >
@@ -382,18 +386,22 @@ const CaseStudyPage = () => {
 
       {/* Lightbox Modal */}
       {selectedImage && (
-        <div 
+        <div
           className="lightbox-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Vista de imagen ampliada"
           onClick={() => setSelectedImage(null)}
         >
           <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-            <button 
+            <button
               className="lightbox-close"
               onClick={() => setSelectedImage(null)}
+              aria-label="Cerrar vista de imagen"
             >
-              <CloseIcon size={24} />
+              <CloseIcon size={24} aria-hidden="true" />
             </button>
-            <img src={selectedImage} alt="Fullscreen preview" />
+            <img src={selectedImage} alt="Vista previa de imagen ampliada" />
           </div>
         </div>
       )}

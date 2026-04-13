@@ -77,15 +77,17 @@ function AppContent() {
       ring.style.borderColor = 'rgba(108,99,255,0.5)';
     };
 
-    document.addEventListener('mousemove', move);
-    document.querySelectorAll('a, button, .hoverable').forEach(el => {
+    const interactableElements = document.querySelectorAll('a, button, .hoverable');
+    interactableElements.forEach(el => {
       el.addEventListener('mouseenter', grow);
       el.addEventListener('mouseleave', shrink);
     });
 
+    document.addEventListener('mousemove', move);
+
     return () => {
       document.removeEventListener('mousemove', move);
-      document.querySelectorAll('a, button, .hoverable').forEach(el => {
+      interactableElements.forEach(el => {
         el.removeEventListener('mouseenter', grow);
         el.removeEventListener('mouseleave', shrink);
       });

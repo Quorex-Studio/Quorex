@@ -46,7 +46,7 @@ const Services = () => {
                   <p className="text-[#F0F1F5]/60 text-sm leading-relaxed mb-6" style={{ fontFamily: "'Outfit',sans-serif" }}>{s.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {s.tags.map(t => (
-                      <span key={t} className="font-mono text-[0.65rem] px-3 py-1 bg-white/[0.02] border border-[#F0F1F5]/10 text-[#F0F1F5]/50 tracking-wilde rounded-full group-hover:bg-[#F0F1F5]/10 transition-colors" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t}</span>
+                      <span key={t} className="font-mono text-[0.65rem] px-3 py-1 bg-white/[0.02] border border-[#F0F1F5]/10 text-[#F0F1F5]/50 tracking-wider rounded-full group-hover:bg-[#F0F1F5]/10 transition-colors" style={{ fontFamily: "'JetBrains Mono',monospace" }}>{t}</span>
                     ))}
                   </div>
                 </div>

@@ -9,7 +9,7 @@ const ProjectDetail = () => {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
   const localizedProjects = getLocalizedData(language).projects;
-  
+
   const [projectIndex, setProjectIndex] = useState(-1);
   const [lightboxImg, setLightboxImg] = useState(null);
 
@@ -45,17 +45,20 @@ const ProjectDetail = () => {
 
   return (
     <div className="bg-[#050507] min-h-screen text-[#F0F1F5] font-outfit selection:bg-[#6C63FF]/30">
-      
+
       {/* Lightbox */}
       {lightboxImg && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-[#050507]/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer animate-fade-in"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Vista de imagen ampliada"
           onClick={() => setLightboxImg(null)}
         >
-          <button aria-label="Close Gallery" className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/5 p-2 rounded-full">
-            <X className="w-6 h-6" />
+          <button aria-label="Cerrar galería" className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/5 p-2 rounded-full">
+            <X className="w-6 h-6" aria-hidden="true" />
           </button>
-          <img src={lightboxImg} alt="Gallery view" className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
+          <img src={lightboxImg} alt="Vista de galería" className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
         </div>
       )}
 
@@ -63,9 +66,9 @@ const ProjectDetail = () => {
       <section className="relative h-[70vh] min-h-[500px] flex items-end pb-16 overflow-hidden">
         {/* Background Image with Parallax & Tint */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={project.heroImage} 
-            alt={project.title} 
+          <img
+            src={project.heroImage}
+            alt={project.title}
             className="w-full h-full object-cover brightness-50 contrast-125"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/80 to-transparent mix-blend-multiply" />
@@ -76,17 +79,17 @@ const ProjectDetail = () => {
           <Link to="/" className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors group text-sm font-mono uppercase tracking-widest bg-white/5 px-4 py-2 rounded-full border border-white/10 backdrop-blur-sm">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> {t('detail.back')}
           </Link>
-          
+
           <div className="flex items-center gap-4 mb-4">
             <div className="px-3 py-1 border border-white/20 rounded-full text-xs font-mono uppercase tracking-widest bg-white/5 backdrop-blur-md" style={{ color: project.color }}>
               {project.category}
             </div>
           </div>
-          
+
           <h1 className="font-bebas text-[clamp(4rem,8vw,8rem)] leading-[0.85] tracking-tight mb-6 drop-shadow-2xl">
             {project.title}
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-white/80 max-w-3xl font-light leading-relaxed">
             {project.description}
           </p>
@@ -94,7 +97,7 @@ const ProjectDetail = () => {
       </section>
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        
+
         {/* Metadata Strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-b border-white/10 mb-16 animate-[fadeUp_0.8s_0.2s_ease_both]">
           {[
@@ -113,10 +116,10 @@ const ProjectDetail = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-          
+
           {/* Main Content (Left) */}
           <div className="lg:col-span-8 space-y-16 animate-[fadeUp_0.8s_0.3s_ease_both]">
-            
+
             {/* Storytelling Sections */}
             {[
               { titleKey: 'detail.challenge', content: project.challenge, num: '01' },
@@ -144,14 +147,19 @@ const ProjectDetail = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {project.gallery.map((img, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className={`overflow-hidden rounded-xl bg-white/5 border border-white/5 cursor-zoom-in group ${i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'}`}
                     onClick={() => setLightboxImg(img)}
+                    role="button"
+                    aria-label={`Ver imagen ${i + 1} del proyecto ${project.title}`}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setLightboxImg(img); e.preventDefault(); } }}
                   >
-                    <img 
-                      src={img} 
-                      alt={`${project.title} screenshot ${i+1}`} 
+                    <img
+                      src={img}
+                      alt={`${project.title} - Captura de pantalla ${i + 1}`}
+                      loading="lazy"
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                     />
                   </div>
@@ -163,15 +171,15 @@ const ProjectDetail = () => {
 
           {/* Sidebar (Right) */}
           <div className="lg:col-span-4 space-y-12 animate-[fadeUp_0.8s_0.4s_ease_both]">
-            
+
             <div className="sticky top-32 p-8 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm">
               <h4 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-6">
                 {t('detail.stack')}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((tech) => (
-                  <span 
-                    key={tech} 
+                  <span
+                    key={tech}
                     className="px-4 py-2 bg-[#050507] border border-white/10 rounded-lg text-sm text-white/70 font-mono transition-colors hover:bg-white/5 hover:border-white/20"
                   >
                     {tech}
@@ -179,7 +187,7 @@ const ProjectDetail = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* CTA specific to case studies */}
             <div className="p-8 rounded-2xl bg-gradient-to-br from-[#6C63FF]/20 to-[#FF6B6B]/10 border border-[#6C63FF]/30 relative overflow-hidden group">
               <div className="absolute inset-0 bg-[#6C63FF]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl uppercase font-bold" />
@@ -187,7 +195,7 @@ const ProjectDetail = () => {
               <p className="text-white/70 text-sm mb-6 relative z-10 font-light leading-relaxed">
                 {t('detail.cta_subtitle')}
               </p>
-              <button 
+              <button
                 onClick={() => navigate('/#contacto')}
                 className="w-full py-3 bg-white text-black font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-[#00E5A0] transition-colors relative z-10"
               >

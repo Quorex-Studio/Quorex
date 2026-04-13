@@ -34,7 +34,7 @@ const Header = () => {
   const [visible, setVisible] = useState(true);
   const [atTop, setAtTop] = useState(true);
   const lastScrollY = useRef(0);
-  
+
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
@@ -94,6 +94,8 @@ const Header = () => {
 
   return (
     <nav
+      role="navigation"
+      aria-label="Navegación principal"
       style={{
         transform: visible ? 'translateY(0)' : 'translateY(-110%)',
         opacity: visible ? 1 : 0,
@@ -110,11 +112,11 @@ const Header = () => {
       className="flex items-center justify-between px-8 py-5"
     >
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-        <button onClick={() => { if (isHome) { window.scrollTo({ top:0, behavior:'smooth' }); } else { navigate('/'); } }} className="flex items-center gap-2 group hoverable">
+        <button onClick={() => { if (isHome) { window.scrollTo({ top: 0, behavior: 'smooth' }); } else { navigate('/'); } }} className="flex items-center gap-2 group hoverable">
           <QuorexLogo />
           <div className="leading-none text-left">
-            <div className="font-black text-[#F0F1F5] text-base tracking-wide group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#6C63FF] group-hover:to-[#00E5A0] transition-all duration-300" style={{fontFamily:"'Bebas Neue',sans-serif"}}>QUOREX</div>
-            <div className="text-[0.45rem] tracking-[0.18em] text-[#F0F1F5]/40 uppercase" style={{fontFamily:"'JetBrains Mono',monospace"}}>Studio</div>
+            <div className="font-black text-[#F0F1F5] text-base tracking-wide group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#6C63FF] group-hover:to-[#00E5A0] transition-all duration-300" style={{ fontFamily: "'Bebas Neue',sans-serif" }}>QUOREX</div>
+            <div className="text-[0.45rem] tracking-[0.18em] text-[#F0F1F5]/40 uppercase" style={{ fontFamily: "'JetBrains Mono',monospace" }}>Studio</div>
           </div>
         </button>
 
@@ -125,9 +127,13 @@ const Header = () => {
               <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] group-hover:w-full transition-all duration-300 rounded-full" />
             </button>
           ))}
-          
-          <button onClick={toggleLanguage} aria-label="Change Language" className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] hover:border-[#6C63FF]/50 text-[#F0F1F5]/60 hover:text-[#F0F1F5] transition-all hoverable">
-            <Globe className="w-3.5 h-3.5" />
+
+          <button
+            onClick={toggleLanguage}
+            aria-label={`Cambiar idioma a ${language === 'es' ? 'inglés' : 'español'}`}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] hover:border-[#6C63FF]/50 text-[#F0F1F5]/60 hover:text-[#F0F1F5] transition-all hoverable"
+          >
+            <Globe className="w-3.5 h-3.5" aria-hidden="true" />
             <span className="text-xs font-mono font-bold">{language.toUpperCase()}</span>
           </button>
         </div>
@@ -136,23 +142,34 @@ const Header = () => {
           {t('nav.quote')}
         </button>
 
-        <button aria-label="Toggle Menu" className="md:hidden text-[#F0F1F5] p-1 hoverable" onClick={() => setOpen(v => !v)}>
+        <button
+          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          className="md:hidden text-[#F0F1F5] p-1 hoverable"
+          onClick={() => setOpen(v => !v)}
+        >
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[#050507]/98 border-t border-white/[0.08] px-6 py-6 flex flex-col gap-5 animate-fade-in shadow-2xl">
-          <button onClick={toggleLanguage} className="flex items-center gap-2 text-[#F0F1F5]/70 hover:text-[#F0F1F5] text-sm">
+        <div
+          id="mobile-menu"
+          role="menu"
+          aria-label="Menú móvil"
+          className="md:hidden absolute top-full left-0 right-0 bg-[#050507]/98 border-t border-white/[0.08] px-6 py-6 flex flex-col gap-5 animate-fade-in shadow-2xl"
+        >
+          <button onClick={toggleLanguage} role="menuitem" aria-label="Cambiar idioma" className="flex items-center gap-2 text-[#F0F1F5]/70 hover:text-[#F0F1F5] text-sm">
             <Globe className="w-4 h-4" />
             <span className="font-mono">{language === 'es' ? 'English' : 'Español'}</span>
           </button>
           {navItems.map(i => (
-            <button key={i.id} onClick={() => go(i.id)} className="text-left text-[#F0F1F5]/70 hover:text-[#F0F1F5] text-base" style={{ fontFamily: "'Outfit',sans-serif" }}>
+            <button key={i.id} role="menuitem" onClick={() => go(i.id)} className="text-left text-[#F0F1F5]/70 hover:text-[#F0F1F5] text-base" style={{ fontFamily: "'Outfit',sans-serif" }}>
               {t(i.labelKey)}
             </button>
           ))}
-          <button onClick={() => go('contacto')} className="py-3 bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] text-white font-semibold text-sm shadow-lg shadow-[#6C63FF]/20" style={{ fontFamily: "'Outfit',sans-serif" }}>
+          <button onClick={() => go('contacto')} role="menuitem" className="py-3 bg-gradient-to-r from-[#6C63FF] to-[#FF6B6B] text-white font-semibold text-sm shadow-lg shadow-[#6C63FF]/20" style={{ fontFamily: "'Outfit',sans-serif" }}>
             {t('nav.quote')}
           </button>
         </div>
