@@ -50,6 +50,15 @@ const dataES = {
       description: "Landing page premium para pastelería artesanal venezolana con 13 productos y fotos reales.",
       image: "/images/dulces-cakes-home.png",
       color: "#FF6B6B",
+    },
+    {
+      id: "e2-live-music",
+      slug: "e2-live-music",
+      category: "landing",
+      title: "E2 Live Music",
+      description: "Landing page premium para orquesta en vivo en Venezuela, especializada en bodas y eventos corporativos.",
+      image: "/images/e2-live-music-home.png",
+      color: "#4FC3F7",
     }
   ],
   features: [
@@ -110,6 +119,15 @@ const dataEN = {
       description: "Premium landing page for Venezuelan artisanal bakery with 13 products and real photos.",
       image: "/images/dulces-cakes-home.png",
       color: "#FF6B6B",
+    },
+    {
+      id: "e2-live-music",
+      slug: "e2-live-music",
+      category: "landing",
+      title: "E2 Live Music",
+      description: "Premium landing page for a live orchestra in Venezuela, specializing in weddings and corporate events.",
+      image: "/images/e2-live-music-home.png",
+      color: "#4FC3F7",
     }
   ],
   features: [
@@ -146,7 +164,7 @@ export const projectCategories = [
     title: "Landing Page",
     color: "#00E5A0",
     description: "Páginas de alto impacto diseñadas para convertir visitantes en clientes.",
-    projectCount: 2,
+    projectCount: 3,
   },
   {
     id: 4,
@@ -193,7 +211,7 @@ export const categoryDetails = {
     challenge: "Negocios sin presencia digital que pierden clientes frente a competidores con mejor imagen. Una mala primera impresión equivale a una venta perdida.",
     solution: "Diseñamos landing pages de alto impacto con animaciones premium y CTAs optimizados. Trabajamos con React o HTML/CSS puro según las necesidades del proyecto — sin frameworks innecesarios cuando no hacen falta.",
     stack: ["React 18", "HTML5", "CSS3", "JavaScript", "TailwindCSS", "Vite", "Vercel"],
-    projects: ["eina-shop", "dulces-cakes"]
+    projects: ["eina-shop", "dulces-cakes", "e2-live-music"]
   },
   catalogo: {
     title: "Catálogo Digital",
@@ -378,6 +396,44 @@ export const caseStudies = [
       { value: "0 JS",   label: "Animaciones 100% CSS puro" },
     ],
     link: "https://dulcescakes.vercel.app",
+    nextProject: "e2-live-music"
+  },
+  {
+    id: "e2-live-music",
+    slug: "e2-live-music",
+    category: "landing",
+    categoryTitle: "Landing Page",
+    title: "E2 Live Music",
+    subtitle: "Landing page premium para orquesta en vivo en Venezuela, especializada en bodas y eventos corporativos.",
+    client: "E2 Live Music",
+    location: "Venezuela",
+    year: "2026",
+    timeline: "5 días",
+    color: "#4FC3F7",
+    heroImage: "/images/e2-live-music-home.png",
+    challenge: "La agrupación musical necesitaba una plataforma digital que transmitiera la energía y elegancia de sus presentaciones en vivo, facilitando la contratación para eventos de alto nivel y mostrando su amplio repertorio de forma interactiva.",
+    solution: "Diseñamos una landing page moderna con estética 'dark mode' y acentos neón, utilizando animaciones fluidas para reflejar el dinamismo de la música. Integramos secciones detalladas sobre la formación de la banda, requerimientos técnicos y contacto directo.",
+    results: "Presencia digital profesional consolidada. La página sirve como portafolio principal y ficha técnica para productores y organizadores de eventos, centralizando toda la información necesaria para contrataciones.",
+    stack: ["HTML5", "CSS3", "JavaScript", "Vercel"],
+    features: [
+      "Estética Dark Mode Premium con efectos de brillo neón",
+      "Sección detallada de formación (11 músicos en escena)",
+      "Ficha técnica interactiva: requerimientos de sonido y energía",
+      "Repertorio multi-género: Salsa, Tropical, Pop y Baladas",
+      "Optimización móvil para visualización rápida en eventos",
+      "Integración directa con WhatsApp para cotizaciones"
+    ],
+    gallery: [
+      "/images/e2-live-music-home.png",
+    ],
+    metrics: [
+      { value: "5 días",   label: "Tiempo de desarrollo" },
+      { value: "11",      label: "Músicos en escena" },
+      { value: "100%",     label: "Diseño responsive" },
+      { value: "<1.2s",    label: "Tiempo de carga" },
+      { value: "Neon", label: "Estética visual" },
+    ],
+    link: "https://e2livemusic.vercel.app",
     nextProject: "dashboard-financiero"
   }
 ];
